@@ -474,6 +474,212 @@
                 flex-direction: column;
             }
         }
+    
+        /* 页面内容区域 */
+        .page-content {
+            display: none;
+            flex: 1;
+        }
+        
+        .page-content.active {
+            display: block;
+        }
+        
+        /* 订单页面样式 */
+        .orders-filter {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--border-color);
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .filter-btn.active {
+            background: var(--accent-pink);
+            color: white;
+            border-color: var(--accent-pink);
+        }
+        
+        .orders-list-full {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .order-date-group {
+            margin-bottom: 20px;
+        }
+        
+        .order-date-header {
+            font-size: 14px;
+            color: var(--text-light);
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 10px;
+        }
+        
+        .order-item-full {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: var(--light-pink);
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .order-item-info h4 {
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+        
+        .order-item-info p {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+        
+        .order-item-amount {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--accent-pink);
+        }
+        
+        /* 报表页面样式 */
+        .report-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .report-tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .report-tab.active {
+            background: var(--accent-pink);
+            color: white;
+            border-color: var(--accent-pink);
+        }
+        
+        .report-content {
+            display: none;
+        }
+        
+        .report-content.active {
+            display: block;
+        }
+        
+        .report-card {
+            background: var(--light-pink);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .report-card h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: var(--text-dark);
+        }
+        
+        .report-stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px dashed var(--border-color);
+        }
+        
+        .report-stat-row:last-child {
+            border-bottom: none;
+        }
+        
+        .report-stat-label {
+            color: var(--text-light);
+        }
+        
+        .report-stat-value {
+            font-weight: 600;
+            color: var(--accent-pink);
+        }
+        
+        /* 设置页面样式 */
+        .settings-section {
+            background: var(--light-pink);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .settings-section h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .settings-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .settings-item:last-child {
+            border-bottom: none;
+        }
+        
+        .settings-label {
+            font-size: 15px;
+        }
+        
+        .settings-value {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+        
+        .settings-btn {
+            padding: 8px 16px;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        
+        .settings-btn:hover {
+            background: var(--accent-pink);
+            color: white;
+            border-color: var(--accent-pink);
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-light);
+        }
+        
+        .empty-state i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: var(--primary-pink);
+        }
     </style>
 </head>
 <body>
@@ -658,6 +864,216 @@
                 </li>
             </ul>
         </footer>
+    </div>
+    
+    <!-- 订单页面 -->
+    <div class="page-content" id="ordersPage">
+        <div style="padding: 20px;">
+            <h2 class="section-title"><i class="fas fa-clipboard-list"></i> 订单列表</h2>
+            
+            <div class="orders-filter">
+                <button class="filter-btn active" data-filter="all">全部</button>
+                <button class="filter-btn" data-filter="today">今日</button>
+                <button class="filter-btn" data-filter="week">本周</button>
+                <button class="filter-btn" data-filter="month">本月</button>
+            </div>
+            
+            <div class="orders-list-full" id="ordersListFull">
+                <!-- 订单列表将通过JS动态生成 -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- 报表页面 -->
+    <div class="page-content" id="reportsPage">
+        <div style="padding: 20px;">
+            <h2 class="section-title"><i class="fas fa-chart-pie"></i> 数据报表</h2>
+            
+            <div class="report-tabs">
+                <button class="report-tab active" data-report="day">日报</button>
+                <button class="report-tab" data-report="week">周报</button>
+                <button class="report-tab" data-report="month">月报</button>
+                <button class="report-tab" data-report="year">年报</button>
+            </div>
+            
+            <!-- 日报 -->
+            <div class="report-content active" id="dayReport">
+                <div class="report-card">
+                    <h3><i class="fas fa-calendar-day"></i> 今日数据</h3>
+                    <div class="report-stat-row">
+                        <span class="report-stat-label">订单数量</span>
+                        <span class="report-stat-value" id="reportTodayOrders">0</span>
+                    </div>
+                    <div class="report-stat-row">
+                        <span class="report-stat-label">营业收入</span>
+                        <span class="report-stat-value">¥<span id="reportTodayIncome">0</span></span>
+                    </div>
+                    <div class="report-stat-row">
+                        <span class="report-stat-label">服务客户</span>
+                        <span class="report-stat-value" id="reportTodayCustomers">0</span>
+                    </div>
+                    <div class="report-stat-row">
+                        <span class="report-stat-label">客单价</span>
+                        <span class="report-stat-value">¥<span id="reportTodayAvg">0</span></span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 周报 -->
+            <div class="report-content" id="weekReport">
+                <div class="report-card">
+                    <h3><i class="fas fa-calendar-week"></i> 本周数据</h3>
+                    <div class="report-stat-row">
+                        <span class="report-stat-label">订单数量</span>
+                        <span class="report-stat-value" id="reportWeekOrders">0</span>
+                    </div>
+                    <div class="report-stat-row">
+                        <span class="report-stat-label">营业收入</span>
+                        <span class="report-stat-value">¥<span id="reportWeekIncome">0</span></span>
+                    </div>
+                    <div class="report-stat-row">
+                        <span class="report-stat-label">服务客户</span>
+                        <span class="report-stat-value" id="reportWeekCustomers">0</span>
+                    </div>
+                    <div class="report-stat-row">
+                        <span class="report-stat-label">日均收入</span>
+                        <span class="report-stat-value">¥<span id="reportWeekAvg">0</span></span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 月报 -->
+            <div class="report-content" id="monthReport">
+                <div class="report-card">
+                    <h3><i class="fas fa-calendar-alt"></i> 本月数据</h3>
+                    <div class="report-stat-row">
+                        <span class="report-stat-label">订单数量</span>
+                        <span class="report-stat-value" id="reportMonthOrders">0</span>
+                    </div>
+                    <div class="report-stat-row">
+                        <span class="report-stat-label">营业收入</span>
+                        <span class="report-stat-value">¥<span id="reportMonthIncome">0</span></span>
+                    </div>
+                    <div class="report-stat-row">
+                        <span class="report-stat-label">服务客户</span>
+                        <span class="report-stat-value" id="reportMonthCustomers">0</span>
+                    </div>
+                    <div class="report-stat-row">
+                        <span class="report-stat-label">日均收入</span>
+                        <span class="report-stat-value">¥<span id="reportMonthAvg">0</span></span>
+                    </div>
+                    <div class="report-stat-row">
+                        <span class="report-stat-label">项目畅销榜</span>
+                        <span class="report-stat-value" id="reportTopService">暂无数据</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 年报 -->
+            <div class="report-content" id="yearReport">
+                <div class="report-card">
+                    <h3><i class="fas fa-calendar"></i> 本年数据</h3>
+                    <div class="report-stat-row">
+                        <span class="report-stat-label">订单数量</span>
+                        <span class="report-stat-value" id="reportYearOrders">0</span>
+                    </div>
+                    <div class="report-stat-row">
+                        <span class="report-stat-label">营业收入</span>
+                        <span class="report-stat-value">¥<span id="reportYearIncome">0</span></span>
+                    </div>
+                    <div class="report-stat-row">
+                        <span class="report-stat-label">服务客户</span>
+                        <span class="report-stat-value" id="reportYearCustomers">0</span>
+                    </div>
+                    <div class="report-stat-row">
+                        <span class="report-stat-label">月均收入</span>
+                        <span class="report-stat-value">¥<span id="reportYearAvg">0</span></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 20px;">
+                <button class="btn btn-secondary" style="width: 100%;" id="exportDataBtn">
+                    <i class="fas fa-download"></i> 导出数据
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 设置页面 -->
+    <div class="page-content" id="settingsPage">
+        <div style="padding: 20px;">
+            <h2 class="section-title"><i class="fas fa-cog"></i> 系统设置</h2>
+            
+            <!-- 店铺信息 -->
+            <div class="settings-section">
+                <h3><i class="fas fa-store"></i> 店铺信息</h3>
+                <div class="settings-item">
+                    <span class="settings-label">店铺名称</span>
+                    <span class="settings-value" id="shopNameDisplay">ZIMI子蜜美甲美睫（城市广场店）</span>
+                </div>
+                <div class="settings-item">
+                    <span class="settings-label">数据统计日</span>
+                    <span class="settings-value" id="statDateDisplay">每日00:00重置</span>
+                </div>
+                <div class="settings-item">
+                    <span class="settings-label">系统版本</span>
+                    <span class="settings-value">v1.0.0</span>
+                </div>
+            </div>
+            
+            <!-- 数据管理 -->
+            <div class="settings-section">
+                <h3><i class="fas fa-database"></i> 数据管理</h3>
+                <div class="settings-item">
+                    <span class="settings-label">今日订单</span>
+                    <span class="settings-value" id="settingsTodayOrders">0</span>
+                </div>
+                <div class="settings-item">
+                    <span class="settings-label">今日收入</span>
+                    <span class="settings-value">¥<span id="settingsTodayIncome">0</span></span>
+                </div>
+                <div class="settings-item">
+                    <span class="settings-label">历史总订单</span>
+                    <span class="settings-value" id="settingsTotalOrders">0</span>
+                </div>
+                <div class="settings-item">
+                    <span class="settings-label">上次备份</span>
+                    <span class="settings-value" id="settingsLastBackup">未备份</span>
+                </div>
+                <div class="settings-item">
+                    <span class="settings-label">手动备份</span>
+                    <button class="settings-btn" id="settingsBackupBtn">立即备份</button>
+                </div>
+            </div>
+            
+            <!-- 服务项目 -->
+            <div class="settings-section">
+                <h3><i class="fas fa-cut"></i> 服务项目 (<span id="serviceCount">18</span>项)</h3>
+                <div class="settings-item">
+                    <span class="settings-label">快速开单项目</span>
+                    <button class="settings-btn" onclick="alert('请在首页点击"快速开单"查看和编辑服务项目')">管理项目</button>
+                </div>
+            </div>
+            
+            <!-- 关于 -->
+            <div class="settings-section">
+                <h3><i class="fas fa-info-circle"></i> 关于</h3>
+                <div class="settings-item">
+                    <span class="settings-label">系统名称</span>
+                    <span class="settings-value">美甲美睫收银台</span>
+                </div>
+                <div class="settings-item">
+                    <span class="settings-label">技术支持</span>
+                    <span class="settings-value">OpenClaw</span>
+                </div>
+            </div>
+            
+            <div style="margin-top: 30px; text-align: center; color: var(--text-light); font-size: 12px;">
+                <p>ZIMI子蜜美甲美睫（城市广场店）</p>
+                <p>Copyright © 2026</p>
+            </div>
+        </div>
     </div>
     
     <!-- 快速开单模态框 -->
@@ -1549,6 +1965,38 @@
             
             // 底部导航切换
             const navItems = document.querySelectorAll('.nav-item');
+            const homeContainer = document.querySelector('.container');
+            const ordersPage = document.getElementById('ordersPage');
+            const reportsPage = document.getElementById('reportsPage');
+            const settingsPage = document.getElementById('settingsPage');
+            
+            function showPage(pageName) {
+                // 隐藏所有页面
+                homeContainer.style.display = 'none';
+                ordersPage.classList.remove('active');
+                reportsPage.classList.remove('active');
+                settingsPage.classList.remove('active');
+                
+                // 显示对应页面
+                switch(pageName) {
+                    case 'home':
+                        homeContainer.style.display = 'flex';
+                        break;
+                    case 'orders':
+                        ordersPage.classList.add('active');
+                        loadOrdersPage();
+                        break;
+                    case 'reports':
+                        reportsPage.classList.add('active');
+                        loadReportsPage();
+                        break;
+                    case 'settings':
+                        settingsPage.classList.add('active');
+                        loadSettingsPage();
+                        break;
+                }
+            }
+            
             navItems.forEach(item => {
                 item.addEventListener('click', () => {
                     // 移除所有active类
@@ -1557,23 +2005,198 @@
                     item.classList.add('active');
                     
                     const tab = item.getAttribute('data-tab');
+                    showPage(tab);
+                });
+            });
+            
+            // 加载订单页面
+            function loadOrdersPage() {
+                const data = dataManager.getData();
+                const ordersListFull = document.getElementById('ordersListFull');
+                
+                if (data.allOrders.length === 0) {
+                    ordersListFull.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-clipboard-list"></i>
+                            <p>暂无订单记录</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // 按日期分组
+                const groupedOrders = {};
+                data.allOrders.forEach(order => {
+                    if (!groupedOrders[order.date]) {
+                        groupedOrders[order.date] = [];
+                    }
+                    groupedOrders[order.date].push(order);
+                });
+                
+                let html = '';
+                Object.keys(groupedOrders).sort((a, b) => b.localeCompare(a)).forEach(date => {
+                    const orders = groupedOrders[date];
+                    const dateObj = new Date(date);
+                    const dateStr = `${dateObj.getMonth() + 1}月${dateObj.getDate()}日`;
+                    const dayNames = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+                    const dayStr = dayNames[dateObj.getDay()];
                     
-                    // 根据tab显示不同内容
-                    switch(tab) {
-                        case 'home':
-                            // 已经是首页，不需要操作
-                            break;
-                        case 'orders':
-                            alert('切换到订单页面\n\n这里可以查看所有历史订单，支持按日期筛选和搜索。');
-                            break;
-                        case 'reports':
-                            alert('切换到报表页面\n\n这里可以查看日/周/月/年收入报表，支持数据导出。');
-                            break;
-                        case 'settings':
-                            alert('切换到设置页面\n\n可以设置店铺信息、服务项目、价格和员工账号。');
-                            break;
+                    html += `
+                        <div class="order-date-group">
+                            <div class="order-date-header">${dateStr} ${dayStr} · ${orders.length}单</div>
+                    `;
+                    
+                    orders.forEach(order => {
+                        html += `
+                            <div class="order-item-full">
+                                <div class="order-item-info">
+                                    <h4>订单 #${order.id}</h4>
+                                    <p>${order.time}</p>
+                                </div>
+                                <div class="order-item-amount">¥${order.amount}</div>
+                            </div>
+                        `;
+                    });
+                    
+                    html += '</div>';
+                });
+                
+                ordersListFull.innerHTML = html;
+            }
+            
+            // 订单筛选功能
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    // 这里可以添加筛选逻辑
+                    loadOrdersPage();
+                });
+            });
+            
+            // 加载报表页面
+            function loadReportsPage() {
+                const data = dataManager.getData();
+                
+                // 日报
+                document.getElementById('reportTodayOrders').textContent = data.today.orders;
+                document.getElementById('reportTodayIncome').textContent = data.today.income.toLocaleString();
+                document.getElementById('reportTodayCustomers').textContent = data.today.customers;
+                document.getElementById('reportTodayAvg').textContent = data.today.orders > 0 
+                    ? Math.round(data.today.income / data.today.orders).toLocaleString() 
+                    : '0';
+                
+                // 月报
+                document.getElementById('reportMonthOrders').textContent = data.month.orders;
+                document.getElementById('reportMonthIncome').textContent = data.month.income.toLocaleString();
+                document.getElementById('reportMonthCustomers').textContent = data.month.customers;
+                document.getElementById('reportMonthAvg').textContent = data.month.orders > 0 
+                    ? Math.round(data.month.income / data.month.orders).toLocaleString() 
+                    : '0';
+                
+                // 计算本周数据
+                const now = new Date();
+                const weekStart = new Date(now);
+                weekStart.setDate(now.getDate() - now.getDay());
+                weekStart.setHours(0, 0, 0, 0);
+                
+                let weekOrders = 0, weekIncome = 0, weekCustomers = 0;
+                data.allOrders.forEach(order => {
+                    const orderDate = new Date(order.date);
+                    if (orderDate >= weekStart) {
+                        weekOrders++;
+                        weekIncome += order.amount;
+                        weekCustomers++;
                     }
                 });
+                
+                document.getElementById('reportWeekOrders').textContent = weekOrders;
+                document.getElementById('reportWeekIncome').textContent = weekIncome.toLocaleString();
+                document.getElementById('reportWeekCustomers').textContent = weekCustomers;
+                document.getElementById('reportWeekAvg').textContent = weekOrders > 0 
+                    ? Math.round(weekIncome / weekOrders).toLocaleString() 
+                    : '0';
+                
+                // 计算本年数据
+                const yearStart = new Date(now.getFullYear(), 0, 1);
+                let yearOrders = 0, yearIncome = 0, yearCustomers = 0;
+                data.allOrders.forEach(order => {
+                    const orderDate = new Date(order.date);
+                    if (orderDate >= yearStart) {
+                        yearOrders++;
+                        yearIncome += order.amount;
+                        yearCustomers++;
+                    }
+                });
+                
+                document.getElementById('reportYearOrders').textContent = yearOrders;
+                document.getElementById('reportYearIncome').textContent = yearIncome.toLocaleString();
+                document.getElementById('reportYearCustomers').textContent = yearCustomers;
+                document.getElementById('reportYearAvg').textContent = yearOrders > 0 
+                    ? Math.round(yearIncome / yearOrders).toLocaleString() 
+                    : '0';
+            }
+            
+            // 报表标签切换
+            document.querySelectorAll('.report-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    document.querySelectorAll('.report-tab').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    document.querySelectorAll('.report-content').forEach(c => c.classList.remove('active'));
+                    const reportType = this.getAttribute('data-report');
+                    document.getElementById(reportType + 'Report').classList.add('active');
+                });
+            });
+            
+            // 导出数据
+            document.getElementById('exportDataBtn').addEventListener('click', function() {
+                const data = dataManager.getData();
+                const exportData = {
+                    exportTime: new Date().toLocaleString('zh-CN'),
+                    today: data.today,
+                    month: data.month,
+                    orders: data.allOrders
+                };
+                
+                const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `收银数据_${new Date().toISOString().slice(0, 10)}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+                
+                alert('数据导出成功！');
+            });
+            
+            // 加载设置页面
+            function loadSettingsPage() {
+                const data = dataManager.getData();
+                
+                document.getElementById('settingsTodayOrders').textContent = data.today.orders;
+                document.getElementById('settingsTodayIncome').textContent = data.today.income.toLocaleString();
+                document.getElementById('settingsTotalOrders').textContent = data.allOrders.length;
+                document.getElementById('settingsLastBackup').textContent = new Date(data.lastBackup).toLocaleString('zh-CN').slice(0, 16);
+                document.getElementById('statDateDisplay').textContent = `${data.lastReset.daily} 重置`;
+            }
+            
+            // 设置页面备份按钮
+            document.getElementById('settingsBackupBtn').addEventListener('click', function() {
+                const data = dataManager.getData();
+                dataManager.saveBackup('manual', {
+                    today: { ...data.today },
+                    month: { ...data.month },
+                    timestamp: new Date().toISOString()
+                });
+                
+                data.lastBackup = new Date().toISOString().slice(0, 19).replace('T', ' ');
+                dataManager.saveData(data);
+                
+                document.getElementById('settingsLastBackup').textContent = new Date().toLocaleString('zh-CN').slice(0, 16);
+                alert('数据备份成功！');
             });
             
             // 点击模态框外部关闭
