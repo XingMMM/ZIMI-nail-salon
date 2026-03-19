@@ -822,39 +822,6 @@
                 </div>
             </div>
             
-            <!-- 今日数据概览 -->
-            <div class="stats-section">
-                <h2 class="section-title"><i class="fas fa-chart-line"></i> 今日数据</h2>
-                
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-value" id="todayOrders">8</div>
-                        <div class="stat-label">今日订单</div>
-                    </div>
-                    
-                    <div class="stat-item">
-                        <div class="stat-value">¥<span id="todayIncome">1,860</span></div>
-                        <div class="stat-label">今日收入</div>
-                    </div>
-                    
-                    <div class="stat-item">
-                        <div class="stat-value" id="todayCustomers">12</div>
-                        <div class="stat-label">服务客户</div>
-                    </div>
-                </div>
-                
-                <div class="period-info">
-                    <div>
-                        <div class="period-label">本月累计订单</div>
-                        <div class="period-value" id="monthOrders">152</div>
-                    </div>
-                    <div>
-                        <div class="period-label">本月累计收入</div>
-                        <div class="period-value">¥<span id="monthIncome">28,450</span></div>
-                    </div>
-                </div>
-            </div>
-            
             <!-- 数据备份区域 -->
             <div class="backup-section">
                 <h2 class="section-title"><i class="fas fa-database"></i> 数据管理</h2>
@@ -873,37 +840,6 @@
                     <button class="btn btn-danger" id="clearAllDataBtn" style="width: 100%; padding: 10px; font-size: 14px;">
                         <i class="fas fa-trash-alt"></i> 清空所有历史数据
                     </button>
-                </div>
-            </div>
-            
-            <!-- 最近订单 -->
-            <div class="recent-orders">
-                <h2 class="section-title"><i class="fas fa-history"></i> 最近订单</h2>
-                
-                <div class="order-list">
-                    <div class="order-item">
-                        <div class="order-info">
-                            <div class="order-id">订单 #026031401</div>
-                            <div class="order-time">10:15 美睫+美甲</div>
-                        </div>
-                        <div class="order-amount">¥298</div>
-                    </div>
-                    
-                    <div class="order-item">
-                        <div class="order-info">
-                            <div class="order-id">订单 #026031402</div>
-                            <div class="order-time">09:45 美甲护理</div>
-                        </div>
-                        <div class="order-amount">¥128</div>
-                    </div>
-                    
-                    <div class="order-item">
-                        <div class="order-info">
-                            <div class="order-id">订单 #026031403</div>
-                            <div class="order-time">09:20 单色美甲</div>
-                        </div>
-                        <div class="order-amount">¥88</div>
-                    </div>
                 </div>
             </div>
         </main>
@@ -1613,13 +1549,6 @@
         function loadDataToPage() {
             const data = dataManager.getData();
             
-            document.getElementById('todayOrders').textContent = data.today.orders;
-            document.getElementById('todayIncome').textContent = data.today.income.toLocaleString();
-            document.getElementById('todayCustomers').textContent = data.today.customers;
-            
-            document.getElementById('monthOrders').textContent = data.month.orders;
-            document.getElementById('monthIncome').textContent = data.month.income.toLocaleString();
-            
             const now = new Date();
             document.getElementById('currentStatDate').textContent = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日`;
             document.getElementById('currentStatMonth').textContent = `${now.getFullYear()}年${now.getMonth() + 1}月`;
@@ -1628,28 +1557,6 @@
             document.getElementById('monthStartTime').textContent = `${now.getMonth() + 1}月1日 00:00`;
             
             document.getElementById('lastBackupTime').textContent = new Date(data.lastBackup).toLocaleString('zh-CN').slice(0, 16);
-            
-            updateRecentOrders(data.allOrders.slice(0, 3));
-        }
-        
-        // 更新最近订单列表
-        function updateRecentOrders(orders) {
-            const orderList = document.querySelector('.order-list');
-            if (!orderList) return;
-            
-            orderList.innerHTML = '';
-            orders.forEach(order => {
-                const orderElement = document.createElement('div');
-                orderElement.className = 'order-item';
-                orderElement.innerHTML = `
-                    <div class="order-info">
-                        <div class="order-id">订单 #${order.id}</div>
-                        <div class="order-time">${order.time}</div>
-                    </div>
-                    <div class="order-amount">¥${order.amount}</div>
-                `;
-                orderList.appendChild(orderElement);
-            });
         }
         
         // 绑定清零按钮事件
