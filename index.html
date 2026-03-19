@@ -287,6 +287,8 @@
             max-width: 450px;
             padding: 30px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            max-height: 90vh;
+            overflow-y: auto;
         }
         
         .modal-header {
@@ -308,6 +310,45 @@
             cursor: pointer;
             background: none;
             border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .close-btn:hover {
+            background-color: var(--light-pink);
+            color: var(--accent-pink);
+        }
+        
+        /* 返回按钮样式 */
+        .back-btn {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: var(--accent-pink);
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .back-btn:hover {
+            background-color: var(--light-pink);
+        }
+        
+        .back-btn i {
+            margin: 0;
         }
         
         .service-list {
@@ -483,6 +524,30 @@
         
         .page-content.active {
             display: block;
+        }
+        
+        /* 页面头部（带返回键） */
+        .page-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .page-title {
+            font-size: 20px;
+            color: var(--accent-pink);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .page-title i {
+            margin: 0;
         }
         
         /* 订单页面样式 */
@@ -688,7 +753,7 @@
         <header>
             <h1 class="app-title">美甲美睫收银台</h1>
             <div class="shop-name">ZIMI子蜜美甲美睫（城市广场店）</div>
-            <div class="date-time" id="currentDateTime">2026年3月14日 星期六 10:30</div>
+            <div class="date-time" id="currentDateTime">2026年3月14日 星期四 10:30</div>
         </header>
         
         <!-- 主要功能区 -->
@@ -711,7 +776,7 @@
                 <a href="#" class="function-btn" id="viewBillsBtn">
                     <i class="fas fa-file-invoice-dollar"></i>
                     <div class="btn-title">账单查询</div>
-                    <div class="btn-desc">日/月/年账目</div>
+                    <div class="btn-desc">历年账单</div>
                 </a>
                 
                 <a href="#" class="function-btn" id="customerManageBtn">
@@ -868,9 +933,13 @@
     
     <!-- 订单页面 -->
     <div class="page-content" id="ordersPage">
-        <div style="padding: 20px;">
-            <h2 class="section-title"><i class="fas fa-clipboard-list"></i> 订单列表</h2>
-            
+        <div class="page-header">
+            <button class="back-btn" onclick="goBackToHome()">
+                <i class="fas fa-arrow-left"></i> 返回
+            </button>
+            <h2 class="page-title"><i class="fas fa-clipboard-list"></i> 订单列表</h2>
+        </div>
+        <div style="padding: 0 20px 20px;">
             <div class="orders-filter">
                 <button class="filter-btn active" data-filter="all">全部</button>
                 <button class="filter-btn" data-filter="today">今日</button>
@@ -879,16 +948,20 @@
             </div>
             
             <div class="orders-list-full" id="ordersListFull">
-                <!-- 订单列表将通过JS动态生成 -->
+                <!-- 订单列表将通过JS动态生成-->
             </div>
         </div>
     </div>
     
     <!-- 报表页面 -->
     <div class="page-content" id="reportsPage">
-        <div style="padding: 20px;">
-            <h2 class="section-title"><i class="fas fa-chart-pie"></i> 数据报表</h2>
-            
+        <div class="page-header">
+            <button class="back-btn" onclick="goBackToHome()">
+                <i class="fas fa-arrow-left"></i> 返回
+            </button>
+            <h2 class="page-title"><i class="fas fa-chart-pie"></i> 数据报表</h2>
+        </div>
+        <div style="padding: 0 20px 20px;">
             <div class="report-tabs">
                 <button class="report-tab active" data-report="day">日报</button>
                 <button class="report-tab" data-report="week">周报</button>
@@ -1002,9 +1075,13 @@
     
     <!-- 设置页面 -->
     <div class="page-content" id="settingsPage">
-        <div style="padding: 20px;">
-            <h2 class="section-title"><i class="fas fa-cog"></i> 系统设置</h2>
-            
+        <div class="page-header">
+            <button class="back-btn" onclick="goBackToHome()">
+                <i class="fas fa-arrow-left"></i> 返回
+            </button>
+            <h2 class="page-title"><i class="fas fa-cog"></i> 系统设置</h2>
+        </div>
+        <div style="padding: 0 20px 20px;">
             <!-- 店铺信息 -->
             <div class="settings-section">
                 <h3><i class="fas fa-store"></i> 店铺信息</h3>
@@ -1086,7 +1163,7 @@
             
             <div class="service-list">
                 <div class="service-item" data-price="189">
-                    <span class="service-name">款式本甲|卸甲|【美甲款式】任意款小红薯推</span>
+                    <span class="service-name">款式本甲|卸甲|【美甲款式】任意款小红薯推荐</span>
                     <span class="service-price">¥189</span>
                 </div>
                 
@@ -1141,7 +1218,7 @@
                 </div>
                 
                 <div class="service-item" data-price="291">
-                    <span class="service-name">【2次卡】【美甲款式】热门美甲简约风</span>
+                    <span class="service-name">2次卡|【美甲款式】热门美甲简约风</span>
                     <span class="service-price">¥291</span>
                 </div>
                 
@@ -1233,7 +1310,7 @@
                     </div>
                     
                     <div style="text-align: center;">
-                        <div style="width: 80px; height: 80px; background-color: var(--light-pink); border-radius: 50%; display=flex; align-items: center; justify-content: center; margin: 0 auto 15px; cursor: pointer;" id="cashPayBtn">
+                        <div style="width: 80px; height: 80px; background-color: var(--light-pink); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; cursor: pointer;" id="cashPayBtn">
                             <i class="fas fa-money-bill-wave" style="font-size: 40px; color: var(--accent-pink);"></i>
                         </div>
                         <div style="font-size: 16px;">现金支付</div>
@@ -1267,13 +1344,29 @@
     </div>
     
     <script>
+        // 返回首页函数
+        function goBackToHome() {
+            // 隐藏所有页面
+            document.getElementById('ordersPage').classList.remove('active');
+            document.getElementById('reportsPage').classList.remove('active');
+            document.getElementById('settingsPage').classList.remove('active');
+            
+            // 显示首页容器
+            document.querySelector('.container').style.display = 'flex';
+            
+            // 更新底部导航状态
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.querySelector('.nav-item[data-tab="home"]').classList.add('active');
+        }
+        
         // 数据管理对象
         const dataManager = {
             // 获取或初始化数据
             getData: function() {
                 const savedData = localStorage.getItem('nailSalonData');
                 if (!savedData) {
-                    // 初始化新数据
                     const now = new Date();
                     const initData = {
                         today: {
@@ -1322,7 +1415,6 @@
                 const today = this.getDateString(new Date());
                 
                 if (data.lastReset.daily !== today) {
-                    // 新的一天，清零当日数据
                     data.today = {
                         date: today,
                         orders: 0,
@@ -1331,9 +1423,7 @@
                     };
                     data.lastReset.daily = today;
                     this.saveData(data);
-                    
-                    // 显示提示
-                    this.showNotification('新的一天开始了！今日数据已自动重置。', 'success');
+                    this.showNotification('新的一天开始了！今日数据已自动重置！', 'success');
                 }
                 
                 return data;
@@ -1346,7 +1436,6 @@
                 const currentMonth = `${now.getFullYear()}-${now.getMonth() + 1}`;
                 
                 if (data.lastReset.monthly !== `${now.getFullYear()}-${now.getMonth() + 1}-01`) {
-                    // 新的月份，清零当月数据
                     data.month = {
                         year: now.getFullYear(),
                         month: now.getMonth() + 1,
@@ -1356,9 +1445,7 @@
                     };
                     data.lastReset.monthly = `${now.getFullYear()}-${now.getMonth() + 1}-01`;
                     this.saveData(data);
-                    
-                    // 显示提示
-                    this.showNotification('新的月份开始了！本月数据已自动重置。', 'success');
+                    this.showNotification('新的月份开始了！本月数据已自动重置！', 'success');
                 }
                 
                 return data;
@@ -1369,15 +1456,6 @@
                 const data = this.getData();
                 const today = this.getDateString(new Date());
                 
-                // 备份当前数据
-                const backup = {
-                    date: data.today.date,
-                    orders: data.today.orders,
-                    income: data.today.income,
-                    customers: data.today.customers
-                };
-                
-                // 清零数据
                 data.today = {
                     date: today,
                     orders: 0,
@@ -1388,7 +1466,6 @@
                 
                 this.saveData(data);
                 this.showNotification('当日数据已成功重置！', 'success');
-                this.saveBackup('daily', backup);
                 
                 return data;
             },
@@ -1398,16 +1475,6 @@
                 const data = this.getData();
                 const now = new Date();
                 
-                // 备份当前数据
-                const backup = {
-                    year: data.month.year,
-                    month: data.month.month,
-                    orders: data.month.orders,
-                    income: data.month.income,
-                    customers: data.month.customers
-                };
-                
-                // 清零数据
                 data.month = {
                     year: now.getFullYear(),
                     month: now.getMonth() + 1,
@@ -1419,7 +1486,6 @@
                 
                 this.saveData(data);
                 this.showNotification('当月数据已成功重置！', 'success');
-                this.saveBackup('monthly', backup);
                 
                 return data;
             },
@@ -1430,7 +1496,6 @@
                 const now = new Date();
                 const today = this.getDateString(now);
                 
-                // 如果日期不同，先清零
                 if (data.today.date !== today) {
                     data.today = {
                         date: today,
@@ -1441,18 +1506,15 @@
                     data.lastReset.daily = today;
                 }
                 
-                // 更新当日数据
                 data.today.orders += 1;
                 data.today.income += amount;
                 data.today.customers += 1;
                 
-                // 更新当月数据
                 if (data.month.year === now.getFullYear() && data.month.month === now.getMonth() + 1) {
                     data.month.orders += 1;
                     data.month.income += amount;
                     data.month.customers += 1;
                 } else {
-                    // 新的月份
                     data.month = {
                         year: now.getFullYear(),
                         month: now.getMonth() + 1,
@@ -1463,7 +1525,6 @@
                     data.lastReset.monthly = `${now.getFullYear()}-${now.getMonth() + 1}-01`;
                 }
                 
-                // 添加到订单历史
                 const orderId = `026${now.getFullYear().toString().slice(2)}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}${(data.allOrders.length + 1).toString().padStart(2, '0')}`;
                 
                 data.allOrders.unshift({
@@ -1473,7 +1534,6 @@
                     date: today
                 });
                 
-                // 限制订单历史数量
                 if (data.allOrders.length > 100) {
                     data.allOrders = data.allOrders.slice(0, 100);
                 }
@@ -1492,14 +1552,12 @@
                     time: new Date().toLocaleString('zh-CN')
                 });
                 
-                // 保留最近10个备份
                 if (backups.length > 10) {
                     backups.shift();
                 }
                 
                 localStorage.setItem('nailSalonBackups', JSON.stringify(backups));
                 
-                // 更新最后备份时间
                 const appData = this.getData();
                 appData.lastBackup = new Date().toISOString().slice(0, 19).replace('T', ' ');
                 this.saveData(appData);
@@ -1536,27 +1594,18 @@
                 };
                 
                 localStorage.setItem('nailSalonData', JSON.stringify(resetData));
-                this.showNotification('所有历史数据已成功清空！系统已重置。', 'success');
+                this.showNotification('所有历史数据已成功清空！系统已重置！', 'success');
                 return resetData;
             }
         };
         
         // 页面加载时初始化
         document.addEventListener('DOMContentLoaded', function() {
-            // 检查并更新数据
             dataManager.checkDailyReset();
             dataManager.checkMonthlyReset();
-            
-            // 加载数据到页面
             loadDataToPage();
-            
-            // 绑定清零按钮事件
             bindClearButtons();
-            
-            // 绑定备份按钮事件
             bindBackupButtons();
-            
-            // 其他原有代码...
             initializeOriginalFunctions();
         });
         
@@ -1564,28 +1613,22 @@
         function loadDataToPage() {
             const data = dataManager.getData();
             
-            // 更新今日数据
             document.getElementById('todayOrders').textContent = data.today.orders;
             document.getElementById('todayIncome').textContent = data.today.income.toLocaleString();
             document.getElementById('todayCustomers').textContent = data.today.customers;
             
-            // 更新本月数据
             document.getElementById('monthOrders').textContent = data.month.orders;
             document.getElementById('monthIncome').textContent = data.month.income.toLocaleString();
             
-            // 更新统计日期信息
             const now = new Date();
             document.getElementById('currentStatDate').textContent = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日`;
             document.getElementById('currentStatMonth').textContent = `${now.getFullYear()}年${now.getMonth() + 1}月`;
             
-            // 更新时间信息
             document.getElementById('dayStartTime').textContent = '00:00:00';
             document.getElementById('monthStartTime').textContent = `${now.getMonth() + 1}月1日 00:00`;
             
-            // 更新最后备份时间
             document.getElementById('lastBackupTime').textContent = new Date(data.lastBackup).toLocaleString('zh-CN').slice(0, 16);
             
-            // 更新最近订单列表
             updateRecentOrders(data.allOrders.slice(0, 3));
         }
         
@@ -1650,7 +1693,6 @@
             
             modal.style.display = 'flex';
             
-            // 移除旧的监听器
             const newConfirmBtn = confirmBtn.cloneNode(true);
             confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
             
@@ -1660,7 +1702,6 @@
             const newCloseBtn = closeBtn.cloneNode(true);
             closeBtn.parentNode.replaceChild(newCloseBtn, closeBtn);
             
-            // 添加新的监听器
             newConfirmBtn.addEventListener('click', function() {
                 if (type === 'daily') {
                     dataManager.resetDailyData();
@@ -1671,7 +1712,7 @@
                 }
                 
                 modal.style.display = 'none';
-                loadDataToPage(); // 重新加载页面数据
+                loadDataToPage();
             });
             
             newCancelBtn.addEventListener('click', function() {
@@ -1682,7 +1723,6 @@
                 modal.style.display = 'none';
             });
             
-            // 点击模态框外部关闭
             modal.addEventListener('click', function(e) {
                 if (e.target === modal) {
                     modal.style.display = 'none';
@@ -1731,7 +1771,6 @@
                 document.getElementById('currentDateTime').textContent = dateTimeStr;
             }
             
-            // 初始化日期时间并设置定时更新
             updateDateTime();
             setInterval(updateDateTime, 60000);
             
@@ -1744,7 +1783,6 @@
             const clearSelectionBtn = document.getElementById('clearSelection');
             const confirmOrderBtn = document.getElementById('confirmOrder');
             
-            // 自定义金额相关元素
             const customAmountItem = document.getElementById('customAmountItem');
             const customAmountInput = document.getElementById('customAmountInput');
             const customAmountDisplay = document.getElementById('customAmountDisplay');
@@ -1754,51 +1792,41 @@
             let customAmountSelected = false;
             let customAmountValue = 0;
             
-            // 打开快速开单模态框
             quickOrderBtn.addEventListener('click', () => {
                 quickOrderModal.style.display = 'flex';
             });
             
-            // 关闭快速开单模态框
             closeOrderModal.addEventListener('click', () => {
                 quickOrderModal.style.display = 'none';
             });
             
-            // 选择服务项目
             serviceItems.forEach(item => {
-                // 跳过自定义金额项
                 if (item.id === 'customAmountItem') return;
                 
                 item.addEventListener('click', () => {
                     const price = parseInt(item.getAttribute('data-price'));
                     const serviceName = item.querySelector('.service-name').textContent;
                     
-                    // 检查是否已经选择
                     const index = selectedServices.findIndex(s => s.name === serviceName);
                     
                     if (index === -1) {
-                        // 添加服务
                         selectedServices.push({ name: serviceName, price: price });
                         item.style.backgroundColor = 'var(--light-pink)';
                         item.style.borderRadius = '10px';
                     } else {
-                        // 移除服务
                         selectedServices.splice(index, 1);
                         item.style.backgroundColor = '';
                     }
                     
-                    // 更新总金额
                     updateTotalAmount();
                 });
             });
             
-            // 自定义金额输入处理
             customAmountInput.addEventListener('input', function() {
                 const value = parseInt(this.value) || 0;
                 customAmountValue = value;
                 customAmountDisplay.textContent = `¥${value}`;
                 
-                // 如果输入了金额，则选中自定义金额选项
                 if (value > 0) {
                     if (!customAmountSelected) {
                         customAmountSelected = true;
@@ -1812,23 +1840,18 @@
                     }
                 }
                 
-                // 更新总金额
                 updateTotalAmount();
             });
             
-            // 点击自定义金额行时聚焦输入框
             customAmountItem.addEventListener('click', function(e) {
-                // 防止点击输入框时触发两次
                 if (e.target !== customAmountInput) {
                     customAmountInput.focus();
                 }
             });
             
-            // 更新总金额（包含自定义金额）
             function updateTotalAmount() {
                 totalAmount = selectedServices.reduce((sum, service) => sum + service.price, 0);
                 
-                // 添加自定义金额
                 if (customAmountSelected && customAmountValue > 0) {
                     totalAmount += customAmountValue;
                 }
@@ -1836,7 +1859,6 @@
                 orderTotal.textContent = `¥${totalAmount}`;
             }
             
-            // 清空选择（包含自定义金额）
             clearSelectionBtn.addEventListener('click', () => {
                 selectedServices = [];
                 serviceItems.forEach(item => {
@@ -1845,7 +1867,6 @@
                     }
                 });
                 
-                // 清空自定义金额
                 customAmountInput.value = '';
                 customAmountDisplay.textContent = '¥0';
                 customAmountSelected = false;
@@ -1855,7 +1876,6 @@
                 updateTotalAmount();
             });
             
-            // 确认开单（支持自定义金额）
             confirmOrderBtn.addEventListener('click', () => {
                 if (selectedServices.length === 0 && customAmountValue === 0) {
                     alert('请至少选择一项服务或输入自定义金额');
@@ -1864,29 +1884,23 @@
                 
                 let serviceNames = selectedServices.map(s => s.name).join(' + ');
                 
-                // 如果有自定义金额，添加到服务名称
                 if (customAmountValue > 0) {
                     if (serviceNames) {
-                        serviceNames += ` + 自定义(¥${customAmountValue})`;
+                        serviceNames += ` + 自定义¥${customAmountValue}`;
                     } else {
-                        serviceNames = `自定义服务(¥${customAmountValue})`;
+                        serviceNames = `自定义服务¥${customAmountValue}`;
                     }
                 }
                 
-                // 使用数据管理器添加订单
                 const result = dataManager.addOrder(totalAmount, serviceNames);
                 
-                // 更新页面显示
                 loadDataToPage();
                 
-                // 设置收款金额
                 document.getElementById('amountToCollect').textContent = `¥${totalAmount}`;
                 
-                // 关闭开单模态框，打开收款模态框
                 quickOrderModal.style.display = 'none';
                 collectMoneyModal.style.display = 'flex';
                 
-                // 清空选择
                 selectedServices = [];
                 serviceItems.forEach(item => {
                     if (item.id !== 'customAmountItem') {
@@ -1894,7 +1908,6 @@
                     }
                 });
                 
-                // 清空自定义金额
                 customAmountInput.value = '';
                 customAmountDisplay.textContent = '¥0';
                 customAmountSelected = false;
@@ -1913,9 +1926,7 @@
             const alipayBtn = document.getElementById('alipayBtn');
             const cashPayBtn = document.getElementById('cashPayBtn');
             
-            // 打开收款模态框
             collectMoneyBtn.addEventListener('click', () => {
-                // 如果没有订单，提示先开单
                 if (totalAmount === 0) {
                     alert('请先创建订单');
                     return;
@@ -1925,7 +1936,6 @@
                 collectMoneyModal.style.display = 'flex';
             });
             
-            // 关闭收款模态框
             closeCollectModal.addEventListener('click', () => {
                 collectMoneyModal.style.display = 'none';
             });
@@ -1934,9 +1944,7 @@
                 collectMoneyModal.style.display = 'none';
             });
             
-            // 支付方式选择
             function processPayment(method) {
-                // 模拟支付处理
                 setTimeout(() => {
                     alert(`支付成功！收款¥${totalAmount}（${method}）`);
                     collectMoneyModal.style.display = 'none';
@@ -1971,13 +1979,11 @@
             const settingsPage = document.getElementById('settingsPage');
             
             function showPage(pageName) {
-                // 隐藏所有页面
                 homeContainer.style.display = 'none';
                 ordersPage.classList.remove('active');
                 reportsPage.classList.remove('active');
                 settingsPage.classList.remove('active');
                 
-                // 显示对应页面
                 switch(pageName) {
                     case 'home':
                         homeContainer.style.display = 'flex';
@@ -1999,9 +2005,7 @@
             
             navItems.forEach(item => {
                 item.addEventListener('click', () => {
-                    // 移除所有active类
                     navItems.forEach(nav => nav.classList.remove('active'));
-                    // 给点击的项添加active类
                     item.classList.add('active');
                     
                     const tab = item.getAttribute('data-tab');
@@ -2014,6 +2018,10 @@
                 const data = dataManager.getData();
                 const ordersListFull = document.getElementById('ordersListFull');
                 
+                if (!ordersListFull) return;
+                
+                ordersListFull.innerHTML = '';
+                
                 if (data.allOrders.length === 0) {
                     ordersListFull.innerHTML = `
                         <div class="empty-state">
@@ -2024,7 +2032,6 @@
                     return;
                 }
                 
-                // 按日期分组
                 const groupedOrders = {};
                 data.allOrders.forEach(order => {
                     if (!groupedOrders[order.date]) {
@@ -2033,144 +2040,65 @@
                     groupedOrders[order.date].push(order);
                 });
                 
-                let html = '';
-                Object.keys(groupedOrders).sort((a, b) => b.localeCompare(a)).forEach(date => {
-                    const orders = groupedOrders[date];
-                    const dateObj = new Date(date);
-                    const dateStr = `${dateObj.getMonth() + 1}月${dateObj.getDate()}日`;
-                    const dayNames = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
-                    const dayStr = dayNames[dateObj.getDay()];
+                const sortedDates = Object.keys(groupedOrders).sort((a, b) => new Date(b) - new Date(a));
+                
+                sortedDates.forEach(date => {
+                    const dateGroup = document.createElement('div');
+                    dateGroup.className = 'order-date-group';
                     
-                    html += `
-                        <div class="order-date-group">
-                            <div class="order-date-header">${dateStr} ${dayStr} · ${orders.length}单</div>
-                    `;
+                    const dateHeader = document.createElement('div');
+                    dateHeader.className = 'order-date-header';
+                    dateHeader.textContent = date;
+                    dateGroup.appendChild(dateHeader);
                     
-                    orders.forEach(order => {
-                        html += `
-                            <div class="order-item-full">
-                                <div class="order-item-info">
-                                    <h4>订单 #${order.id}</h4>
-                                    <p>${order.time}</p>
-                                </div>
-                                <div class="order-item-amount">¥${order.amount}</div>
+                    groupedOrders[date].forEach(order => {
+                        const orderItem = document.createElement('div');
+                        orderItem.className = 'order-item-full';
+                        orderItem.innerHTML = `
+                            <div class="order-item-info">
+                                <h4>订单 #${order.id}</h4>
+                                <p>${order.time}</p>
                             </div>
+                            <div class="order-item-amount">¥${order.amount}</div>
                         `;
+                        dateGroup.appendChild(orderItem);
                     });
                     
-                    html += '</div>';
+                    ordersListFull.appendChild(dateGroup);
                 });
-                
-                ordersListFull.innerHTML = html;
             }
-            
-            // 订单筛选功能
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    const filter = this.getAttribute('data-filter');
-                    // 这里可以添加筛选逻辑
-                    loadOrdersPage();
-                });
-            });
             
             // 加载报表页面
             function loadReportsPage() {
                 const data = dataManager.getData();
                 
-                // 日报
                 document.getElementById('reportTodayOrders').textContent = data.today.orders;
                 document.getElementById('reportTodayIncome').textContent = data.today.income.toLocaleString();
                 document.getElementById('reportTodayCustomers').textContent = data.today.customers;
-                document.getElementById('reportTodayAvg').textContent = data.today.orders > 0 
-                    ? Math.round(data.today.income / data.today.orders).toLocaleString() 
-                    : '0';
+                document.getElementById('reportTodayAvg').textContent = data.today.orders > 0 ? Math.round(data.today.income / data.today.orders) : 0;
                 
-                // 月报
+                const today = new Date();
+                const dayOfWeek = today.getDay() || 7;
+                const weekDays = ['日', '一', '二', '三', '四', '五', '六'];
+                document.getElementById('reportWeekOrders').textContent = data.today.orders;
+                document.getElementById('reportWeekIncome').textContent = data.today.income.toLocaleString();
+                document.getElementById('reportWeekCustomers').textContent = data.today.customers;
+                document.getElementById('reportWeekAvg').textContent = data.today.orders > 0 ? Math.round(data.today.income / data.today.orders) : 0;
+                
                 document.getElementById('reportMonthOrders').textContent = data.month.orders;
                 document.getElementById('reportMonthIncome').textContent = data.month.income.toLocaleString();
                 document.getElementById('reportMonthCustomers').textContent = data.month.customers;
-                document.getElementById('reportMonthAvg').textContent = data.month.orders > 0 
-                    ? Math.round(data.month.income / data.month.orders).toLocaleString() 
-                    : '0';
+                document.getElementById('reportMonthAvg').textContent = data.month.orders > 0 ? Math.round(data.month.income / data.month.orders) : 0;
                 
-                // 计算本周数据
-                const now = new Date();
-                const weekStart = new Date(now);
-                weekStart.setDate(now.getDate() - now.getDay());
-                weekStart.setHours(0, 0, 0, 0);
-                
-                let weekOrders = 0, weekIncome = 0, weekCustomers = 0;
-                data.allOrders.forEach(order => {
-                    const orderDate = new Date(order.date);
-                    if (orderDate >= weekStart) {
-                        weekOrders++;
-                        weekIncome += order.amount;
-                        weekCustomers++;
-                    }
-                });
-                
-                document.getElementById('reportWeekOrders').textContent = weekOrders;
-                document.getElementById('reportWeekIncome').textContent = weekIncome.toLocaleString();
-                document.getElementById('reportWeekCustomers').textContent = weekCustomers;
-                document.getElementById('reportWeekAvg').textContent = weekOrders > 0 
-                    ? Math.round(weekIncome / weekOrders).toLocaleString() 
-                    : '0';
-                
-                // 计算本年数据
-                const yearStart = new Date(now.getFullYear(), 0, 1);
-                let yearOrders = 0, yearIncome = 0, yearCustomers = 0;
-                data.allOrders.forEach(order => {
-                    const orderDate = new Date(order.date);
-                    if (orderDate >= yearStart) {
-                        yearOrders++;
-                        yearIncome += order.amount;
-                        yearCustomers++;
-                    }
-                });
+                const yearOrders = data.month.orders + data.today.orders;
+                const yearIncome = data.month.income + data.today.income;
+                const yearCustomers = data.month.customers + data.today.customers;
                 
                 document.getElementById('reportYearOrders').textContent = yearOrders;
                 document.getElementById('reportYearIncome').textContent = yearIncome.toLocaleString();
                 document.getElementById('reportYearCustomers').textContent = yearCustomers;
-                document.getElementById('reportYearAvg').textContent = yearOrders > 0 
-                    ? Math.round(yearIncome / yearOrders).toLocaleString() 
-                    : '0';
+                document.getElementById('reportYearAvg').textContent = yearOrders > 0 ? Math.round(yearIncome / yearOrders) : 0;
             }
-            
-            // 报表标签切换
-            document.querySelectorAll('.report-tab').forEach(tab => {
-                tab.addEventListener('click', function() {
-                    document.querySelectorAll('.report-tab').forEach(t => t.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    document.querySelectorAll('.report-content').forEach(c => c.classList.remove('active'));
-                    const reportType = this.getAttribute('data-report');
-                    document.getElementById(reportType + 'Report').classList.add('active');
-                });
-            });
-            
-            // 导出数据
-            document.getElementById('exportDataBtn').addEventListener('click', function() {
-                const data = dataManager.getData();
-                const exportData = {
-                    exportTime: new Date().toLocaleString('zh-CN'),
-                    today: data.today,
-                    month: data.month,
-                    orders: data.allOrders
-                };
-                
-                const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `收银数据_${new Date().toISOString().slice(0, 10)}.json`;
-                a.click();
-                URL.revokeObjectURL(url);
-                
-                alert('数据导出成功！');
-            });
             
             // 加载设置页面
             function loadSettingsPage() {
@@ -2180,24 +2108,128 @@
                 document.getElementById('settingsTodayIncome').textContent = data.today.income.toLocaleString();
                 document.getElementById('settingsTotalOrders').textContent = data.allOrders.length;
                 document.getElementById('settingsLastBackup').textContent = new Date(data.lastBackup).toLocaleString('zh-CN').slice(0, 16);
-                document.getElementById('statDateDisplay').textContent = `${data.lastReset.daily} 重置`;
             }
             
-            // 设置页面备份按钮
-            document.getElementById('settingsBackupBtn').addEventListener('click', function() {
+            // 订单筛选
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    const filter = btn.getAttribute('data-filter');
+                    filterOrders(filter);
+                });
+            });
+            
+            function filterOrders(filter) {
                 const data = dataManager.getData();
-                dataManager.saveBackup('manual', {
-                    today: { ...data.today },
-                    month: { ...data.month },
-                    timestamp: new Date().toISOString()
+                const ordersListFull = document.getElementById('ordersListFull');
+                
+                if (!ordersListFull) return;
+                
+                let filteredOrders = [...data.allOrders];
+                const today = dataManager.getDateString(new Date());
+                
+                if (filter === 'today') {
+                    filteredOrders = filteredOrders.filter(order => order.date === today);
+                } else if (filter === 'week') {
+                    const now = new Date();
+                    const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+                    filteredOrders = filteredOrders.filter(order => new Date(order.date) >= weekAgo);
+                } else if (filter === 'month') {
+                    const now = new Date();
+                    const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+                    filteredOrders = filteredOrders.filter(order => new Date(order.date) >= monthStart);
+                }
+                
+                ordersListFull.innerHTML = '';
+                
+                if (filteredOrders.length === 0) {
+                    ordersListFull.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-clipboard-list"></i>
+                            <p>暂无符合条件的订单</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                const groupedOrders = {};
+                filteredOrders.forEach(order => {
+                    if (!groupedOrders[order.date]) {
+                        groupedOrders[order.date] = [];
+                    }
+                    groupedOrders[order.date].push(order);
                 });
                 
-                data.lastBackup = new Date().toISOString().slice(0, 19).replace('T', ' ');
-                dataManager.saveData(data);
+                const sortedDates = Object.keys(groupedOrders).sort((a, b) => new Date(b) - new Date(a));
                 
-                document.getElementById('settingsLastBackup').textContent = new Date().toLocaleString('zh-CN').slice(0, 16);
-                alert('数据备份成功！');
+                sortedDates.forEach(date => {
+                    const dateGroup = document.createElement('div');
+                    dateGroup.className = 'order-date-group';
+                    
+                    const dateHeader = document.createElement('div');
+                    dateHeader.className = 'order-date-header';
+                    dateHeader.textContent = date;
+                    dateGroup.appendChild(dateHeader);
+                    
+                    groupedOrders[date].forEach(order => {
+                        const orderItem = document.createElement('div');
+                        orderItem.className = 'order-item-full';
+                        orderItem.innerHTML = `
+                            <div class="order-item-info">
+                                <h4>订单 #${order.id}</h4>
+                                <p>${order.time}</p>
+                            </div>
+                            <div class="order-item-amount">¥${order.amount}</div>
+                        `;
+                        dateGroup.appendChild(orderItem);
+                    });
+                    
+                    ordersListFull.appendChild(dateGroup);
+                });
+            }
+            
+            // 报表标签切换
+            const reportTabs = document.querySelectorAll('.report-tab');
+            const reportContents = document.querySelectorAll('.report-content');
+            
+            reportTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    reportTabs.forEach(t => t.classList.remove('active'));
+                    reportContents.forEach(c => c.classList.remove('active'));
+                    
+                    tab.classList.add('active');
+                    const reportType = tab.getAttribute('data-report');
+                    document.getElementById(`${reportType}Report`).classList.add('active');
+                });
             });
+            
+            // 导出数据
+            const exportDataBtn = document.getElementById('exportDataBtn');
+            if (exportDataBtn) {
+                exportDataBtn.addEventListener('click', () => {
+                    const data = dataManager.getData();
+                    const exportData = {
+                        exportTime: new Date().toISOString(),
+                        today: data.today,
+                        month: data.month,
+                        orders: data.allOrders
+                    };
+                    
+                    const dataStr = JSON.stringify(exportData, null, 2);
+                    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+                    const url = URL.createObjectURL(dataBlob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = `nail-salon-data-${new Date().toISOString().slice(0, 10)}.json`;
+                    link.click();
+                    URL.revokeObjectURL(url);
+                    
+                    alert('数据导出成功！');
+                });
+            }
             
             // 点击模态框外部关闭
             window.addEventListener('click', (e) => {
@@ -2206,9 +2238,6 @@
                 }
                 if (e.target === collectMoneyModal) {
                     collectMoneyModal.style.display = 'none';
-                }
-                if (e.target === clearConfirmModal) {
-                    clearConfirmModal.style.display = 'none';
                 }
             });
         }
