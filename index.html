@@ -828,11 +828,18 @@
                 
                 <div class="backup-info">
                     <div>
-                        <div class="period-label">上次数据备份</div>
-                        <div class="period-value" id="lastBackupTime">2026-03-13 23:59</div>
+                        <div class="period-label">上次云端备份</div>
+                        <div class="period-value" id="lastBackupTime">未备份</div>
+                        <div style="font-size: 12px; margin-top: 4px;" id="backupStatus">本地数据未同步到云端</div>
                     </div>
                     <button class="btn btn-secondary" id="manualBackupBtn" style="padding: 8px 15px; font-size: 14px;">
-                        <i class="fas fa-save"></i> 立即备份
+                        <i class="fas fa-cloud-upload-alt"></i> 备份到云端
+                    </button>
+                </div>
+                
+                <div style="margin-top: 12px;">
+                    <button class="btn btn-secondary" id="restoreCloudBtn" style="width: 100%; padding: 10px; font-size: 14px; border-color: #6c5ce7; color: #6c5ce7;">
+                        <i class="fas fa-cloud-download-alt"></i> 从云端恢复数据
                     </button>
                 </div>
                 
@@ -1299,156 +1306,171 @@
         
         // 数据管理对象
         const dataManager = {
-            // JSONBin.io 配置 - 用于跨平台同步
+            // JSONBin.io 配置 - 用于跨平台云端备份
             jsonBinConfig: {
                 apiKey: '$2a$10$r8i5NVagxk8pgrltf9ZrIOIzhCEFOZ.HBSeyQ/s60v7eh.Pbow27K',
-                collectionId: '69bca581aa77b81da9fed6cf',
-                apiUrl: 'https://api.jsonbin.io/v3'
+                binId: null, // 运行时自动发现并缓存
+                apiUrl: 'https://api.jsonbin.io/v3',
+                collectionId: '69bca581aa77b81da9fed6cf'
             },
-            
-            // 检查是否使用云端同步
-            useCloudSync: function() {
-                return this.jsonBinConfig.apiKey && this.jsonBinConfig.collectionId;
-            },
-            
-            // 从 JSONBin 获取数据
-            fetchFromCloud: async function() {
-                if (!this.useCloudSync()) return null;
-                
+
+            // 获取或创建 Bin ID（带本地缓存）
+            getBinId: async function() {
+                // 优先从 localStorage 缓存读取
+                const cached = localStorage.getItem('nailSalonBinId');
+                if (cached) return cached;
+
                 try {
-                    const response = await fetch(`${this.jsonBinConfig.apiUrl}/c/${this.jsonBinConfig.collectionId}/latest`, {
+                    // 查询 collection 下的 bins
+                    const res = await fetch(
+                        `${this.jsonBinConfig.apiUrl}/c/${this.jsonBinConfig.collectionId}/bins`,
+                        { headers: { 'X-Master-Key': this.jsonBinConfig.apiKey } }
+                    );
+                    if (res.ok) {
+                        const bins = await res.json();
+                        if (Array.isArray(bins) && bins.length > 0) {
+                            const id = bins[0].record;
+                            localStorage.setItem('nailSalonBinId', id);
+                            return id;
+                        }
+                    }
+                } catch (e) { /* 忽略，继续创建 */ }
+
+                // 没有则创建新 Bin
+                try {
+                    const createRes = await fetch(`${this.jsonBinConfig.apiUrl}/b`, {
+                        method: 'POST',
+                        headers: {
+                            'X-Master-Key': this.jsonBinConfig.apiKey,
+                            'X-Collection-Id': this.jsonBinConfig.collectionId,
+                            'Content-Type': 'application/json',
+                            'X-Bin-Name': 'nail-salon-main'
+                        },
+                        body: JSON.stringify({ _init: true })
+                    });
+                    if (createRes.ok) {
+                        const result = await createRes.json();
+                        const id = result.metadata?.id;
+                        if (id) {
+                            localStorage.setItem('nailSalonBinId', id);
+                            return id;
+                        }
+                    }
+                } catch (e) { console.error('创建 Bin 失败:', e); }
+
+                return null;
+            },
+
+            // 从云端读取数据
+            fetchFromCloud: async function() {
+                try {
+                    const binId = await this.getBinId();
+                    if (!binId) return null;
+
+                    const res = await fetch(`${this.jsonBinConfig.apiUrl}/b/${binId}/latest`, {
                         headers: {
                             'X-Master-Key': this.jsonBinConfig.apiKey,
                             'X-Bin-Meta': 'false'
                         }
                     });
-                    
-                    if (!response.ok) {
-                        if (response.status === 404) return null;
-                        throw new Error('Failed to fetch from cloud');
-                    }
-                    
-                    const result = await response.json();
-                    return result.record || result;
-                } catch (error) {
-                    console.error('Cloud fetch error:', error);
+                    if (!res.ok) return null;
+                    const data = await res.json();
+                    // 过滤掉初始化占位数据
+                    if (data && data._init) return null;
+                    return data;
+                } catch (e) {
+                    console.error('云端读取失败:', e);
                     return null;
                 }
             },
-            
-            // 保存数据到 JSONBin
+
+            // 保存数据到云端
             saveToCloud: async function(data) {
-                if (!this.useCloudSync()) return false;
-                
                 try {
-                    const listResponse = await fetch(`${this.jsonBinConfig.apiUrl}/c/${this.jsonBinConfig.collectionId}/bins`, {
-                        headers: { 'X-Master-Key': this.jsonBinConfig.apiKey }
-                    });
-                    
-                    if (listResponse.ok) {
-                        const bins = await listResponse.json();
-                        if (bins && bins.length > 0) {
-                            const binId = bins[0].record;
-                            const updateResponse = await fetch(`${this.jsonBinConfig.apiUrl}/b/${binId}`, {
-                                method: 'PUT',
-                                headers: {
-                                    'X-Master-Key': this.jsonBinConfig.apiKey,
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify(data)
-                            });
-                            return updateResponse.ok;
-                        }
-                    }
-                    
-                    const createResponse = await fetch(`${this.jsonBinConfig.apiUrl}/b`, {
-                        method: 'POST',
+                    const binId = await this.getBinId();
+                    if (!binId) return false;
+
+                    const res = await fetch(`${this.jsonBinConfig.apiUrl}/b/${binId}`, {
+                        method: 'PUT',
                         headers: {
                             'X-Master-Key': this.jsonBinConfig.apiKey,
-                            'X-Collection-Id': this.jsonBinConfig.collectionId,
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify(data)
                     });
-                    
-                    return createResponse.ok;
-                } catch (error) {
-                    console.error('Cloud save error:', error);
+                    return res.ok;
+                } catch (e) {
+                    console.error('云端保存失败:', e);
                     return false;
                 }
             },
-            
-            // 从 Gist 获取数据（保留兼容）
-            fetchFromGist: async function() {
-                return await this.fetchFromCloud();
-            },
-            
-            // 保存数据到 Gist（保留兼容）
-            saveToGist: async function(data) {
-                return await this.saveToCloud(data);
-            },
-            
-            // 获取或初始化数据
+
+            // 获取或初始化数据（本地优先，云端兜底）
             getData: async function() {
-                // 优先尝试从 Gist 获取（如果配置了）
-                if (this.useCloudSync()) {
-                    const gistData = await this.fetchFromGist();
-                    if (gistData) {
-                        // 同时保存到本地缓存
-                        localStorage.setItem('nailSalonData', JSON.stringify(gistData));
-                        return gistData;
-                    }
-                }
-                
-                // 从本地存储获取
                 const savedData = localStorage.getItem('nailSalonData');
-                if (!savedData) {
-                    const now = new Date();
-                    const initData = {
-                        today: {
-                            date: this.getDateString(now),
-                            orders: 8,
-                            income: 1860,
-                            customers: 12
-                        },
-                        month: {
-                            year: now.getFullYear(),
-                            month: now.getMonth() + 1,
-                            orders: 152,
-                            income: 28450,
-                            customers: 240
-                        },
-                        lastReset: {
-                            daily: this.getDateString(now),
-                            monthly: `${now.getFullYear()}-${now.getMonth() + 1}-01`
-                        },
-                        lastBackup: '2026-03-13 23:59',
-                        allOrders: [
-                            { id: '026031401', time: '10:15 美睫+美甲', amount: 298, date: this.getDateString(now) },
-                            { id: '026031402', time: '09:45 美甲护理', amount: 128, date: this.getDateString(now) },
-                            { id: '026031403', time: '09:20 单色美甲', amount: 88, date: this.getDateString(now) }
-                        ]
-                    };
-                    localStorage.setItem('nailSalonData', JSON.stringify(initData));
-                    
-                    // 如果配置了 Gist，也同步到云端
-                    if (this.useCloudSync()) {
-                        await this.saveToGist(initData);
-                    }
-                    
-                    return initData;
+                if (savedData) {
+                    return JSON.parse(savedData);
                 }
-                return JSON.parse(savedData);
+
+                // 本地没有数据，尝试从云端恢复
+                const cloudData = await this.fetchFromCloud();
+                if (cloudData && cloudData.allOrders !== undefined) {
+                    localStorage.setItem('nailSalonData', JSON.stringify(cloudData));
+                    return cloudData;
+                }
+
+                // 全新初始化
+                const now = new Date();
+                const initData = {
+                    today: {
+                        date: this.getDateString(now),
+                        orders: 0,
+                        income: 0,
+                        customers: 0
+                    },
+                    month: {
+                        year: now.getFullYear(),
+                        month: now.getMonth() + 1,
+                        orders: 0,
+                        income: 0,
+                        customers: 0
+                    },
+                    lastReset: {
+                        daily: this.getDateString(now),
+                        monthly: `${now.getFullYear()}-${now.getMonth() + 1}-01`
+                    },
+                    lastBackup: null,
+                    allOrders: []
+                };
+                localStorage.setItem('nailSalonData', JSON.stringify(initData));
+                return initData;
             },
-            
-            // 保存数据
+
+            // 保存数据（仅本地，不自动同步云端，避免频繁 API 调用）
             saveData: async function(data) {
                 localStorage.setItem('nailSalonData', JSON.stringify(data));
-                
-                // 如果配置了 Gist，同步到云端
-                if (this.useCloudSync()) {
-                    await this.saveToGist(data);
+            },
+
+            // 手动备份到云端（含时间戳）
+            backupToCloud: async function() {
+                const data = await this.getData();
+                data.lastBackup = new Date().toISOString().slice(0, 19).replace('T', ' ');
+                const success = await this.saveToCloud(data);
+                if (success) {
+                    // 同步更新本地的 lastBackup
+                    localStorage.setItem('nailSalonData', JSON.stringify(data));
                 }
+                return success;
+            },
+
+            // 从云端恢复数据到本地
+            restoreFromCloud: async function() {
+                const cloudData = await this.fetchFromCloud();
+                if (cloudData && cloudData.allOrders !== undefined) {
+                    localStorage.setItem('nailSalonData', JSON.stringify(cloudData));
+                    return cloudData;
+                }
+                return null;
             },
             
             // 获取日期字符串
@@ -1589,30 +1611,55 @@
                 return { data, orderId };
             },
             
-            // 保存备份
+            // 保存备份记录（本地快照，最多保留10条）
             saveBackup: async function(type, data) {
                 const backups = JSON.parse(localStorage.getItem('nailSalonBackups') || '[]');
-                backups.push({
+                backups.unshift({
                     type: type,
                     data: data,
                     timestamp: new Date().toISOString(),
                     time: new Date().toLocaleString('zh-CN')
                 });
-                
-                if (backups.length > 10) {
-                    backups.shift();
-                }
-                
+                if (backups.length > 10) backups.pop();
                 localStorage.setItem('nailSalonBackups', JSON.stringify(backups));
-                
-                const appData = await this.getData();
-                appData.lastBackup = new Date().toISOString().slice(0, 19).replace('T', ' ');
-                await this.saveData(appData);
             },
             
-            // 显示通知
+            // 显示 Toast 通知（不打断操作）
             showNotification: function(message, type = 'info') {
-                alert(message);
+                const existing = document.getElementById('toastNotification');
+                if (existing) existing.remove();
+
+                const colors = {
+                    success: '#4CAF50',
+                    error: '#ff6b6b',
+                    warning: '#FFA726',
+                    info: '#F2A8C2'
+                };
+                const icons = {
+                    success: '✅',
+                    error: '❌',
+                    warning: '⚠️',
+                    info: 'ℹ️'
+                };
+
+                const toast = document.createElement('div');
+                toast.id = 'toastNotification';
+                toast.style.cssText = `
+                    position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%);
+                    background: ${colors[type] || colors.info}; color: white;
+                    padding: 12px 20px; border-radius: 24px; font-size: 14px;
+                    box-shadow: 0 4px 16px rgba(0,0,0,0.2); z-index: 9999;
+                    max-width: 320px; text-align: center; line-height: 1.5;
+                    animation: fadeInUp 0.3s ease;
+                `;
+                toast.textContent = `${icons[type] || ''} ${message}`;
+
+                const style = document.createElement('style');
+                style.textContent = `@keyframes fadeInUp { from { opacity:0; transform:translateX(-50%) translateY(20px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }`;
+                document.head.appendChild(style);
+
+                document.body.appendChild(toast);
+                setTimeout(() => { if (toast.parentNode) toast.remove(); }, 3000);
             },
             
             // 清空所有数据
@@ -1636,28 +1683,14 @@
                         daily: this.getDateString(now),
                         monthly: `${now.getFullYear()}-${now.getMonth() + 1}-01`
                     },
-                    lastBackup: new Date().toISOString().slice(0, 19).replace('T', ' '),
+                    lastBackup: null,
                     allOrders: []
                 };
-                
-                // 保存到本地
+
                 localStorage.setItem('nailSalonData', JSON.stringify(resetData));
-                
-                // 如果配置了 Gist，同步到云端
-                if (this.useCloudSync()) {
-                    const success = await this.saveToGist(resetData);
-                    if (success) {
-                        this.showNotification('所有历史数据已成功清空！数据已同步到所有设备！', 'success');
-                    } else {
-                        this.showNotification('本地数据已清空，但云端同步失败，请检查网络连接。', 'warning');
-                    }
-                } else {
-                    this.showNotification('所有历史数据已成功清空！系统已重置！', 'success');
-                }
-                
+                this.showNotification('所有历史数据已清空！', 'success');
                 return resetData;
             }
-        };
         
         // 页面加载时初始化
         document.addEventListener('DOMContentLoaded', async function() {
@@ -1680,7 +1713,17 @@
             document.getElementById('dayStartTime').textContent = '00:00:00';
             document.getElementById('monthStartTime').textContent = `${now.getMonth() + 1}月1日 00:00`;
             
-            document.getElementById('lastBackupTime').textContent = new Date(data.lastBackup).toLocaleString('zh-CN').slice(0, 16);
+            const backupTimeEl = document.getElementById('lastBackupTime');
+            const backupStatusEl = document.getElementById('backupStatus');
+            if (data.lastBackup) {
+                backupTimeEl.textContent = data.lastBackup;
+                backupStatusEl.textContent = '☁️ 已同步到云端';
+                backupStatusEl.style.color = '#4CAF50';
+            } else {
+                backupTimeEl.textContent = '未备份';
+                backupStatusEl.textContent = '⚠️ 本地数据未同步到云端';
+                backupStatusEl.style.color = '#FFA726';
+            }
         }
         
         // 绑定清零按钮事件
@@ -1764,21 +1807,49 @@ newConfirmBtn.addEventListener('click', async function() {
         // 绑定备份按钮事件
         function bindBackupButtons() {
             const manualBackupBtn = document.getElementById('manualBackupBtn');
-            
+            const restoreCloudBtn = document.getElementById('restoreCloudBtn');
+
             if (manualBackupBtn) {
                 manualBackupBtn.addEventListener('click', async function() {
-                    const data = await dataManager.getData();
-                    await dataManager.saveBackup('manual', {
-                        today: { ...data.today },
-                        month: { ...data.month },
-                        timestamp: new Date().toISOString()
-                    });
-                    
-                    data.lastBackup = new Date().toISOString().slice(0, 19).replace('T', ' ');
-                    await dataManager.saveData(data);
-                    
-                    document.getElementById('lastBackupTime').textContent = new Date().toLocaleString('zh-CN').slice(0, 16);
-                    alert('数据备份成功！');
+                    manualBackupBtn.disabled = true;
+                    manualBackupBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 备份中...';
+
+                    const success = await dataManager.backupToCloud();
+
+                    if (success) {
+                        const now = new Date().toLocaleString('zh-CN').slice(0, 16);
+                        document.getElementById('lastBackupTime').textContent = now;
+                        document.getElementById('backupStatus').textContent = '☁️ 已同步到云端';
+                        document.getElementById('backupStatus').style.color = '#4CAF50';
+                        dataManager.showNotification('备份成功！数据已同步到云端 ☁️', 'success');
+                    } else {
+                        dataManager.showNotification('云端备份失败，请检查网络连接', 'error');
+                    }
+
+                    manualBackupBtn.disabled = false;
+                    manualBackupBtn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> 备份到云端';
+                });
+            }
+
+            if (restoreCloudBtn) {
+                restoreCloudBtn.addEventListener('click', async function() {
+                    if (!confirm('确认从云端恢复数据？这将覆盖本地当前数据！')) return;
+
+                    restoreCloudBtn.disabled = true;
+                    restoreCloudBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 恢复中...';
+
+                    const cloudData = await dataManager.restoreFromCloud();
+
+                    if (cloudData) {
+                        await loadDataToPage();
+                        const backupTime = cloudData.lastBackup || '未知';
+                        dataManager.showNotification(`数据恢复成功！备份时间：${backupTime}`, 'success');
+                    } else {
+                        dataManager.showNotification('云端暂无备份数据，请先备份', 'warning');
+                    }
+
+                    restoreCloudBtn.disabled = false;
+                    restoreCloudBtn.innerHTML = '<i class="fas fa-cloud-download-alt"></i> 从云端恢复';
                 });
             }
         }
