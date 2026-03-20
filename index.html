@@ -1299,8 +1299,164 @@
         
         // 数据管理对象
         const dataManager = {
+            // JSONBin.io 配置 - 用于跨平台同步
+            jsonBinConfig: {
+                apiKey: '$2a$10$r8i5NVagxk8pgrltf9ZrIOIzhCEFOZ.HBSeyQ/s60v7eh.Pbow27K',
+                collectionId: '69bca581aa77b81da9fed6cf',
+                apiUrl: 'https://api.jsonbin.io/v3'
+            },
+            
+            // 检查是否使用云端同步
+            useCloudSync: function() {
+                return this.jsonBinConfig.apiKey && this.jsonBinConfig.collectionId;
+            },
+            
+            // 从 JSONBin 获取数据
+            fetchFromCloud: async function() {
+                if (!this.useCloudSync()) return null;
+                
+                try {
+                    const response = await fetch(`${this.jsonBinConfig.apiUrl}/c/${this.jsonBinConfig.collectionId}/latest`, {
+                        headers: {
+                            'X-Master-Key': this.jsonBinConfig.apiKey,
+                            'X-Bin-Meta': 'false'
+                        }
+                    });
+                    
+                    if (!response.ok) {
+                        if (response.status === 404) return null;
+                        throw new Error('Failed to fetch from cloud');
+                    }
+                    
+                    const result = await response.json();
+                    return result.record || result;
+                } catch (error) {
+                    console.error('Cloud fetch error:', error);
+                    return null;
+                }
+            },
+            
+            // 保存数据到 JSONBin
+            saveToCloud: async function(data) {
+                if (!this.useCloudSync()) return false;
+                
+                try {
+                    const listResponse = await fetch(`${this.jsonBinConfig.apiUrl}/c/${this.jsonBinConfig.collectionId}/bins`, {
+                        headers: { 'X-Master-Key': this.jsonBinConfig.apiKey }
+                    });
+                    
+                    if (listResponse.ok) {
+                        const bins = await listResponse.json();
+                        if (bins && bins.length > 0) {
+                            const binId = bins[0].record;
+                            const updateResponse = await fetch(`${this.jsonBinConfig.apiUrl}/b/${binId}`, {
+                                method: 'PUT',
+                                headers: {
+                                    'X-Master-Key': this.jsonBinConfig.apiKey,
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(data)
+                            });
+                            return updateResponse.ok;
+                        }
+                    }
+                    
+                    const createResponse = await fetch(`${this.jsonBinConfig.apiUrl}/b`, {
+                        method: 'POST',
+                        headers: {
+                            'X-Master-Key': this.jsonBinConfig.apiKey,
+                            'X-Collection-Id': this.jsonBinConfig.collectionId,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    });
+                    
+                    return createResponse.ok;
+                } catch (error) {
+                    console.error('Cloud save error:', error);
+                    return false;
+                }
+            },
+            
+            // 从 Gist 获取数据（保留兼容）
+            fetchFromGist: async function() {
+                return await this.fetchFromCloud();
+            },
+            
+            // 保存数据到 Gist（保留兼容）
+            saveToGist: async function(data) {
+                return await this.saveToCloud(data);
+            },
+            
+            // 从 JSONBin 获取数据
+            fetchFromGist: async function() {
+                if (!this.useCloudSync()) return null;
+                
+                try {
+                    const response = await fetch(`${this.gistConfig.apiUrl}/gists/${this.gistConfig.gistId}`, {
+                        headers: {
+                            'Authorization': `token ${this.gistConfig.token}`,
+                            'Accept': 'application/vnd.github.v3+json'
+                        }
+                    });
+                    
+                    if (!response.ok) throw new Error('Failed to fetch from Gist');
+                    
+                    const gist = await response.json();
+                    const content = gist.files['nail-salon-data.json']?.content;
+                    
+                    if (content) {
+                        return JSON.parse(content);
+                    }
+                    return null;
+                } catch (error) {
+                    console.error('Gist fetch error:', error);
+                    return null;
+                }
+            },
+            
+            // 保存数据到 Gist
+            saveToGist: async function(data) {
+                if (!this.useCloudSync()) return false;
+                
+                try {
+                    const response = await fetch(`${this.gistConfig.apiUrl}/gists/${this.gistConfig.gistId}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Authorization': `token ${this.gistConfig.token}`,
+                            'Accept': 'application/vnd.github.v3+json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            files: {
+                                'nail-salon-data.json': {
+                                    content: JSON.stringify(data, null, 2)
+                                }
+                            }
+                        })
+                    });
+                    
+                    if (!response.ok) throw new Error('Failed to save to Gist');
+                    return true;
+                } catch (error) {
+                    console.error('Gist save error:', error);
+                    return false;
+                }
+            },
+            
             // 获取或初始化数据
-            getData: function() {
+            getData: async function() {
+                // 优先尝试从 Gist 获取（如果配置了）
+                if (this.useCloudSync()) {
+                    const gistData = await this.fetchFromGist();
+                    if (gistData) {
+                        // 同时保存到本地缓存
+                        localStorage.setItem('nailSalonData', JSON.stringify(gistData));
+                        return gistData;
+                    }
+                }
+                
+                // 从本地存储获取
                 const savedData = localStorage.getItem('nailSalonData');
                 if (!savedData) {
                     const now = new Date();
@@ -1330,14 +1486,25 @@
                         ]
                     };
                     localStorage.setItem('nailSalonData', JSON.stringify(initData));
+                    
+                    // 如果配置了 Gist，也同步到云端
+                    if (this.useCloudSync()) {
+                        await this.saveToGist(initData);
+                    }
+                    
                     return initData;
                 }
                 return JSON.parse(savedData);
             },
             
             // 保存数据
-            saveData: function(data) {
+            saveData: async function(data) {
                 localStorage.setItem('nailSalonData', JSON.stringify(data));
+                
+                // 如果配置了 Gist，同步到云端
+                if (this.useCloudSync()) {
+                    await this.saveToGist(data);
+                }
             },
             
             // 获取日期字符串
@@ -1346,8 +1513,8 @@
             },
             
             // 检查是否需要每日清零
-            checkDailyReset: function() {
-                const data = this.getData();
+            checkDailyReset: async function() {
+                const data = await this.getData();
                 const today = this.getDateString(new Date());
                 
                 if (data.lastReset.daily !== today) {
@@ -1358,7 +1525,7 @@
                         customers: 0
                     };
                     data.lastReset.daily = today;
-                    this.saveData(data);
+                    await this.saveData(data);
                     this.showNotification('新的一天开始了！今日数据已自动重置！', 'success');
                 }
                 
@@ -1366,8 +1533,8 @@
             },
             
             // 检查是否需要每月清零
-            checkMonthlyReset: function() {
-                const data = this.getData();
+            checkMonthlyReset: async function() {
+                const data = await this.getData();
                 const now = new Date();
                 const currentMonth = `${now.getFullYear()}-${now.getMonth() + 1}`;
                 
@@ -1380,7 +1547,7 @@
                         customers: 0
                     };
                     data.lastReset.monthly = `${now.getFullYear()}-${now.getMonth() + 1}-01`;
-                    this.saveData(data);
+                    await this.saveData(data);
                     this.showNotification('新的月份开始了！本月数据已自动重置！', 'success');
                 }
                 
@@ -1388,8 +1555,8 @@
             },
             
             // 手动重置当日数据
-            resetDailyData: function() {
-                const data = this.getData();
+            resetDailyData: async function() {
+                const data = await this.getData();
                 const today = this.getDateString(new Date());
                 
                 data.today = {
@@ -1400,15 +1567,15 @@
                 };
                 data.lastReset.daily = today;
                 
-                this.saveData(data);
+                await this.saveData(data);
                 this.showNotification('当日数据已成功重置！', 'success');
                 
                 return data;
             },
             
             // 手动重置当月数据
-            resetMonthlyData: function() {
-                const data = this.getData();
+            resetMonthlyData: async function() {
+                const data = await this.getData();
                 const now = new Date();
                 
                 data.month = {
@@ -1420,15 +1587,15 @@
                 };
                 data.lastReset.monthly = `${now.getFullYear()}-${now.getMonth() + 1}-01`;
                 
-                this.saveData(data);
+                await this.saveData(data);
                 this.showNotification('当月数据已成功重置！', 'success');
                 
                 return data;
             },
             
             // 添加新订单
-            addOrder: function(amount, services) {
-                const data = this.getData();
+            addOrder: async function(amount, services) {
+                const data = await this.getData();
                 const now = new Date();
                 const today = this.getDateString(now);
                 
@@ -1474,12 +1641,12 @@
                     data.allOrders = data.allOrders.slice(0, 100);
                 }
                 
-                this.saveData(data);
+                await this.saveData(data);
                 return { data, orderId };
             },
             
             // 保存备份
-            saveBackup: function(type, data) {
+            saveBackup: async function(type, data) {
                 const backups = JSON.parse(localStorage.getItem('nailSalonBackups') || '[]');
                 backups.push({
                     type: type,
@@ -1494,9 +1661,9 @@
                 
                 localStorage.setItem('nailSalonBackups', JSON.stringify(backups));
                 
-                const appData = this.getData();
+                const appData = await this.getData();
                 appData.lastBackup = new Date().toISOString().slice(0, 19).replace('T', ' ');
-                this.saveData(appData);
+                await this.saveData(appData);
             },
             
             // 显示通知
@@ -1505,7 +1672,7 @@
             },
             
             // 清空所有数据
-            clearAllData: function() {
+            clearAllData: async function() {
                 const now = new Date();
                 const resetData = {
                     today: {
@@ -1529,25 +1696,38 @@
                     allOrders: []
                 };
                 
+                // 保存到本地
                 localStorage.setItem('nailSalonData', JSON.stringify(resetData));
-                this.showNotification('所有历史数据已成功清空！系统已重置！', 'success');
+                
+                // 如果配置了 Gist，同步到云端
+                if (this.useCloudSync()) {
+                    const success = await this.saveToGist(resetData);
+                    if (success) {
+                        this.showNotification('所有历史数据已成功清空！数据已同步到所有设备！', 'success');
+                    } else {
+                        this.showNotification('本地数据已清空，但云端同步失败，请检查网络连接。', 'warning');
+                    }
+                } else {
+                    this.showNotification('所有历史数据已成功清空！系统已重置！', 'success');
+                }
+                
                 return resetData;
             }
         };
         
         // 页面加载时初始化
-        document.addEventListener('DOMContentLoaded', function() {
-            dataManager.checkDailyReset();
-            dataManager.checkMonthlyReset();
-            loadDataToPage();
+        document.addEventListener('DOMContentLoaded', async function() {
+            await dataManager.checkDailyReset();
+            await dataManager.checkMonthlyReset();
+            await loadDataToPage();
             bindClearButtons();
             bindBackupButtons();
             initializeOriginalFunctions();
         });
         
         // 加载数据到页面
-        function loadDataToPage() {
-            const data = dataManager.getData();
+        async function loadDataToPage() {
+            const data = await dataManager.getData();
             
             const now = new Date();
             document.getElementById('currentStatDate').textContent = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日`;
@@ -1609,17 +1789,17 @@
             const newCloseBtn = closeBtn.cloneNode(true);
             closeBtn.parentNode.replaceChild(newCloseBtn, closeBtn);
             
-            newConfirmBtn.addEventListener('click', function() {
+newConfirmBtn.addEventListener('click', async function() {
                 if (type === 'daily') {
-                    dataManager.resetDailyData();
+                    await dataManager.resetDailyData();
                 } else if (type === 'monthly') {
-                    dataManager.resetMonthlyData();
+                    await dataManager.resetMonthlyData();
                 } else if (type === 'all') {
-                    dataManager.clearAllData();
+                    await dataManager.clearAllData();
                 }
                 
                 modal.style.display = 'none';
-                loadDataToPage();
+                await loadDataToPage();
             });
             
             newCancelBtn.addEventListener('click', function() {
@@ -1642,16 +1822,16 @@
             const manualBackupBtn = document.getElementById('manualBackupBtn');
             
             if (manualBackupBtn) {
-                manualBackupBtn.addEventListener('click', function() {
-                    const data = dataManager.getData();
-                    dataManager.saveBackup('manual', {
+                manualBackupBtn.addEventListener('click', async function() {
+                    const data = await dataManager.getData();
+                    await dataManager.saveBackup('manual', {
                         today: { ...data.today },
                         month: { ...data.month },
                         timestamp: new Date().toISOString()
                     });
                     
                     data.lastBackup = new Date().toISOString().slice(0, 19).replace('T', ' ');
-                    dataManager.saveData(data);
+                    await dataManager.saveData(data);
                     
                     document.getElementById('lastBackupTime').textContent = new Date().toLocaleString('zh-CN').slice(0, 16);
                     alert('数据备份成功！');
@@ -1799,9 +1979,9 @@
                     }
                 }
                 
-                const result = dataManager.addOrder(totalAmount, serviceNames);
+                const result = await dataManager.addOrder(totalAmount, serviceNames);
                 
-                loadDataToPage();
+                await loadDataToPage();
                 
                 document.getElementById('amountToCollect').textContent = `¥${totalAmount}`;
                 
@@ -1866,15 +2046,15 @@
             
             // 账单查询功能
             const viewBillsBtn = document.getElementById('viewBillsBtn');
-            viewBillsBtn.addEventListener('click', () => {
-                const data = dataManager.getData();
+            viewBillsBtn.addEventListener('click', async () => {
+                const data = await dataManager.getData();
                 alert(`账单查询功能：\n\n今日收入：¥${data.today.income.toLocaleString()}\n本月收入：¥${data.month.income.toLocaleString()}\n历史总收入：¥${(data.today.income + data.month.income).toLocaleString()}\n\n详细账单请在"报表"页面查看。`);
             });
             
             // 客户管理功能
             const customerManageBtn = document.getElementById('customerManageBtn');
-            customerManageBtn.addEventListener('click', () => {
-                const data = dataManager.getData();
+            customerManageBtn.addEventListener('click', async () => {
+                const data = await dataManager.getData();
                 alert(`客户管理功能：\n\n今日客户：${data.today.customers}人\n本月客户：${data.month.customers}人\n总服务客户：${data.today.customers + data.month.customers}人\n\n点击"设置"页面可查看详细客户信息。`);
             });
             
@@ -1921,8 +2101,8 @@
             });
             
             // 加载订单页面
-            function loadOrdersPage() {
-                const data = dataManager.getData();
+            async function loadOrdersPage() {
+                const data = await dataManager.getData();
                 const ordersListFull = document.getElementById('ordersListFull');
                 
                 if (!ordersListFull) return;
@@ -1976,8 +2156,8 @@
             }
             
             // 加载报表页面
-            function loadReportsPage() {
-                const data = dataManager.getData();
+            async function loadReportsPage() {
+                const data = await dataManager.getData();
                 
                 document.getElementById('reportTodayOrders').textContent = data.today.orders;
                 document.getElementById('reportTodayIncome').textContent = data.today.income.toLocaleString();
@@ -2008,8 +2188,8 @@
             }
             
             // 加载设置页面
-            function loadSettingsPage() {
-                const data = dataManager.getData();
+            async function loadSettingsPage() {
+                const data = await dataManager.getData();
                 
                 document.getElementById('settingsTodayOrders').textContent = data.today.orders;
                 document.getElementById('settingsTodayIncome').textContent = data.today.income.toLocaleString();
@@ -2029,8 +2209,8 @@
                 });
             });
             
-            function filterOrders(filter) {
-                const data = dataManager.getData();
+            async function filterOrders(filter) {
+                const data = await dataManager.getData();
                 const ordersListFull = document.getElementById('ordersListFull');
                 
                 if (!ordersListFull) return;
@@ -2116,8 +2296,8 @@
             // 导出数据
             const exportDataBtn = document.getElementById('exportDataBtn');
             if (exportDataBtn) {
-                exportDataBtn.addEventListener('click', () => {
-                    const data = dataManager.getData();
+                exportDataBtn.addEventListener('click', async () => {
+                    const data = await dataManager.getData();
                     const exportData = {
                         exportTime: new Date().toISOString(),
                         today: data.today,
