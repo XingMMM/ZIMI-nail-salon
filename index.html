@@ -1388,62 +1388,6 @@
                 return await this.saveToCloud(data);
             },
             
-            // 从 JSONBin 获取数据
-            fetchFromGist: async function() {
-                if (!this.useCloudSync()) return null;
-                
-                try {
-                    const response = await fetch(`${this.gistConfig.apiUrl}/gists/${this.gistConfig.gistId}`, {
-                        headers: {
-                            'Authorization': `token ${this.gistConfig.token}`,
-                            'Accept': 'application/vnd.github.v3+json'
-                        }
-                    });
-                    
-                    if (!response.ok) throw new Error('Failed to fetch from Gist');
-                    
-                    const gist = await response.json();
-                    const content = gist.files['nail-salon-data.json']?.content;
-                    
-                    if (content) {
-                        return JSON.parse(content);
-                    }
-                    return null;
-                } catch (error) {
-                    console.error('Gist fetch error:', error);
-                    return null;
-                }
-            },
-            
-            // 保存数据到 Gist
-            saveToGist: async function(data) {
-                if (!this.useCloudSync()) return false;
-                
-                try {
-                    const response = await fetch(`${this.gistConfig.apiUrl}/gists/${this.gistConfig.gistId}`, {
-                        method: 'PATCH',
-                        headers: {
-                            'Authorization': `token ${this.gistConfig.token}`,
-                            'Accept': 'application/vnd.github.v3+json',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            files: {
-                                'nail-salon-data.json': {
-                                    content: JSON.stringify(data, null, 2)
-                                }
-                            }
-                        })
-                    });
-                    
-                    if (!response.ok) throw new Error('Failed to save to Gist');
-                    return true;
-                } catch (error) {
-                    console.error('Gist save error:', error);
-                    return false;
-                }
-            },
-            
             // 获取或初始化数据
             getData: async function() {
                 // 优先尝试从 Gist 获取（如果配置了）
