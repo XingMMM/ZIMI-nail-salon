@@ -1,62 +1,82 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
-  <!-- Background circle - pink gradient -->
+  <!-- Background - pink circle -->
   <defs>
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#FFD1DC"/>
       <stop offset="100%" style="stop-color:#F2A8C2"/>
     </linearGradient>
-    <linearGradient id="hairGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#8B4513"/>
-      <stop offset="100%" style="stop-color:#5D2E0C"/>
+    <linearGradient id="bottleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF69B4"/>
+      <stop offset="100%" style="stop-color:#FF1493"/>
     </linearGradient>
   </defs>
-  <circle cx="64" cy="64" r="60" fill="url(#bgGrad)" stroke="#E893B1" stroke-width="3"/>
+  <circle cx="64" cy="64" r="60" fill="url(#bgGrad)" stroke="#E893B1" stroke-width="2"/>
   
+  <!-- Cartoon girl body/head -->
   <!-- Hair back -->
-  <ellipse cx="64" cy="52" rx="38" ry="35" fill="url(#hairGrad)"/>
-  
+  <ellipse cx="50" cy="52" rx="28" ry="26" fill="#8B4513"/>
   <!-- Face -->
-  <ellipse cx="64" cy="58" rx="28" ry="30" fill="#FFE4C4"/>
-  
-  <!-- Bangs -->
-  <path d="M36 45 Q50 35 64 38 Q78 35 92 45 Q85 50 80 48 Q72 42 64 44 Q56 42 48 48 Q43 50 36 45" fill="url(#hairGrad)"/>
-  
-  <!-- Hair sides -->
-  <ellipse cx="38" cy="62" rx="8" ry="22" fill="url(#hairGrad)"/>
-  <ellipse cx="90" cy="62" rx="8" ry="22" fill="url(#hairGrad)"/>
+  <ellipse cx="50" cy="55" rx="22" ry="24" fill="#FFE4C4"/>
+  <!-- Hair front/bangs -->
+  <path d="M28 48 Q38 38 50 40 Q62 38 72 48 Q65 52 60 48 Q55 42 50 44 Q45 42 40 48 Q35 52 28 48" fill="#8B4513"/>
+  <!-- Hair side left -->
+  <ellipse cx="30" cy="58" rx="6" ry="18" fill="#8B4513"/>
+  <!-- Hair side right -->
+  <ellipse cx="70" cy="58" rx="6" ry="18" fill="#8B4513"/>
   
   <!-- Eyes -->
-  <ellipse cx="52" cy="58" rx="6" ry="7" fill="#fff"/>
-  <ellipse cx="76" cy="58" rx="6" ry="7" fill="#fff"/>
-  <circle cx="53" cy="59" r="4" fill="#4A3728"/>
-  <circle cx="77" cy="59" r="4" fill="#4A3728"/>
-  <circle cx="54" cy="57" r="1.5" fill="#fff"/>
-  <circle cx="78" cy="57" r="1.5" fill="#fff"/>
+  <ellipse cx="42" cy="55" rx="5" ry="6" fill="#fff"/>
+  <ellipse cx="58" cy="55" rx="5" ry="6" fill="#fff"/>
+  <circle cx="43" cy="56" r="3.5" fill="#4A3728"/>
+  <circle cx="59" cy="56" r="3.5" fill="#4A3728"/>
+  <circle cx="44" cy="54" r="1.2" fill="#fff"/>
+  <circle cx="60" cy="54" r="1.2" fill="#fff"/>
   
   <!-- Eyebrows -->
-  <path d="M46 50 Q52 47 58 50" stroke="#8B4513" stroke-width="2" fill="none"/>
-  <path d="M70 50 Q76 47 82 50" stroke="#8B4513" stroke-width="2" fill="none"/>
+  <path d="M37 48 Q42 46 47 48" stroke="#8B4513" stroke-width="1.5" fill="none"/>
+  <path d="M53 48 Q58 46 63 48" stroke="#8B4513" stroke-width="1.5" fill="none"/>
   
   <!-- Blush -->
-  <ellipse cx="44" cy="68" rx="7" ry="4" fill="#FFB6C1" opacity="0.6"/>
-  <ellipse cx="84" cy="68" rx="7" ry="4" fill="#FFB6C1" opacity="0.6"/>
-  
-  <!-- Nose -->
-  <path d="M64 62 L63 67 L65 67" stroke="#DEB887" stroke-width="1.5" fill="none"/>
+  <ellipse cx="35" cy="62" rx="5" ry="3" fill="#FFB6C1" opacity="0.7"/>
+  <ellipse cx="65" cy="62" rx="5" ry="3" fill="#FFB6C1" opacity="0.7"/>
   
   <!-- Smile -->
-  <path d="M56 74 Q64 82 72 74" stroke="#E893B1" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M44 68 Q50 74 56 68" stroke="#E893B1" stroke-width="2" fill="none" stroke-linecap="round"/>
   
-  <!-- Earrings -->
-  <circle cx="36" cy="66" r="4" fill="#FFD700"/>
-  <circle cx="92" cy="66" r="4" fill="#FFD700"/>
+  <!-- Body/dress -->
+  <path d="M30 78 Q50 72 70 78 L72 95 Q50 90 28 95 Z" fill="#FF69B4"/>
   
-  <!-- Bow on head -->
-  <path d="M58 32 Q50 26 52 32 Q50 38 58 34 Z" fill="#FF69B4"/>
-  <path d="M70 32 Q78 26 76 32 Q78 38 70 34 Z" fill="#FF69B4"/>
-  <circle cx="64" cy="33" r="4" fill="#FF1493"/>
+  <!-- Raised hand with nail polish -->
+  <!-- Arm -->
+  <path d="M70 82 Q85 70 90 55" stroke="#FFE4C4" stroke-width="10" fill="none" stroke-linecap="round"/>
   
-  <!-- Bottom text banner -->
-  <rect x="8" y="95" width="112" height="26" rx="8" fill="#E893B1"/>
-  <text x="64" y="113" font-size="16" font-weight="bold" font-family="Arial, sans-serif" fill="#fff" text-anchor="middle">收银</text>
+  <!-- Hand with painted nails -->
+  <ellipse cx="92" cy="50" rx="10" ry="12" fill="#FFE4C4"/>
+  <!-- Fingers -->
+  <ellipse cx="96" cy="40" rx="4" ry="6" fill="#FFE4C4"/>
+  <ellipse cx="100" cy="46" rx="4" ry="6" fill="#FFE4C4"/>
+  <ellipse cx="98" cy="54" rx="4" ry="6" fill="#FFE4C4"/>
+  <ellipse cx="94" cy="60" rx="4" ry="5" fill="#FFE4C4"/>
+  <!-- Thumb -->
+  <ellipse cx="88" cy="56" rx="4" ry="5" fill="#FFE4C4"/>
+  
+  <!-- Painted nails on fingers - pink with shine -->
+  <ellipse cx="96" cy="39" rx="2.5" ry="4" fill="#FF1493"/>
+  <ellipse cx="100" cy="45" rx="2.5" ry="4" fill="#FF1493"/>
+  <ellipse cx="98" cy="53" rx="2.5" ry="4" fill="#FF1493"/>
+  <ellipse cx="94" cy="59" rx="2.5" ry="3" fill="#FF1493"/>
+  <ellipse cx="88" cy="55" rx="2.5" ry="3" fill="#FF1493"/>
+  <!-- Nail shine -->
+  <ellipse cx="97" cy="38" rx="1" ry="1.5" fill="#fff" opacity="0.6"/>
+  <ellipse cx="101" cy="44" rx="1" ry="1.5" fill="#fff" opacity="0.6"/>
+  
+  <!-- Nail polish bottle near hand -->
+  <rect x="105" y="38" width="14" height="20" rx="3" fill="url(#bottleGrad)"/>
+  <rect x="108" y="30" width="8" height="10" rx="2" fill="#FFB6C1"/>
+  <rect x="107" y="42" width="4" height="8" rx="1" fill="#fff" opacity="0.4"/>
+  
+  <!-- Sparkles -->
+  <text x="108" y="28" font-size="6" fill="#FFD700">✦</text>
+  <text x="28" y="35" font-size="5" fill="#FFD700">✦</text>
+  <text x="78" y="30" font-size="4" fill="#FFB6C1">✦</text>
 </svg>
