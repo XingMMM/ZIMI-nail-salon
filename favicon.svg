@@ -1,17 +1,62 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <!-- Background circle -->
-  <circle cx="32" cy="32" r="30" fill="#F8D7E3"/>
-  <!-- Nail bottle body -->
-  <rect x="24" y="30" width="16" height="24" rx="3" fill="#F2A8C2"/>
-  <!-- Nail bottle cap -->
-  <rect x="27" y="16" width="10" height="16" rx="2" fill="#E893B1"/>
-  <!-- Bottle highlight -->
-  <rect x="26" y="34" width="4" height="8" rx="1" fill="#fff" opacity="0.4"/>
-  <!-- Decorative dots -->
-  <circle cx="20" cy="22" r="3" fill="#FFB6C1"/>
-  <circle cx="44" cy="22" r="3" fill="#FFB6C1"/>
-  <circle cx="18" cy="36" r="2" fill="#FFB6C1"/>
-  <circle cx="46" cy="36" r="2" fill="#FFB6C1"/>
-  <!-- Star decoration -->
-  <text x="32" y="50" font-size="12" text-anchor="middle" fill="#fff">✦</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <!-- Background circle - pink gradient -->
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD1DC"/>
+      <stop offset="100%" style="stop-color:#F2A8C2"/>
+    </linearGradient>
+    <linearGradient id="hairGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B4513"/>
+      <stop offset="100%" style="stop-color:#5D2E0C"/>
+    </linearGradient>
+  </defs>
+  <circle cx="64" cy="64" r="60" fill="url(#bgGrad)" stroke="#E893B1" stroke-width="3"/>
+  
+  <!-- Hair back -->
+  <ellipse cx="64" cy="52" rx="38" ry="35" fill="url(#hairGrad)"/>
+  
+  <!-- Face -->
+  <ellipse cx="64" cy="58" rx="28" ry="30" fill="#FFE4C4"/>
+  
+  <!-- Bangs -->
+  <path d="M36 45 Q50 35 64 38 Q78 35 92 45 Q85 50 80 48 Q72 42 64 44 Q56 42 48 48 Q43 50 36 45" fill="url(#hairGrad)"/>
+  
+  <!-- Hair sides -->
+  <ellipse cx="38" cy="62" rx="8" ry="22" fill="url(#hairGrad)"/>
+  <ellipse cx="90" cy="62" rx="8" ry="22" fill="url(#hairGrad)"/>
+  
+  <!-- Eyes -->
+  <ellipse cx="52" cy="58" rx="6" ry="7" fill="#fff"/>
+  <ellipse cx="76" cy="58" rx="6" ry="7" fill="#fff"/>
+  <circle cx="53" cy="59" r="4" fill="#4A3728"/>
+  <circle cx="77" cy="59" r="4" fill="#4A3728"/>
+  <circle cx="54" cy="57" r="1.5" fill="#fff"/>
+  <circle cx="78" cy="57" r="1.5" fill="#fff"/>
+  
+  <!-- Eyebrows -->
+  <path d="M46 50 Q52 47 58 50" stroke="#8B4513" stroke-width="2" fill="none"/>
+  <path d="M70 50 Q76 47 82 50" stroke="#8B4513" stroke-width="2" fill="none"/>
+  
+  <!-- Blush -->
+  <ellipse cx="44" cy="68" rx="7" ry="4" fill="#FFB6C1" opacity="0.6"/>
+  <ellipse cx="84" cy="68" rx="7" ry="4" fill="#FFB6C1" opacity="0.6"/>
+  
+  <!-- Nose -->
+  <path d="M64 62 L63 67 L65 67" stroke="#DEB887" stroke-width="1.5" fill="none"/>
+  
+  <!-- Smile -->
+  <path d="M56 74 Q64 82 72 74" stroke="#E893B1" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  
+  <!-- Earrings -->
+  <circle cx="36" cy="66" r="4" fill="#FFD700"/>
+  <circle cx="92" cy="66" r="4" fill="#FFD700"/>
+  
+  <!-- Bow on head -->
+  <path d="M58 32 Q50 26 52 32 Q50 38 58 34 Z" fill="#FF69B4"/>
+  <path d="M70 32 Q78 26 76 32 Q78 38 70 34 Z" fill="#FF69B4"/>
+  <circle cx="64" cy="33" r="4" fill="#FF1493"/>
+  
+  <!-- Bottom text banner -->
+  <rect x="8" y="95" width="112" height="26" rx="8" fill="#E893B1"/>
+  <text x="64" y="113" font-size="16" font-weight="bold" font-family="Arial, sans-serif" fill="#fff" text-anchor="middle">收银</text>
 </svg>
