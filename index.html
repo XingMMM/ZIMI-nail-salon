@@ -1963,7 +1963,7 @@ newConfirmBtn.addEventListener('click', async function() {
                 updateTotalAmount();
             });
             
-            confirmOrderBtn.addEventListener('click', () => {
+            confirmOrderBtn.addEventListener('click', async () => {
                 if (selectedServices.length === 0 && customAmountValue === 0) {
                     alert('请至少选择一项服务或输入自定义金额');
                     return;
