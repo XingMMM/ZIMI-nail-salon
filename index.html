@@ -2284,6 +2284,10 @@
         // ==================== 模态框初始�?====================
         function initializeModals() {
             // 快速开�?            initQuickOrderModal();
+            // 收款按钮
+            initCollectMoneyBtn();
+            // 会员管理按钮
+            initMemberManageBtn();
             // 收款
             initCollectMoneyModal();
             // 会员充�?            initMemberRechargeModal();
@@ -2428,6 +2432,37 @@
             document.getElementById('quickOrderModal').style.display = 'none';
             document.getElementById('amountToCollect').textContent = `¥${totalAmount}`;
             document.getElementById('collectMoneyModal').style.display = 'flex';
+        }
+        
+        // 收款按钮绑定
+        function initCollectMoneyBtn() {
+            const btn = document.getElementById('collectMoneyBtn');
+            if (btn) {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (totalAmount === 0) {
+                        showNotification('请先创建订单', 'warning');
+                        return;
+                    }
+                    document.getElementById('amountToCollect').textContent = '¥' + totalAmount;
+                    document.getElementById('collectMoneyModal').style.display = 'flex';
+                });
+            }
+        }
+        
+        // 会员管理按钮绑定
+        function initMemberManageBtn() {
+            const btn = document.getElementById('memberManageBtn');
+            if (btn) {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    document.querySelector('.container').style.display = 'none';
+                    document.getElementById('membersPage').classList.add('active');
+                    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+                    document.querySelector('.nav-item[data-tab="members"]').classList.add('active');
+                    loadMembersPage();
+                });
+            }
         }
         
         // 收款模态框
@@ -3154,3 +3189,4 @@
     </script>
 </body>
 </html>
+
