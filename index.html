@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -8,21 +8,10 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="ZIMI">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=17">
-    <link rel="apple-touch-icon" sizes="167x167" href="apple-touch-icon.png?v=17">
-    <link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon.png?v=17">
-    <link rel="apple-touch-icon" sizes="144x144" href="apple-touch-icon.png?v=17">
-    <link rel="apple-touch-icon" sizes="120x120" href="apple-touch-icon.png?v=17">
-    <link rel="apple-touch-icon" sizes="114x114" href="apple-touch-icon.png?v=17">
-    <link rel="apple-touch-icon" sizes="76x76" href="apple-touch-icon.png?v=17">
-    <link rel="apple-touch-icon" sizes="72x72" href="apple-touch-icon.png?v=17">
-    <link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon.png?v=17">
     <link rel="shortcut icon" type="image/png" href="favicon.svg?v=17">
     <link rel="icon" type="image/svg+xml" href="favicon.svg?v=17">
-    <meta name="msapplication-TileImage" content="favicon.svg?v=17">
-    <meta name="msapplication-TileColor" content="#F2A8C2">
     <meta name="theme-color" content="#F2A8C2">
     <meta property="og:title" content="ZIMI美甲美睫">
-    <meta property="og:image" content="apple-touch-icon.png?v=17">
     <meta property="og:type" content="website">
     <style>
         * {
@@ -40,6 +29,8 @@
             --text-light: #888888;
             --border-color: #E8D1DA;
             --shadow: 0 4px 12px rgba(242, 168, 194, 0.1);
+            --gold: #FFD700;
+            --gold-light: #FFF8DC;
         }
         
         body {
@@ -114,15 +105,15 @@
         .function-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 40px;
+            gap: 15px;
+            margin-bottom: 30px;
         }
         
         .function-btn {
             background-color: var(--light-pink);
             border: 2px solid var(--primary-pink);
             border-radius: 16px;
-            padding: 25px 15px;
+            padding: 20px 15px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -135,65 +126,75 @@
         }
         
         .function-btn:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px);
             box-shadow: var(--shadow);
             background-color: white;
             border-color: var(--accent-pink);
         }
         
         .function-btn i {
-            font-size: 32px;
+            font-size: 28px;
             color: var(--accent-pink);
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
         
         .function-btn .btn-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 500;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
         }
         
         .function-btn .btn-desc {
-            font-size: 14px;
+            font-size: 12px;
             color: var(--text-light);
         }
         
-        /* 今日数据概览 */
+        /* 会员按钮特殊样式 */
+        .function-btn.member-btn {
+            background: linear-gradient(135deg, var(--gold-light) 0%, #FFF 100%);
+            border-color: var(--gold);
+        }
+        
+        .function-btn.member-btn i {
+            color: #DAA520;
+        }
+        
+        /* 数据概览 */
         .stats-section {
             background-color: var(--light-pink);
             border-radius: 16px;
-            padding: 25px;
-            margin-bottom: 40px;
+            padding: 20px;
+            margin-bottom: 25px;
             box-shadow: var(--shadow);
         }
         
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
+            gap: 12px;
             text-align: center;
         }
         
         .stat-item {
-            padding: 15px 5px;
+            padding: 12px 5px;
         }
         
         .stat-value {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 600;
             color: var(--accent-pink);
             margin-bottom: 5px;
         }
         
         .stat-label {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text-light);
         }
         
-        /* 数据统计周期信息 */
+        /* 数据周期信息 */
         .period-info {
-            margin-top: 20px;
-            padding-top: 20px;
+            margin-top: 15px;
+            padding-top: 15px;
             border-top: 1px dashed var(--border-color);
             display: flex;
             justify-content: space-between;
@@ -201,88 +202,122 @@
         }
         
         .period-label {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text-light);
         }
         
         .period-value {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
             color: var(--accent-pink);
         }
         
-        /* 最近订单 */
-        .recent-orders {
-            margin-bottom: 30px;
+        /* 清零管理区域 */
+        .clear-management {
+            background-color: var(--light-pink);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 25px;
         }
         
-        .order-item {
+        .clear-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        
+        .clear-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background-color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        
+        .clear-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        .clear-btn.daily {
+            border-color: var(--accent-pink);
+            color: var(--accent-pink);
+        }
+        
+        .clear-btn.monthly {
+            border-color: #6c5ce7;
+            color: #6c5ce7;
+        }
+        
+        /* 数据备份区域 */
+        .backup-section {
+            background-color: var(--light-pink);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .backup-info {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 18px 0;
-            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 15px;
         }
         
-        .order-item:last-child {
-            border-bottom: none;
-        }
-        
-        .order-info .order-id {
-            font-size: 16px;
-            font-weight: 500;
-            margin-bottom: 5px;
-        }
-        
-        .order-info .order-time {
-            font-size: 14px;
-            color: var(--text-light);
-        }
-        
-        .order-amount {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--accent-pink);
-        }
-        
-        /* 底部导航 */
-        footer {
-            background-color: var(--light-pink);
-            border-top: 1px solid var(--border-color);
-            padding: 15px 0;
-            margin-top: auto;
-        }
-        
-        .nav-tabs {
-            display: flex;
-            justify-content: space-around;
-            list-style: none;
-        }
-        
-        .nav-item {
-            text-align: center;
-            cursor: pointer;
-            padding: 10px;
+        /* 页面内容区域 */
+        .page-content {
+            display: none;
             flex: 1;
-            transition: all 0.2s ease;
-            border-radius: 10px;
         }
         
-        .nav-item.active {
-            background-color: white;
-            box-shadow: 0 3px 10px rgba(242, 168, 194, 0.2);
-        }
-        
-        .nav-item i {
-            font-size: 22px;
-            color: var(--accent-pink);
-            margin-bottom: 5px;
-        }
-        
-        .nav-item span {
-            font-size: 13px;
-            color: var(--text-dark);
+        .page-content.active {
             display: block;
+        }
+        
+        /* 页面头部 */
+        .page-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .page-title {
+            font-size: 20px;
+            color: var(--accent-pink);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .back-btn {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 18px;
+            color: var(--accent-pink);
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .back-btn:hover {
+            background-color: var(--light-pink);
         }
         
         /* 模态框样式 */
@@ -304,7 +339,7 @@
             border-radius: 20px;
             width: 90%;
             max-width: 450px;
-            padding: 30px;
+            padding: 25px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             max-height: 90vh;
             overflow-y: auto;
@@ -314,11 +349,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
         
         .modal-title {
-            font-size: 22px;
+            font-size: 20px;
             color: var(--accent-pink);
             font-weight: 500;
         }
@@ -343,44 +378,17 @@
             color: var(--accent-pink);
         }
         
-        /* 返回按钮样式 */
-        .back-btn {
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            font-size: 20px;
-            color: var(--accent-pink);
-            cursor: pointer;
-            padding: 8px 12px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .back-btn:hover {
-            background-color: var(--light-pink);
-        }
-        
-        .back-btn i {
-            margin: 0;
-        }
-        
         .service-list {
-            max-height: 300px;
+            max-height: 280px;
             overflow-y: auto;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
         
         .service-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px;
+            padding: 12px;
             border-bottom: 1px solid var(--border-color);
             cursor: pointer;
             transition: background-color 0.2s;
@@ -390,12 +398,17 @@
             background-color: var(--light-pink);
         }
         
+        .service-item.selected {
+            background-color: var(--light-pink);
+            border-radius: 10px;
+        }
+        
         .service-name {
-            font-size: 16px;
+            font-size: 14px;
         }
         
         .service-price {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
             color: var(--accent-pink);
         }
@@ -404,28 +417,28 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-top: 20px;
+            padding-top: 15px;
             border-top: 2px solid var(--border-color);
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 600;
         }
         
         .action-buttons {
             display: flex;
             justify-content: space-between;
-            margin-top: 30px;
+            margin-top: 20px;
+            gap: 10px;
         }
         
         .btn {
-            padding: 15px 25px;
+            padding: 12px 20px;
             border-radius: 12px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
             border: none;
             flex: 1;
-            margin: 0 5px;
         }
         
         .btn-primary {
@@ -455,135 +468,73 @@
         
         .btn-danger:hover {
             background-color: #ff5252;
+        }
+        
+        .btn-gold {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: white;
+        }
+        
+        .btn-gold:hover {
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
         }
         
-        /* 清零管理区域 */
-        .clear-management {
+        /* 底部导航 */
+        footer {
             background-color: var(--light-pink);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 30px;
+            border-top: 1px solid var(--border-color);
+            padding: 12px 0;
+            margin-top: auto;
         }
         
-        .clear-buttons {
+        .nav-tabs {
             display: flex;
-            gap: 15px;
-            margin-top: 15px;
+            justify-content: space-around;
+            list-style: none;
         }
         
-        .clear-btn {
-            flex: 1;
-            padding: 12px;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            background-color: white;
+        .nav-item {
+            text-align: center;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 14px;
-            font-weight: 500;
-        }
-        
-        .clear-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
-        
-        .clear-btn.daily {
-            border-color: var(--accent-pink);
-            color: var(--accent-pink);
-        }
-        
-        .clear-btn.monthly {
-            border-color: #6c5ce7;
-            color: #6c5ce7;
-        }
-        
-        /* 数据备份区域 */
-        .backup-section {
-            background-color: var(--light-pink);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .backup-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        /* 响应式调整 */
-        @media (max-width: 480px) {
-            .container {
-                padding: 15px;
-            }
-            
-            .function-grid {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr;
-                gap: 10px;
-            }
-            
-            .clear-buttons {
-                flex-direction: column;
-            }
-        }
-    
-        /* 页面内容区域 */
-        .page-content {
-            display: none;
+            padding: 8px;
             flex: 1;
+            transition: all 0.2s ease;
+            border-radius: 10px;
         }
         
-        .page-content.active {
-            display: block;
+        .nav-item.active {
+            background-color: white;
+            box-shadow: 0 3px 10px rgba(242, 168, 194, 0.2);
         }
         
-        /* 页面头部（带返回键） */
-        .page-header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px 0;
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 25px;
-            position: relative;
-        }
-        
-        .page-title {
+        .nav-item i {
             font-size: 20px;
             color: var(--accent-pink);
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            margin-bottom: 3px;
         }
         
-        .page-title i {
-            margin: 0;
+        .nav-item span {
+            font-size: 12px;
+            color: var(--text-dark);
+            display: block;
         }
         
         /* 订单页面样式 */
         .orders-filter {
             display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 8px;
+            margin-bottom: 15px;
             flex-wrap: wrap;
         }
         
         .filter-btn {
-            padding: 8px 16px;
+            padding: 6px 14px;
             border: 1px solid var(--border-color);
             background: white;
             border-radius: 20px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
             transition: all 0.3s;
         }
         
@@ -594,44 +545,44 @@
         }
         
         .orders-list-full {
-            max-height: 500px;
+            max-height: 450px;
             overflow-y: auto;
         }
         
         .order-date-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         
         .order-date-header {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text-light);
-            padding: 10px 0;
+            padding: 8px 0;
             border-bottom: 1px solid var(--border-color);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         
         .order-item-full {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px;
+            padding: 12px;
             background: var(--light-pink);
-            border-radius: 12px;
-            margin-bottom: 10px;
+            border-radius: 10px;
+            margin-bottom: 8px;
         }
         
         .order-item-info h4 {
-            font-size: 15px;
-            margin-bottom: 5px;
+            font-size: 14px;
+            margin-bottom: 3px;
         }
         
         .order-item-info p {
-            font-size: 13px;
+            font-size: 12px;
             color: var(--text-light);
         }
         
         .order-item-amount {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
             color: var(--accent-pink);
         }
@@ -639,19 +590,19 @@
         /* 报表页面样式 */
         .report-tabs {
             display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 8px;
+            margin-bottom: 15px;
         }
         
         .report-tab {
             flex: 1;
-            padding: 12px;
+            padding: 10px;
             text-align: center;
             background: white;
             border: 1px solid var(--border-color);
             border-radius: 10px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
         }
         
         .report-tab.active {
@@ -671,20 +622,20 @@
         .report-card {
             background: var(--light-pink);
             border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 20px;
+            padding: 18px;
+            margin-bottom: 15px;
         }
         
         .report-card h3 {
-            font-size: 16px;
-            margin-bottom: 15px;
+            font-size: 15px;
+            margin-bottom: 12px;
             color: var(--text-dark);
         }
         
         .report-stat-row {
             display: flex;
             justify-content: space-between;
-            padding: 12px 0;
+            padding: 10px 0;
             border-bottom: 1px dashed var(--border-color);
         }
         
@@ -694,34 +645,36 @@
         
         .report-stat-label {
             color: var(--text-light);
+            font-size: 14px;
         }
         
         .report-stat-value {
             font-weight: 600;
             color: var(--accent-pink);
+            font-size: 14px;
         }
         
         /* 设置页面样式 */
         .settings-section {
             background: var(--light-pink);
             border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 20px;
+            padding: 18px;
+            margin-bottom: 15px;
         }
         
         .settings-section h3 {
-            font-size: 16px;
-            margin-bottom: 15px;
+            font-size: 15px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
         
         .settings-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 0;
+            padding: 12px 0;
             border-bottom: 1px solid var(--border-color);
         }
         
@@ -730,21 +683,21 @@
         }
         
         .settings-label {
-            font-size: 15px;
+            font-size: 14px;
         }
         
         .settings-value {
             color: var(--text-light);
-            font-size: 14px;
+            font-size: 13px;
         }
         
         .settings-btn {
-            padding: 8px 16px;
+            padding: 6px 14px;
             background: white;
             border: 1px solid var(--border-color);
             border-radius: 8px;
             cursor: pointer;
-            font-size: 13px;
+            font-size: 12px;
         }
         
         .settings-btn:hover {
@@ -755,14 +708,260 @@
         
         .empty-state {
             text-align: center;
-            padding: 60px 20px;
+            padding: 40px 20px;
             color: var(--text-light);
         }
         
         .empty-state i {
-            font-size: 48px;
-            margin-bottom: 15px;
+            font-size: 40px;
+            margin-bottom: 12px;
             color: var(--primary-pink);
+        }
+        
+        /* 会员模块样式 */
+        .member-card {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .member-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+        }
+        
+        .member-card-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .member-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .member-phone {
+            font-size: 13px;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+        
+        .member-balance {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .balance-label {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+        
+        .balance-value {
+            font-size: 28px;
+            font-weight: 700;
+        }
+        
+        .member-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .member-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: var(--light-pink);
+            border-radius: 12px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .member-item:hover {
+            transform: translateX(5px);
+            box-shadow: var(--shadow);
+        }
+        
+        .member-info {
+            flex: 1;
+        }
+        
+        .member-info .name {
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 3px;
+        }
+        
+        .member-info .phone {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+        
+        .member-balance-small {
+            text-align: right;
+        }
+        
+        .member-balance-small .label {
+            font-size: 11px;
+            color: var(--text-light);
+        }
+        
+        .member-balance-small .value {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--accent-pink);
+        }
+        
+        .recharge-packages {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .recharge-package {
+            padding: 15px;
+            background: var(--light-pink);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .recharge-package:hover {
+            border-color: var(--accent-pink);
+            transform: translateY(-2px);
+        }
+        
+        .recharge-package.selected {
+            border-color: var(--accent-pink);
+            background: white;
+        }
+        
+        .recharge-package .amount {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--accent-pink);
+        }
+        
+        .recharge-package .bonus {
+            font-size: 12px;
+            color: #FF6B6B;
+            margin-top: 5px;
+        }
+        
+        .recharge-package .desc {
+            font-size: 11px;
+            color: var(--text-light);
+            margin-top: 3px;
+        }
+        
+        .custom-recharge {
+            margin-top: 15px;
+        }
+        
+        .custom-recharge input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 16px;
+            text-align: center;
+        }
+        
+        .custom-recharge input:focus {
+            outline: none;
+            border-color: var(--accent-pink);
+        }
+        
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .search-box input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--accent-pink);
+        }
+        
+        .search-box button {
+            padding: 10px 20px;
+            background: var(--accent-pink);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 14px;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent-pink);
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .function-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
+            
+            .clear-buttons {
+                flex-direction: row;
+            }
+            
+            .recharge-packages {
+                grid-template-columns: 1fr 1fr;
+            }
         }
     </style>
 </head>
@@ -772,99 +971,97 @@
         <header>
             <h1 class="app-title">美甲美睫收银台</h1>
             <div class="shop-name">ZIMI子蜜美甲美睫（城市广场店）</div>
-            <div class="date-time" id="currentDateTime">2026年3月14日 星期四 10:30</div>
+            <div class="date-time" id="currentDateTime">2026年4月1日 星期三 18:00</div>
         </header>
         
         <!-- 主要功能区 -->
         <main class="functions-section">
-            <h2 class="section-title"><i class="fas fa-star"></i> 核心功能</h2>
+            <h2 class="section-title">✨ 核心功能</h2>
             
             <div class="function-grid">
                 <a href="#" class="function-btn" id="quickOrderBtn">
-                    <i class="fas fa-bolt"></i>
+                    <i>⚡</i>
                     <div class="btn-title">快速开单</div>
                     <div class="btn-desc">3步完成新订单</div>
                 </a>
                 
                 <a href="#" class="function-btn" id="collectMoneyBtn">
-                    <i class="fas fa-qrcode"></i>
+                    <i>💳</i>
                     <div class="btn-title">收款</div>
                     <div class="btn-desc">扫码/现金/刷卡</div>
                 </a>
                 
-                <a href="#" class="function-btn" id="viewBillsBtn">
-                    <i class="fas fa-file-invoice-dollar"></i>
-                    <div class="btn-title">账单查询</div>
-                    <div class="btn-desc">历年账单</div>
+                <a href="#" class="function-btn member-btn" id="memberRechargeBtn">
+                    <i>👑</i>
+                    <div class="btn-title">会员充值</div>
+                    <div class="btn-desc">储值管理</div>
                 </a>
                 
-                <a href="#" class="function-btn" id="customerManageBtn">
-                    <i class="fas fa-users"></i>
-                    <div class="btn-title">客户管理</div>
-                    <div class="btn-desc">会员与记录</div>
+                <a href="#" class="function-btn" id="memberManageBtn">
+                    <i>👥</i>
+                    <div class="btn-title">会员管理</div>
+                    <div class="btn-desc">查询与编辑</div>
                 </a>
+            </div>
+            
+            <!-- 今日数据概览 -->
+            <div class="stats-section">
+                <h2 class="section-title">📊 今日数据</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="todayOrders">0</div>
+                        <div class="stat-label">订单数</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="todayIncome">¥0</div>
+                        <div class="stat-label">收入</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="todayRecharge">¥0</div>
+                        <div class="stat-label">充值</div>
+                    </div>
+                </div>
             </div>
             
             <!-- 数据清零管理 -->
             <div class="clear-management">
-                <h2 class="section-title"><i class="fas fa-redo"></i> 数据周期管理</h2>
+                <h2 class="section-title">🔄 数据周期管理</h2>
                 
                 <div class="period-info">
                     <div>
                         <div class="period-label">当前统计日期</div>
-                        <div class="period-value" id="currentStatDate">2026年3月14日</div>
+                        <div class="period-value" id="currentStatDate">2026年4月1日</div>
                     </div>
                     <div>
                         <div class="period-label">当前统计月份</div>
-                        <div class="period-value" id="currentStatMonth">2026年3月</div>
+                        <div class="period-value" id="currentStatMonth">2026年4月</div>
                     </div>
                 </div>
                 
                 <div class="clear-buttons">
-                    <button class="clear-btn daily" id="dailyClearBtn">
-                        <i class="fas fa-sun"></i> 重置当日数据
-                    </button>
-                    <button class="clear-btn monthly" id="monthlyClearBtn">
-                        <i class="fas fa-calendar-alt"></i> 重置当月数据
-                    </button>
-                </div>
-                
-                <div class="period-info" style="margin-top: 15px;">
-                    <div>
-                        <div class="period-label">今日开始时间</div>
-                        <div class="period-value" id="dayStartTime">00:00:00</div>
-                    </div>
-                    <div>
-                        <div class="period-label">本月开始时间</div>
-                        <div class="period-value" id="monthStartTime">3月1日 00:00</div>
-                    </div>
+                    <button class="clear-btn daily" id="dailyClearBtn">☀️ 重置当日数据</button>
+                    <button class="clear-btn monthly" id="monthlyClearBtn">📅 重置当月数据</button>
                 </div>
             </div>
             
             <!-- 数据备份区域 -->
             <div class="backup-section">
-                <h2 class="section-title"><i class="fas fa-database"></i> 数据管理</h2>
+                <h2 class="section-title">💾 数据管理</h2>
                 
                 <div class="backup-info">
                     <div>
                         <div class="period-label">上次云端备份</div>
                         <div class="period-value" id="lastBackupTime">未备份</div>
-                        <div style="font-size: 12px; margin-top: 4px;" id="backupStatus">本地数据未同步到云端</div>
+                        <div style="font-size: 12px; margin-top: 4px;" id="backupStatus">⚠️ 本地数据未同步到云端</div>
                     </div>
-                    <button class="btn btn-secondary" id="manualBackupBtn" style="padding: 8px 15px; font-size: 14px;">
-                        <i class="fas fa-cloud-upload-alt"></i> 备份到云端
-                    </button>
-                </div>
-                
-                <div style="margin-top: 12px;">
-                    <button class="btn btn-secondary" id="restoreCloudBtn" style="width: 100%; padding: 10px; font-size: 14px; border-color: #6c5ce7; color: #6c5ce7;">
-                        <i class="fas fa-cloud-download-alt"></i> 从云端恢复数据
+                    <button class="btn btn-secondary" id="manualBackupBtn" style="padding: 8px 15px; font-size: 13px;">
+                        ☁️ 备份
                     </button>
                 </div>
                 
                 <div style="margin-top: 10px;">
-                    <button class="btn btn-danger" id="clearAllDataBtn" style="width: 100%; padding: 10px; font-size: 14px;">
-                        <i class="fas fa-trash-alt"></i> 清空所有历史数据
+                    <button class="btn btn-danger" id="clearAllDataBtn" style="width: 100%; padding: 10px; font-size: 13px;">
+                        🗑️ 清空所有历史数据
                     </button>
                 </div>
             </div>
@@ -874,19 +1071,23 @@
         <footer>
             <ul class="nav-tabs">
                 <li class="nav-item active" data-tab="home">
-                    <i class="fas fa-home"></i>
+                    <i>🏠</i>
                     <span>首页</span>
                 </li>
                 <li class="nav-item" data-tab="orders">
-                    <i class="fas fa-clipboard-list"></i>
+                    <i>📋</i>
                     <span>订单</span>
                 </li>
+                <li class="nav-item" data-tab="members">
+                    <i>👑</i>
+                    <span>会员</span>
+                </li>
                 <li class="nav-item" data-tab="reports">
-                    <i class="fas fa-chart-pie"></i>
+                    <i>📊</i>
                     <span>报表</span>
                 </li>
                 <li class="nav-item" data-tab="settings">
-                    <i class="fas fa-cog"></i>
+                    <i>⚙️</i>
                     <span>设置</span>
                 </li>
             </ul>
@@ -896,10 +1097,8 @@
     <!-- 订单页面 -->
     <div class="page-content" id="ordersPage">
         <div class="page-header">
-            <button class="back-btn" onclick="goBackToHome()">
-                <i class="fas fa-arrow-left"></i> 返回
-            </button>
-            <h2 class="page-title"><i class="fas fa-clipboard-list"></i> 订单列表</h2>
+            <button class="back-btn" onclick="goBackToHome()">← 返回</button>
+            <h2 class="page-title">📋 订单列表</h2>
         </div>
         <div style="padding: 0 20px 20px;">
             <div class="orders-filter">
@@ -908,20 +1107,33 @@
                 <button class="filter-btn" data-filter="week">本周</button>
                 <button class="filter-btn" data-filter="month">本月</button>
             </div>
-            
-            <div class="orders-list-full" id="ordersListFull">
-                <!-- 订单列表将通过JS动态生成-->
+            <div class="orders-list-full" id="ordersListFull"></div>
+        </div>
+    </div>
+    
+    <!-- 会员页面 -->
+    <div class="page-content" id="membersPage">
+        <div class="page-header">
+            <button class="back-btn" onclick="goBackToHome()">← 返回</button>
+            <h2 class="page-title">👑 会员管理</h2>
+        </div>
+        <div style="padding: 0 20px 20px;">
+            <div class="search-box">
+                <input type="text" id="memberSearchInput" placeholder="搜索会员姓名或手机号">
+                <button id="searchMemberBtn">搜索</button>
             </div>
+            <button class="btn btn-gold" style="width: 100%; margin-bottom: 15px;" id="addMemberBtn">
+                ➕ 新增会员
+            </button>
+            <div class="member-list" id="memberList"></div>
         </div>
     </div>
     
     <!-- 报表页面 -->
     <div class="page-content" id="reportsPage">
         <div class="page-header">
-            <button class="back-btn" onclick="goBackToHome()">
-                <i class="fas fa-arrow-left"></i> 返回
-            </button>
-            <h2 class="page-title"><i class="fas fa-chart-pie"></i> 数据报表</h2>
+            <button class="back-btn" onclick="goBackToHome()">← 返回</button>
+            <h2 class="page-title">📊 数据报表</h2>
         </div>
         <div style="padding: 0 20px 20px;">
             <div class="report-tabs">
@@ -934,7 +1146,7 @@
             <!-- 日报 -->
             <div class="report-content active" id="dayReport">
                 <div class="report-card">
-                    <h3><i class="fas fa-calendar-day"></i> 今日数据</h3>
+                    <h3>📅 今日数据</h3>
                     <div class="report-stat-row">
                         <span class="report-stat-label">订单数量</span>
                         <span class="report-stat-value" id="reportTodayOrders">0</span>
@@ -942,6 +1154,10 @@
                     <div class="report-stat-row">
                         <span class="report-stat-label">营业收入</span>
                         <span class="report-stat-value">¥<span id="reportTodayIncome">0</span></span>
+                    </div>
+                    <div class="report-stat-row">
+                        <span class="report-stat-label">会员充值</span>
+                        <span class="report-stat-value">¥<span id="reportTodayRecharge">0</span></span>
                     </div>
                     <div class="report-stat-row">
                         <span class="report-stat-label">服务客户</span>
@@ -957,7 +1173,7 @@
             <!-- 周报 -->
             <div class="report-content" id="weekReport">
                 <div class="report-card">
-                    <h3><i class="fas fa-calendar-week"></i> 本周数据</h3>
+                    <h3>📆 本周数据</h3>
                     <div class="report-stat-row">
                         <span class="report-stat-label">订单数量</span>
                         <span class="report-stat-value" id="reportWeekOrders">0</span>
@@ -967,8 +1183,8 @@
                         <span class="report-stat-value">¥<span id="reportWeekIncome">0</span></span>
                     </div>
                     <div class="report-stat-row">
-                        <span class="report-stat-label">服务客户</span>
-                        <span class="report-stat-value" id="reportWeekCustomers">0</span>
+                        <span class="report-stat-label">会员充值</span>
+                        <span class="report-stat-value">¥<span id="reportWeekRecharge">0</span></span>
                     </div>
                     <div class="report-stat-row">
                         <span class="report-stat-label">日均收入</span>
@@ -980,7 +1196,7 @@
             <!-- 月报 -->
             <div class="report-content" id="monthReport">
                 <div class="report-card">
-                    <h3><i class="fas fa-calendar-alt"></i> 本月数据</h3>
+                    <h3>🗓️ 本月数据</h3>
                     <div class="report-stat-row">
                         <span class="report-stat-label">订单数量</span>
                         <span class="report-stat-value" id="reportMonthOrders">0</span>
@@ -990,16 +1206,12 @@
                         <span class="report-stat-value">¥<span id="reportMonthIncome">0</span></span>
                     </div>
                     <div class="report-stat-row">
-                        <span class="report-stat-label">服务客户</span>
-                        <span class="report-stat-value" id="reportMonthCustomers">0</span>
+                        <span class="report-stat-label">会员充值</span>
+                        <span class="report-stat-value">¥<span id="reportMonthRecharge">0</span></span>
                     </div>
                     <div class="report-stat-row">
                         <span class="report-stat-label">日均收入</span>
                         <span class="report-stat-value">¥<span id="reportMonthAvg">0</span></span>
-                    </div>
-                    <div class="report-stat-row">
-                        <span class="report-stat-label">项目畅销榜</span>
-                        <span class="report-stat-value" id="reportTopService">暂无数据</span>
                     </div>
                 </div>
             </div>
@@ -1007,7 +1219,7 @@
             <!-- 年报 -->
             <div class="report-content" id="yearReport">
                 <div class="report-card">
-                    <h3><i class="fas fa-calendar"></i> 本年数据</h3>
+                    <h3>📊 本年数据</h3>
                     <div class="report-stat-row">
                         <span class="report-stat-label">订单数量</span>
                         <span class="report-stat-value" id="reportYearOrders">0</span>
@@ -1017,8 +1229,8 @@
                         <span class="report-stat-value">¥<span id="reportYearIncome">0</span></span>
                     </div>
                     <div class="report-stat-row">
-                        <span class="report-stat-label">服务客户</span>
-                        <span class="report-stat-value" id="reportYearCustomers">0</span>
+                        <span class="report-stat-label">会员充值</span>
+                        <span class="report-stat-value">¥<span id="reportYearRecharge">0</span></span>
                     </div>
                     <div class="report-stat-row">
                         <span class="report-stat-label">月均收入</span>
@@ -1027,9 +1239,9 @@
                 </div>
             </div>
             
-            <div style="margin-top: 20px;">
+            <div style="margin-top: 15px;">
                 <button class="btn btn-secondary" style="width: 100%;" id="exportDataBtn">
-                    <i class="fas fa-download"></i> 导出数据
+                    📥 导出数据
                 </button>
             </div>
         </div>
@@ -1038,32 +1250,24 @@
     <!-- 设置页面 -->
     <div class="page-content" id="settingsPage">
         <div class="page-header">
-            <button class="back-btn" onclick="goBackToHome()">
-                <i class="fas fa-arrow-left"></i> 返回
-            </button>
-            <h2 class="page-title"><i class="fas fa-cog"></i> 系统设置</h2>
+            <button class="back-btn" onclick="goBackToHome()">← 返回</button>
+            <h2 class="page-title">⚙️ 系统设置</h2>
         </div>
         <div style="padding: 0 20px 20px;">
-            <!-- 店铺信息 -->
             <div class="settings-section">
-                <h3><i class="fas fa-store"></i> 店铺信息</h3>
+                <h3>🏪 店铺信息</h3>
                 <div class="settings-item">
                     <span class="settings-label">店铺名称</span>
-                    <span class="settings-value" id="shopNameDisplay">ZIMI子蜜美甲美睫（城市广场店）</span>
-                </div>
-                <div class="settings-item">
-                    <span class="settings-label">数据统计日</span>
-                    <span class="settings-value" id="statDateDisplay">每日00:00重置</span>
+                    <span class="settings-value">ZIMI子蜜美甲美睫（城市广场店）</span>
                 </div>
                 <div class="settings-item">
                     <span class="settings-label">系统版本</span>
-                    <span class="settings-value">v1.0.0</span>
+                    <span class="settings-value">v1.1.0</span>
                 </div>
             </div>
             
-            <!-- 数据管理 -->
             <div class="settings-section">
-                <h3><i class="fas fa-database"></i> 数据管理</h3>
+                <h3>📊 数据管理</h3>
                 <div class="settings-item">
                     <span class="settings-label">今日订单</span>
                     <span class="settings-value" id="settingsTodayOrders">0</span>
@@ -1073,59 +1277,31 @@
                     <span class="settings-value">¥<span id="settingsTodayIncome">0</span></span>
                 </div>
                 <div class="settings-item">
+                    <span class="settings-label">会员总数</span>
+                    <span class="settings-value" id="settingsTotalMembers">0</span>
+                </div>
+                <div class="settings-item">
                     <span class="settings-label">历史总订单</span>
                     <span class="settings-value" id="settingsTotalOrders">0</span>
-                </div>
-                <div class="settings-item">
-                    <span class="settings-label">上次备份</span>
-                    <span class="settings-value" id="settingsLastBackup">未备份</span>
-                </div>
-                <div class="settings-item">
-                    <span class="settings-label">手动备份</span>
-                    <button class="settings-btn" id="settingsBackupBtn">立即备份</button>
-                </div>
-            </div>
-            
-            <!-- 服务项目 -->
-            <div class="settings-section">
-                <h3><i class="fas fa-cut"></i> 服务项目 (<span id="serviceCount">18</span>项)</h3>
-                <div class="settings-item">
-                    <span class="settings-label">快速开单项目</span>
-                    <button class="settings-btn" onclick="alert('请在首页点击"快速开单"查看和编辑服务项目')">管理项目</button>
                 </div>
             </div>
             
             <!-- 云端备份配置 -->
             <div class="settings-section">
-                <h3><i class="fas fa-key"></i> 云端备份配置</h3>
+                <h3>🔑 云端备份配置</h3>
                 <div class="settings-item" style="flex-direction: column; align-items: flex-start; gap: 10px;">
                     <span class="settings-label">JSONBin API Key</span>
                     <div style="display: flex; width: 100%; gap: 8px;">
                         <input type="password" id="apiKeyInput" placeholder="输入你的 JSONBin Master Key"
-                            style="flex: 1; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 13px;"
-                            value="">
+                            style="flex: 1; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 13px;">
                         <button class="settings-btn" onclick="saveApiKey()">保存</button>
                     </div>
-                    <span style="font-size: 12px; color: var(--text-light);">Key 仅保存在本设备，不会上传</span>
-                </div>
-            </div>
-
-            <!-- 关于 -->
-            <div class="settings-section">
-                <h3><i class="fas fa-info-circle"></i> 关于</h3>
-                <div class="settings-item">
-                    <span class="settings-label">系统名称</span>
-                    <span class="settings-value">美甲美睫收银台</span>
-                </div>
-                <div class="settings-item">
-                    <span class="settings-label">技术支持</span>
-                    <span class="settings-value">Charlie饼干</span>
                 </div>
             </div>
             
-            <div style="margin-top: 30px; text-align: center; color: var(--text-light); font-size: 12px;">
+            <div style="margin-top: 20px; text-align: center; color: var(--text-light); font-size: 12px;">
                 <p>ZIMI子蜜美甲美睫（城市广场店）</p>
-                <p>Copyright © 2026</p>
+                <p>Copyright © 2026 · 技术支持: Charlie饼干</p>
             </div>
         </div>
     </div>
@@ -1134,118 +1310,11 @@
     <div class="modal" id="quickOrderModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">快速开单</h3>
+                <h3 class="modal-title">⚡ 快速开单</h3>
                 <button class="close-btn" id="closeOrderModal">&times;</button>
             </div>
             
-            <div class="service-list">
-                <div class="service-item" data-price="189">
-                    <span class="service-name">款式本甲|卸甲|【美甲款式】任意款小红薯推荐</span>
-                    <span class="service-price">¥189</span>
-                </div>
-                
-                <div class="service-item" data-price="101">
-                    <span class="service-name">【纯色美甲】手部纯色+加固微建构</span>
-                    <span class="service-price">¥101</span>
-                </div>
-                
-                <div class="service-item" data-price="159">
-                    <span class="service-name">【闪耀上新】瓷白猫眼美甲</span>
-                    <span class="service-price">¥159</span>
-                </div>
-                
-                <div class="service-item" data-price="159">
-                    <span class="service-name">美甲建构+冰透色/极光海莉同款二选一</span>
-                    <span class="service-price">¥159</span>
-                </div>
-                
-                <div class="service-item" data-price="159">
-                    <span class="service-name">《畅销》网红爆款美睫任意款式设计</span>
-                    <span class="service-price">¥159</span>
-                </div>
-                
-                <div class="service-item" data-price="189">
-                    <span class="service-name">【自然款】纯欲仿真婴儿弯妈生设计款</span>
-                    <span class="service-price">¥189</span>
-                </div>
-                
-                <div class="service-item" data-price="279">
-                    <span class="service-name">【网红美甲款】小红薯随心款式+甲片</span>
-                    <span class="service-price">¥279</span>
-                </div>
-                
-                <div class="service-item" data-price="149">
-                    <span class="service-name">【美甲款式】热门美甲简约风</span>
-                    <span class="service-price">¥149</span>
-                </div>
-                
-                <div class="service-item" data-price="279">
-                    <span class="service-name">【美睫嫁接】美睫任意款式+下睫毛套餐</span>
-                    <span class="service-price">¥279</span>
-                </div>
-                
-                <div class="service-item" data-price="219">
-                    <span class="service-name">【款式任选】纯欲小精灵漫画款美睫</span>
-                    <span class="service-price">¥219</span>
-                </div>
-                
-                <div class="service-item" data-price="121">
-                    <span class="service-name">【自然款】灵动随心淡妆、裸妆感美睫</span>
-                    <span class="service-price">¥121</span>
-                </div>
-                
-                <div class="service-item" data-price="291">
-                    <span class="service-name">2次卡|【美甲款式】热门美甲简约风</span>
-                    <span class="service-price">¥291</span>
-                </div>
-                
-                <div class="service-item" data-price="159">
-                    <span class="service-name">【闪耀碎钻】脚部纯色美甲</span>
-                    <span class="service-price">¥159</span>
-                </div>
-                
-                <div class="service-item" data-price="179">
-                    <span class="service-name">【自然款】自然微密空气睫毛-健康嫁接</span>
-                    <span class="service-price">¥179</span>
-                </div>
-                
-                <div class="service-item" data-price="54.9">
-                    <span class="service-name">【爆款】自然下睫毛</span>
-                    <span class="service-price">¥54.9</span>
-                </div>
-                
-                <div class="service-item" data-price="498">
-                    <span class="service-name">3次【自然款】自然微密空气睫毛卡</span>
-                    <span class="service-price">¥498</span>
-                </div>
-                
-                <div class="service-item" data-price="179">
-                    <span class="service-name">【闪耀】瓷白猫眼脚部美甲</span>
-                    <span class="service-price">¥179</span>
-                </div>
-                
-                <div class="service-item" data-price="424">
-                    <span class="service-name">2次卡【款式任选】纯欲小精灵漫画款美睫</span>
-                    <span class="service-price">¥424</span>
-                </div>
-                
-                <!-- 自定义金额选项 -->
-                <div class="service-item" id="customAmountItem">
-                    <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
-                        <div style="display: flex; align-items: center;">
-                            <i class="fas fa-edit" style="margin-right: 10px; color: var(--accent-pink);"></i>
-                            <span class="service-name">自定义金额</span>
-                        </div>
-                        <div style="display: flex; align-items: center;">
-                            <input type="number" id="customAmountInput" placeholder="输入金额" 
-                            style="width: 100px; padding: 5px 10px; border: 1px solid var(--border-color); 
-                            border-radius: 6px; text-align: right; margin-right: 10px;"
-                            min="0" step="1">
-                            <span class="service-price" id="customAmountDisplay">¥0</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div class="service-list" id="serviceList"></div>
             
             <div class="total-section">
                 <span>总计：</span>
@@ -1253,48 +1322,185 @@
             </div>
             
             <div class="action-buttons">
-                <button class="btn btn-secondary" id="clearSelection">清空选择</button>
+                <button class="btn btn-secondary" id="clearSelection">清空</button>
                 <button class="btn btn-primary" id="confirmOrder">确认开单</button>
             </div>
         </div>
     </div>
     
-    <!-- 收款模态框 -->
+    <!--<!-- 收款模态框 -->
     <div class="modal" id="collectMoneyModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">收款</h3>
+                <h3 class="modal-title">💳 收款</h3>
                 <button class="close-btn" id="closeCollectModal">&times;</button>
             </div>
             
-            <div style="text-align: center; padding: 40px 20px;">
-                <div style="font-size: 20px; margin-bottom: 20px; color: var(--text-light);">应收金额</div>
-                <div style="font-size: 48px; font-weight: 700; color: var(--accent-pink); margin-bottom: 40px;" id="amountToCollect">¥0</div>
+            <div style="text-align: center; padding: 30px 15px;">
+                <div style="font-size: 18px; margin-bottom: 15px; color: var(--text-light);">应收金额</div>
+                <div style="font-size: 42px; font-weight: 700; color: var(--accent-pink); margin-bottom: 30px;" id="amountToCollect">¥0</div>
                 
-                <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 40px;">
-                    <div style="text-align: center;">
-                        <div style="width: 80px; height: 80px; background-color: var(--light-pink); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; cursor: pointer;" id="wechatPayBtn">
-                            <i class="fab fa-weixin" style="font-size: 40px; color: #09BB07;"></i>
+                <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 30px;">
+                    <div style="text-align: center; cursor: pointer;" id="wechatPayBtn">
+                        <div style="width: 70px; height: 70px; background-color: var(--light-pink); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px;">
+                            <span style="font-size: 32px;">💚</span>
                         </div>
-                        <div style="font-size: 16px;">微信支付</div>
+                        <div style="font-size: 14px;">微信支付</div>
                     </div>
                     
-                    <div style="text-align: center;">
-                        <div style="width: 80px; height: 80px; background-color: var(--light-pink); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; cursor: pointer;" id="alipayBtn">
-                            <i class="fab fa-alipay" style="font-size: 40px; color: #1677FF;"></i>
+                    <div style="text-align: center; cursor: pointer;" id="alipayBtn">
+                        <div style="width: 70px; height: 70px; background-color: var(--light-pink); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px;">
+                            <span style="font-size: 32px;">💙</span>
                         </div>
-                        <div style="font-size: 16px;">支付宝</div>
+                        <div style="font-size: 14px;">支付�?/div>
                     </div>
                     
-                    <div style="text-align: center;">
-                        <div style="width: 80px; height: 80px; background-color: var(--light-pink); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; cursor: pointer;" id="cashPayBtn">
-                            <i class="fas fa-money-bill-wave" style="font-size: 40px; color: var(--accent-pink);"></i>
+                    <div style="text-align: center; cursor: pointer;" id="cashPayBtn">
+                        <div style="width: 70px; height: 70px; background-color: var(--light-pink); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px;">
+                            <span style="font-size: 32px;">💵</span>
                         </div>
-                        <div style="font-size: 16px;">现金支付</div>
+                        <div style="font-size: 14px;">现金支付</div>
+                    </div>
+                    
+                    <div style="text-align: center; cursor: pointer;" id="memberPayBtn">
+                        <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px;">
+                            <span style="font-size: 32px;">👑</span>
+                        </div>
+                        <div style="font-size: 14px;">会员余额</div>
                     </div>
                 </div>
                 
                 <button class="btn btn-secondary" id="closeCollectBtn" style="width: 100%;">取消</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 会员充值模态框 -->
+    <div class="modal" id="memberRechargeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">👑 会员充�?/h3>
+                <button class="close-btn" id="closeRechargeModal">&times;</button>
+            </div>
+            
+            <div class="search-box" style="margin-bottom: 15px;">
+                <input type="text" id="rechargeSearchPhone" placeholder="输入手机号搜索会�?>
+                <button id="searchRechargeMemberBtn">搜索</button>
+            </div>
+            
+            <div id="rechargeMemberInfo" style="display: none; margin-bottom: 15px;">
+                <div class="member-card">
+                    <div class="member-card-content">
+                        <div class="member-name" id="rechargeMemberName">-</div>
+                        <div class="member-phone" id="rechargeMemberPhone">-</div>
+                        <div class="member-balance">
+                            <span class="balance-label">当前余额</span>
+                            <span class="balance-value" id="rechargeMemberBalance">¥0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="recharge-packages" id="rechargePackages">
+                <div class="recharge-package" data-amount="100" data-bonus="0">
+                    <div class="amount">¥100</div>
+                    <div class="desc">充�?00�?/div>
+                </div>
+                <div class="recharge-package" data-amount="200" data-bonus="20">
+                    <div class="amount">¥200</div>
+                    <div class="bonus">送�?0</div>
+                    <div class="desc">实际¥220</div>
+                </div>
+                <div class="recharge-package" data-amount="500" data-bonus="80">
+                    <div class="amount">¥500</div>
+                    <div class="bonus">送�?0</div>
+                    <div class="desc">实际¥580</div>
+                </div>
+                <div class="recharge-package" data-amount="1000" data-bonus="200">
+                    <div class="amount">¥1000</div>
+                    <div class="bonus">送�?00</div>
+                    <div class="desc">实际¥1200</div>
+                </div>
+            </div>
+            
+            <div class="custom-recharge">
+                <input type="number" id="customRechargeAmount" placeholder="自定义充值金额（元）" min="1" max="50000">
+            </div>
+            
+            <div class="total-section" style="margin-top: 15px;">
+                <span>充值后余额�?/span>
+                <span id="rechargePreviewBalance">¥0</span>
+            </div>
+            
+            <div class="action-buttons" style="margin-top: 15px;">
+                <button class="btn btn-secondary" id="cancelRechargeBtn">取消</button>
+                <button class="btn btn-gold" id="confirmRechargeBtn">确认充�?/button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 新增会员模态框 -->
+    <div class="modal" id="addMemberModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">�?新增会员</h3>
+                <button class="close-btn" id="closeAddMemberModal">&times;</button>
+            </div>
+            
+            <div class="form-group">
+                <label>姓名 *</label>
+                <input type="text" id="newMemberName" placeholder="请输入会员姓�?>
+            </div>
+            
+            <div class="form-group">
+                <label>手机�?*</label>
+                <input type="tel" id="newMemberPhone" placeholder="请输入手机号" maxlength="11">
+            </div>
+            
+            <div class="form-group">
+                <label>初始充值金额（可选）</label>
+                <input type="number" id="newMemberInitialBalance" placeholder="0" min="0" max="50000">
+            </div>
+            
+            <div class="form-group">
+                <label>备注</label>
+                <input type="text" id="newMemberNote" placeholder="备注信息（选填�?>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-secondary" id="cancelAddMemberBtn">取消</button>
+                <button class="btn btn-gold" id="confirmAddMemberBtn">确认添加</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 会员详情模态框 -->
+    <div class="modal" id="memberDetailModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">👤 会员详情</h3>
+                <button class="close-btn" id="closeMemberDetailModal">&times;</button>
+            </div>
+            
+            <div class="member-card" id="memberDetailCard">
+                <div class="member-card-content">
+                    <div class="member-name" id="detailMemberName">-</div>
+                    <div class="member-phone" id="detailMemberPhone">-</div>
+                    <div class="member-balance">
+                        <span class="balance-label">账户余额</span>
+                        <span class="balance-value" id="detailMemberBalance">¥0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <div style="font-size: 14px; color: var(--text-dark); margin-bottom: 8px;">📜 消费记录</div>
+                <div id="memberTransactionList" style="max-height: 200px; overflow-y: auto;"></div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-secondary" id="editMemberBtn">编辑</button>
+                <button class="btn btn-gold" id="rechargeForMemberBtn">充�?/button>
             </div>
         </div>
     </div>
@@ -1307,76 +1513,161 @@
                 <button class="close-btn" id="closeClearModal">&times;</button>
             </div>
             
-            <div style="padding: 30px 20px; text-align: center;">
-                <i class="fas fa-exclamation-triangle" style="font-size: 60px; color: #ff6b6b; margin-bottom: 20px;"></i>
-                <div style="font-size: 18px; margin-bottom: 10px; font-weight: 600;" id="clearConfirmMessage"></div>
-                <div style="font-size: 14px; color: var(--text-light); margin-bottom: 30px;" id="clearConfirmDesc"></div>
+            <div style="padding: 25px 15px; text-align: center;">
+                <div style="font-size: 50px; margin-bottom: 15px;">⚠️</div>
+                <div style="font-size: 16px; margin-bottom: 8px; font-weight: 600;" id="clearConfirmMessage"></div>
+                <div style="font-size: 13px; color: var(--text-light); margin-bottom: 20px;" id="clearConfirmDesc"></div>
                 
                 <div class="action-buttons">
                     <button class="btn btn-secondary" id="cancelClearBtn">取消</button>
-                    <button class="btn btn-danger" id="confirmClearBtn">确认清零</button>
+                    <button class="btn btn-danger" id="confirmClearBtn">确认</button>
                 </div>
             </div>
         </div>
     </div>
     
-    <script>
-        // 返回首页函数
-        function goBackToHome() {
-            // 隐藏所有页面
-            document.getElementById('ordersPage').classList.remove('active');
-            document.getElementById('reportsPage').classList.remove('active');
-            document.getElementById('settingsPage').classList.remove('active');
+    <!-- 会员余额支付选择模态框 -->
+    <div class="modal" id="memberSelectModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">👑 选择会员</h3>
+                <button class="close-btn" id="closeMemberSelectModal">&times;</button>
+            </div>
             
-            // 显示首页容器
-            document.querySelector('.container').style.display = 'flex';
+            <div class="search-box" style="margin-bottom: 15px;">
+                <input type="text" id="payMemberSearch" placeholder="搜索会员姓名或手机号">
+            </div>
             
-            // 更新底部导航状态
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            document.querySelector('.nav-item[data-tab="home"]').classList.add('active');
-        }
-
-        // 保存 API Key 到 localStorage
-        function saveApiKey() {
-            const input = document.getElementById('apiKeyInput');
-            const key = input ? input.value.trim() : '';
-            if (!key) {
-                alert('请输入 API Key');
-                return;
-            }
-            localStorage.setItem('nailSalonApiKey', key);
-            // 同步到 dataManager
-            dataManager.jsonBinConfig.apiKey = key;
-            alert('✅ API Key 已保存！');
-        }
-
-        // 页面加载时填入已保存的 Key（显示为 ***）
-        window.addEventListener('DOMContentLoaded', function() {
-            const saved = localStorage.getItem('nailSalonApiKey');
-            const input = document.getElementById('apiKeyInput');
-            if (saved && input) input.value = saved;
-        });
+            <div class="member-list" id="payMemberList" style="max-height: 300px;"></div>
+        </div>
+    </div>
+<script>
+        // ==================== 工具函数 ====================
         
-        // 数据管理对象
+        // 生成唯一订单号（修复：动态年�?+ 时间戳保证唯一性）
+        function generateOrderId(orderCount) {
+            const now = new Date();
+            const year = now.getFullYear().toString().slice(2); // 动态获取年份后两位
+            const month = (now.getMonth() + 1).toString().padStart(2, '0');
+            const day = now.getDate().toString().padStart(2, '0');
+            const timestamp = now.getTime().toString().slice(-6); // 使用时间戳后6位保证唯一
+            return `${year}${month}${day}${timestamp}`;
+        }
+        
+        // 生成唯一会员ID
+        function generateMemberId() {
+            return 'M' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2, 6).toUpperCase();
+        }
+        
+        // 获取日期字符�?        function getDateString(date) {
+            return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+        }
+        
+        // 获取周范围（周一到周日）
+        function getWeekRange(date) {
+            const d = new Date(date);
+            const day = d.getDay() || 7; // 周日�?
+            const monday = new Date(d);
+            monday.setDate(d.getDate() - day + 1);
+            monday.setHours(0, 0, 0, 0);
+            const sunday = new Date(monday);
+            sunday.setDate(monday.getDate() + 6);
+            sunday.setHours(23, 59, 59, 999);
+            return { start: monday, end: sunday };
+        }
+        
+        // 获取年范�?        function getYearRange(date) {
+            return {
+                start: new Date(date.getFullYear(), 0, 1),
+                end: new Date(date.getFullYear(), 11, 31, 23, 59, 59, 999)
+            };
+        }
+        
+        // 判断日期是否在范围内
+        function isDateInRange(dateStr, start, end) {
+            const d = new Date(dateStr);
+            return d >= start && d <= end;
+        }
+        
+        // 显示 Toast 通知
+        function showNotification(message, type = 'info') {
+            const existing = document.getElementById('toastNotification');
+            if (existing) existing.remove();
+
+            const colors = {
+                success: '#4CAF50',
+                error: '#ff6b6b',
+                warning: '#FFA726',
+                info: '#F2A8C2'
+            };
+            const icons = {
+                success: '�?,
+                error: '�?,
+                warning: '⚠️',
+                info: 'ℹ️'
+            };
+
+            const toast = document.createElement('div');
+            toast.id = 'toastNotification';
+            toast.style.cssText = `
+                position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%);
+                background: ${colors[type] || colors.info}; color: white;
+                padding: 12px 20px; border-radius: 24px; font-size: 14px;
+                box-shadow: 0 4px 16px rgba(0,0,0,0.2); z-index: 9999;
+                max-width: 320px; text-align: center; line-height: 1.5;
+            `;
+            toast.textContent = `${icons[type] || ''} ${message}`;
+            document.body.appendChild(toast);
+            setTimeout(() => { if (toast.parentNode) toast.remove(); }, 3000);
+        }
+        
+        // ==================== 服务项目数据 ====================
+        const serviceList = [
+            { name: '款式本甲|卸甲|【美甲款式】任意款小红薯推�?, price: 189 },
+            { name: '【纯色美甲】手部纯�?加固微建�?, price: 101 },
+            { name: '【闪耀上新】瓷白猫眼美�?, price: 159 },
+            { name: '美甲建构+冰透色/极光海莉同款二选一', price: 159 },
+            { name: '《畅销》网红爆款美睫任意款式设�?, price: 159 },
+            { name: '【自然款】纯欲仿真婴儿弯妈生设计�?, price: 189 },
+            { name: '【网红美甲款】小红薯随心款式+甲片', price: 279 },
+            { name: '【美甲款式】热门美甲简约风', price: 149 },
+            { name: '【美睫嫁接】美睫任意款�?下睫毛套�?, price: 279 },
+            { name: '【款式任选】纯欲小精灵漫画款美�?, price: 219 },
+            { name: '【自然款】灵动随心淡妆、裸妆感美睫', price: 121 },
+            { name: '2次卡|【美甲款式】热门美甲简约风', price: 291 },
+            { name: '【闪耀碎钻】脚部纯色美�?, price: 159 },
+            { name: '【自然款】自然微密空气睫�?健康嫁接', price: 179 },
+            { name: '【爆款】自然下睫毛', price: 54.9 },
+            { name: '3次【自然款】自然微密空气睫毛卡', price: 498 },
+            { name: '【闪耀】瓷白猫眼脚部美�?, price: 179 },
+            { name: '2次卡【款式任选】纯欲小精灵漫画款美�?, price: 424 }
+        ];
+        
+        // 充值套�?        const rechargePackages = [
+            { amount: 100, bonus: 0 },
+            { amount: 200, bonus: 20 },
+            { amount: 500, bonus: 80 },
+            { amount: 1000, bonus: 200 },
+            { amount: 2000, bonus: 500 },
+            { amount: 5000, bonus: 1500 }
+        ];
+        
+        // ==================== 数据管理�?====================
         const dataManager = {
-            // JSONBin.io 配置 - 用于跨平台云端备份
+            // JSONBin.io 配置
             jsonBinConfig: {
                 apiKey: localStorage.getItem('nailSalonApiKey') || '',
-                binId: null, // 运行时自动发现并缓存
+                binId: null,
                 apiUrl: 'https://api.jsonbin.io/v3',
                 collectionId: '69bca581aa77b81da9fed6cf'
             },
 
-            // 获取或创建 Bin ID（带本地缓存）
+            // 获取或创�?Bin ID
             getBinId: async function() {
-                // 优先从 localStorage 缓存读取
                 const cached = localStorage.getItem('nailSalonBinId');
                 if (cached) return cached;
 
                 try {
-                    // 查询 collection 下的 bins
                     const res = await fetch(
                         `${this.jsonBinConfig.apiUrl}/c/${this.jsonBinConfig.collectionId}/bins`,
                         { headers: { 'X-Master-Key': this.jsonBinConfig.apiKey } }
@@ -1389,9 +1680,8 @@
                             return id;
                         }
                     }
-                } catch (e) { /* 忽略，继续创建 */ }
+                } catch (e) { }
 
-                // 没有则创建新 Bin
                 try {
                     const createRes = await fetch(`${this.jsonBinConfig.apiUrl}/b`, {
                         method: 'POST',
@@ -1416,7 +1706,6 @@
                 return null;
             },
 
-            // 从云端读取数据
             fetchFromCloud: async function() {
                 try {
                     const binId = await this.getBinId();
@@ -1430,7 +1719,6 @@
                     });
                     if (!res.ok) return null;
                     const data = await res.json();
-                    // 过滤掉初始化占位数据
                     if (data && data._init) return null;
                     return data;
                 } catch (e) {
@@ -1439,7 +1727,6 @@
                 }
             },
 
-            // 保存数据到云端
             saveToCloud: async function(data) {
                 try {
                     const binId = await this.getBinId();
@@ -1460,27 +1747,30 @@
                 }
             },
 
-            // 获取或初始化数据（本地优先，云端兜底）
+            // 获取数据
             getData: async function() {
                 const savedData = localStorage.getItem('nailSalonData');
                 if (savedData) {
                     return JSON.parse(savedData);
                 }
 
-                // 本地没有数据，尝试从云端恢复
                 const cloudData = await this.fetchFromCloud();
                 if (cloudData && cloudData.allOrders !== undefined) {
                     localStorage.setItem('nailSalonData', JSON.stringify(cloudData));
                     return cloudData;
                 }
 
-                // 全新初始化
+                return this.initData();
+            },
+            
+            // 初始化数�?            initData: function() {
                 const now = new Date();
                 const initData = {
                     today: {
-                        date: this.getDateString(now),
+                        date: getDateString(now),
                         orders: 0,
                         income: 0,
+                        recharge: 0,
                         customers: 0
                     },
                     month: {
@@ -1488,76 +1778,71 @@
                         month: now.getMonth() + 1,
                         orders: 0,
                         income: 0,
+                        recharge: 0,
                         customers: 0
                     },
                     lastReset: {
-                        daily: this.getDateString(now),
+                        daily: getDateString(now),
                         monthly: `${now.getFullYear()}-${now.getMonth() + 1}-01`
                     },
                     lastBackup: null,
-                    allOrders: []
+                    allOrders: [],
+                    members: [], // 会员列表
+                    transactions: [] // 会员交易记录
                 };
                 localStorage.setItem('nailSalonData', JSON.stringify(initData));
                 return initData;
             },
 
-            // 保存数据（仅本地，不自动同步云端，避免频繁 API 调用）
             saveData: async function(data) {
                 localStorage.setItem('nailSalonData', JSON.stringify(data));
             },
 
-            // 手动备份到云端（含时间戳）
             backupToCloud: async function() {
                 const data = await this.getData();
                 data.lastBackup = new Date().toISOString().slice(0, 19).replace('T', ' ');
                 const success = await this.saveToCloud(data);
                 if (success) {
-                    // 同步更新本地的 lastBackup
                     localStorage.setItem('nailSalonData', JSON.stringify(data));
                 }
                 return success;
             },
 
-            // 从云端恢复数据到本地
             restoreFromCloud: async function() {
                 const cloudData = await this.fetchFromCloud();
                 if (cloudData && cloudData.allOrders !== undefined) {
+                    // 确保会员数据存在
+                    if (!cloudData.members) cloudData.members = [];
+                    if (!cloudData.transactions) cloudData.transactions = [];
                     localStorage.setItem('nailSalonData', JSON.stringify(cloudData));
                     return cloudData;
                 }
                 return null;
             },
             
-            // 获取日期字符串
-            getDateString: function(date) {
-                return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
-            },
-            
-            // 检查是否需要每日清零
-            checkDailyReset: async function() {
+            // 检查每日重�?            checkDailyReset: async function() {
                 const data = await this.getData();
-                const today = this.getDateString(new Date());
+                const today = getDateString(new Date());
                 
                 if (data.lastReset.daily !== today) {
                     data.today = {
                         date: today,
                         orders: 0,
                         income: 0,
+                        recharge: 0,
                         customers: 0
                     };
                     data.lastReset.daily = today;
                     await this.saveData(data);
-                    this.showNotification('新的一天开始了！今日数据已自动重置！', 'success');
+                    showNotification('新的一天开始了！今日数据已自动重置�?, 'success');
                 }
                 
                 return data;
             },
             
-            // 检查是否需要每月清零
-            checkMonthlyReset: async function() {
+            // 检查每月重�?            checkMonthlyReset: async function() {
                 const data = await this.getData();
                 const now = new Date();
-                const currentMonth = `${now.getFullYear()}-${now.getMonth() + 1}`;
                 
                 if (data.lastReset.monthly !== `${now.getFullYear()}-${now.getMonth() + 1}-01`) {
                     data.month = {
@@ -1565,36 +1850,38 @@
                         month: now.getMonth() + 1,
                         orders: 0,
                         income: 0,
+                        recharge: 0,
                         customers: 0
                     };
                     data.lastReset.monthly = `${now.getFullYear()}-${now.getMonth() + 1}-01`;
                     await this.saveData(data);
-                    this.showNotification('新的月份开始了！本月数据已自动重置！', 'success');
+                    showNotification('新的月份开始了！本月数据已自动重置�?, 'success');
                 }
                 
                 return data;
             },
             
-            // 手动重置当日数据
+            // 重置当日数据
             resetDailyData: async function() {
                 const data = await this.getData();
-                const today = this.getDateString(new Date());
+                const today = getDateString(new Date());
                 
                 data.today = {
                     date: today,
                     orders: 0,
                     income: 0,
+                    recharge: 0,
                     customers: 0
                 };
                 data.lastReset.daily = today;
                 
                 await this.saveData(data);
-                this.showNotification('当日数据已成功重置！', 'success');
+                showNotification('当日数据已成功重置！', 'success');
                 
                 return data;
             },
             
-            // 手动重置当月数据
+            // 重置当月数据
             resetMonthlyData: async function() {
                 const data = await this.getData();
                 const now = new Date();
@@ -1604,27 +1891,28 @@
                     month: now.getMonth() + 1,
                     orders: 0,
                     income: 0,
+                    recharge: 0,
                     customers: 0
                 };
                 data.lastReset.monthly = `${now.getFullYear()}-${now.getMonth() + 1}-01`;
                 
                 await this.saveData(data);
-                this.showNotification('当月数据已成功重置！', 'success');
+                showNotification('当月数据已成功重置！', 'success');
                 
                 return data;
             },
             
-            // 添加新订单
-            addOrder: async function(amount, services) {
+            // 添加订单（修复：使用新的订单号生成逻辑�?            addOrder: async function(amount, services, memberId = null) {
                 const data = await this.getData();
                 const now = new Date();
-                const today = this.getDateString(now);
+                const today = getDateString(now);
                 
-                if (data.today.date !== today) {
+                // 检查日�?                if (data.today.date !== today) {
                     data.today = {
                         date: today,
                         orders: 0,
                         income: 0,
+                        recharge: 0,
                         customers: 0
                     };
                     data.lastReset.daily = today;
@@ -1634,7 +1922,7 @@
                 data.today.income += amount;
                 data.today.customers += 1;
                 
-                if (data.month.year === now.getFullYear() && data.month.month === now.getMonth() + 1) {
+                // 检查月�?                if (data.month.year === now.getFullYear() && data.month.month === now.getMonth() + 1) {
                     data.month.orders += 1;
                     data.month.income += amount;
                     data.month.customers += 1;
@@ -1644,195 +1932,1206 @@
                         month: now.getMonth() + 1,
                         orders: 1,
                         income: amount,
+                        recharge: 0,
                         customers: 1
                     };
                     data.lastReset.monthly = `${now.getFullYear()}-${now.getMonth() + 1}-01`;
                 }
                 
-                const orderId = `026${now.getFullYear().toString().slice(2)}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}${(data.allOrders.length + 1).toString().padStart(2, '0')}`;
+                // 生成唯一订单�?                const orderId = generateOrderId(data.allOrders.length);
                 
-                data.allOrders.unshift({
+                const order = {
                     id: orderId,
                     time: `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')} ${services}`,
                     amount: amount,
-                    date: today
-                });
+                    date: today,
+                    memberId: memberId,
+                    timestamp: now.getTime()
+                };
                 
-                if (data.allOrders.length > 100) {
-                    data.allOrders = data.allOrders.slice(0, 100);
+                data.allOrders.unshift(order);
+                
+                // 保留最�?500 条订�?                if (data.allOrders.length > 500) {
+                    data.allOrders = data.allOrders.slice(0, 500);
                 }
                 
                 await this.saveData(data);
                 return { data, orderId };
             },
             
-            // 保存备份记录（本地快照，最多保留10条）
-            saveBackup: async function(type, data) {
-                const backups = JSON.parse(localStorage.getItem('nailSalonBackups') || '[]');
-                backups.unshift({
-                    type: type,
-                    data: data,
-                    timestamp: new Date().toISOString(),
-                    time: new Date().toLocaleString('zh-CN')
-                });
-                if (backups.length > 10) backups.pop();
-                localStorage.setItem('nailSalonBackups', JSON.stringify(backups));
-            },
-            
-            // 显示 Toast 通知（不打断操作）
-            showNotification: function(message, type = 'info') {
-                const existing = document.getElementById('toastNotification');
-                if (existing) existing.remove();
-
-                const colors = {
-                    success: '#4CAF50',
-                    error: '#ff6b6b',
-                    warning: '#FFA726',
-                    info: '#F2A8C2'
-                };
-                const icons = {
-                    success: '✅',
-                    error: '❌',
-                    warning: '⚠️',
-                    info: 'ℹ️'
-                };
-
-                const toast = document.createElement('div');
-                toast.id = 'toastNotification';
-                toast.style.cssText = `
-                    position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%);
-                    background: ${colors[type] || colors.info}; color: white;
-                    padding: 12px 20px; border-radius: 24px; font-size: 14px;
-                    box-shadow: 0 4px 16px rgba(0,0,0,0.2); z-index: 9999;
-                    max-width: 320px; text-align: center; line-height: 1.5;
-                    animation: fadeInUp 0.3s ease;
-                `;
-                toast.textContent = `${icons[type] || ''} ${message}`;
-
-                const style = document.createElement('style');
-                style.textContent = `@keyframes fadeInUp { from { opacity:0; transform:translateX(-50%) translateY(20px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }`;
-                document.head.appendChild(style);
-
-                document.body.appendChild(toast);
-                setTimeout(() => { if (toast.parentNode) toast.remove(); }, 3000);
-            },
-            
-            // 清空所有数据
-            clearAllData: async function() {
-                const now = new Date();
-                const resetData = {
-                    today: {
-                        date: this.getDateString(now),
-                        orders: 0,
-                        income: 0,
-                        customers: 0
-                    },
-                    month: {
-                        year: now.getFullYear(),
-                        month: now.getMonth() + 1,
-                        orders: 0,
-                        income: 0,
-                        customers: 0
-                    },
-                    lastReset: {
-                        daily: this.getDateString(now),
-                        monthly: `${now.getFullYear()}-${now.getMonth() + 1}-01`
-                    },
-                    lastBackup: null,
-                    allOrders: []
-                };
-
-                localStorage.setItem('nailSalonData', JSON.stringify(resetData));
-                this.showNotification('所有历史数据已清空！', 'success');
+            // 清空所有数�?            clearAllData: async function() {
+                const resetData = this.initData();
+                showNotification('所有历史数据已清空�?, 'success');
                 return resetData;
+            },
+            
+            // ==================== 会员管理 ====================
+            
+            // 添加会员
+            addMember: async function(name, phone, initialBalance = 0, note = '') {
+                const data = await this.getData();
+                
+                // 检查手机号是否已存�?                if (data.members.some(m => m.phone === phone)) {
+                    showNotification('该手机号已注册会员！', 'error');
+                    return null;
+                }
+                
+                const member = {
+                    id: generateMemberId(),
+                    name: name,
+                    phone: phone,
+                    balance: initialBalance,
+                    note: note,
+                    createdAt: new Date().toISOString(),
+                    transactions: []
+                };
+                
+                data.members.push(member);
+                
+                // 如果有初始充值，记录交易
+                if (initialBalance > 0) {
+                    const transaction = {
+                        type: 'recharge',
+                        amount: initialBalance,
+                        bonus: 0,
+                        balanceAfter: initialBalance,
+                        time: new Date().toISOString()
+                    };
+                    member.transactions.push(transaction);
+                    data.transactions.push({
+                        ...transaction,
+                        memberId: member.id,
+                        memberName: member.name
+                    });
+                    
+                    // 更新今日充值统�?                    const today = getDateString(new Date());
+                    if (data.today.date === today) {
+                        data.today.recharge = (data.today.recharge || 0) + initialBalance;
+                    }
+                }
+                
+                await this.saveData(data);
+                showNotification(`会员 ${name} 添加成功！`, 'success');
+                return member;
+            },
+            
+            // 查找会员
+            findMember: function(data, phone) {
+                return data.members.find(m => m.phone === phone);
+            },
+            
+            // 根据ID查找会员
+            findMemberById: function(data, id) {
+                return data.members.find(m => m.id === id);
+            },
+            
+            // 会员充�?            rechargeMember: async function(memberId, amount, bonus = 0) {
+                const data = await this.getData();
+                const member = this.findMemberById(data, memberId);
+                
+                if (!member) {
+                    showNotification('会员不存在！', 'error');
+                    return null;
+                }
+                
+                const totalAdd = amount + bonus;
+                member.balance += totalAdd;
+                
+                const transaction = {
+                    type: 'recharge',
+                    amount: amount,
+                    bonus: bonus,
+                    balanceAfter: member.balance,
+                    time: new Date().toISOString()
+                };
+                
+                member.transactions.push(transaction);
+                data.transactions.push({
+                    ...transaction,
+                    memberId: member.id,
+                    memberName: member.name
+                });
+                
+                // 更新今日/本月充值统�?                const today = getDateString(new Date());
+                if (data.today.date === today) {
+                    data.today.recharge = (data.today.recharge || 0) + amount;
+                }
+                if (data.month.year === new Date().getFullYear() && 
+                    data.month.month === new Date().getMonth() + 1) {
+                    data.month.recharge = (data.month.recharge || 0) + amount;
+                }
+                
+                await this.saveData(data);
+                showNotification(`充值成功！${member.name} 余额：�?{member.balance}`, 'success');
+                return member;
+            },
+            
+            // 会员消费（使用余额支付）
+            memberConsume: async function(memberId, amount, services) {
+                const data = await this.getData();
+                const member = this.findMemberById(data, memberId);
+                
+                if (!member) {
+                    showNotification('会员不存在！', 'error');
+                    return null;
+                }
+                
+                if (member.balance < amount) {
+                    showNotification(`余额不足！当前余额：¥${member.balance}`, 'error');
+                    return null;
+                }
+                
+                member.balance -= amount;
+                
+                const transaction = {
+                    type: 'consume',
+                    amount: amount,
+                    balanceAfter: member.balance,
+                    services: services,
+                    time: new Date().toISOString()
+                };
+                
+                member.transactions.push(transaction);
+                data.transactions.push({
+                    ...transaction,
+                    memberId: member.id,
+                    memberName: member.name
+                });
+                
+                await this.saveData(data);
+                
+                // 同时记录订单
+                await this.addOrder(amount, services, memberId);
+                
+                showNotification(`支付成功�?{member.name} 剩余余额：�?{member.balance}`, 'success');
+                return member;
+            },
+            
+            // 搜索会员
+            searchMembers: function(data, keyword) {
+                if (!keyword) return data.members;
+                const kw = keyword.toLowerCase();
+                return data.members.filter(m => 
+                    m.name.toLowerCase().includes(kw) || 
+                    m.phone.includes(kw)
+                );
+            },
+            
+            // 获取会员统计数据
+            getMemberStats: async function() {
+                const data = await this.getData();
+                const now = new Date();
+                const today = getDateString(now);
+                const weekRange = getWeekRange(now);
+                const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+                const yearRange = getYearRange(now);
+                
+                const stats = {
+                    today: { orders: 0, income: 0, recharge: 0, customers: 0 },
+                    week: { orders: 0, income: 0, recharge: 0 },
+                    month: { orders: 0, income: 0, recharge: 0 },
+                    year: { orders: 0, income: 0, recharge: 0 }
+                };
+                
+                // 统计订单
+                data.allOrders.forEach(order => {
+                    const orderDate = order.date;
+                    
+                    // 今日
+                    if (orderDate === today) {
+                        stats.today.orders++;
+                        stats.today.income += order.amount;
+                    }
+                    
+                    // 本周
+                    if (isDateInRange(orderDate, weekRange.start, weekRange.end)) {
+                        stats.week.orders++;
+                        stats.week.income += order.amount;
+                    }
+                    
+                    // 本月
+                    if (new Date(orderDate) >= monthStart) {
+                        stats.month.orders++;
+                        stats.month.income += order.amount;
+                    }
+                    
+                    // 本年
+                    if (isDateInRange(orderDate, yearRange.start, yearRange.end)) {
+                        stats.year.orders++;
+                        stats.year.income += order.amount;
+                    }
+                });
+                
+                stats.today.customers = data.today.customers;
+                
+                // 统计充�?                data.transactions.filter(t => t.type === 'recharge').forEach(t => {
+                    const tDate = t.time.slice(0, 10);
+                    
+                    if (tDate === today) {
+                        stats.today.recharge += t.amount;
+                    }
+                    if (isDateInRange(tDate, weekRange.start, weekRange.end)) {
+                        stats.week.recharge += t.amount;
+                    }
+                    if (new Date(tDate) >= monthStart) {
+                        stats.month.recharge += t.amount;
+                    }
+                    if (isDateInRange(tDate, yearRange.start, yearRange.end)) {
+                        stats.year.recharge += t.amount;
+                    }
+                });
+                
+                return stats;
             }
         };
         
-        // 页面加载时初始化
+        // ==================== 页面初始�?====================
+        
+        // 返回首页
+        function goBackToHome() {
+            document.getElementById('ordersPage').classList.remove('active');
+            document.getElementById('membersPage').classList.remove('active');
+            document.getElementById('reportsPage').classList.remove('active');
+            document.getElementById('settingsPage').classList.remove('active');
+            document.querySelector('.container').style.display = 'flex';
+            
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.querySelector('.nav-item[data-tab="home"]').classList.add('active');
+        }
+
+        // 保存 API Key
+        function saveApiKey() {
+            const input = document.getElementById('apiKeyInput');
+            const key = input ? input.value.trim() : '';
+            if (!key) {
+                alert('请输�?API Key');
+                return;
+            }
+            localStorage.setItem('nailSalonApiKey', key);
+            dataManager.jsonBinConfig.apiKey = key;
+            showNotification('API Key 已保存！', 'success');
+        }
+        
+        // ==================== 全局变量 ====================
+        let selectedServices = [];
+        let totalAmount = 0;
+        let currentRechargeMember = null;
+        let currentRechargeAmount = 0;
+        let currentRechargeBonus = 0;
+        
+        // ==================== 页面加载初始�?====================
         document.addEventListener('DOMContentLoaded', async function() {
             await dataManager.checkDailyReset();
             await dataManager.checkMonthlyReset();
             await loadDataToPage();
-            bindClearButtons();
-            bindBackupButtons();
-            initializeOriginalFunctions();
+            initializeModals();
+            initializeNavigation();
+            initializeBackupButtons();
+            initializeClearButtons();
+            
+            // 加载已保存的 API Key
+            const saved = localStorage.getItem('nailSalonApiKey');
+            const input = document.getElementById('apiKeyInput');
+            if (saved && input) input.value = saved;
         });
         
-        // 加载数据到页面
-        async function loadDataToPage() {
+        // 加载数据到页�?        async function loadDataToPage() {
             const data = await dataManager.getData();
-            
             const now = new Date();
-            document.getElementById('currentStatDate').textContent = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日`;
-            document.getElementById('currentStatMonth').textContent = `${now.getFullYear()}年${now.getMonth() + 1}月`;
             
-            document.getElementById('dayStartTime').textContent = '00:00:00';
-            document.getElementById('monthStartTime').textContent = `${now.getMonth() + 1}月1日 00:00`;
+            // 更新日期显示
+            document.getElementById('currentStatDate').textContent = 
+                `${now.getFullYear()}�?{now.getMonth() + 1}�?{now.getDate()}日`;
+            document.getElementById('currentStatMonth').textContent = 
+                `${now.getFullYear()}�?{now.getMonth() + 1}月`;
             
-            const backupTimeEl = document.getElementById('lastBackupTime');
+            // 更新今日数据
+            document.getElementById('todayOrders').textContent = data.today.orders;
+            document.getElementById('todayIncome').textContent = `¥${data.today.income}`;
+            document.getElementById('todayRecharge').textContent = `¥${data.today.recharge || 0}`;
+            
+            // 更新备份状�?            const backupTimeEl = document.getElementById('lastBackupTime');
             const backupStatusEl = document.getElementById('backupStatus');
             if (data.lastBackup) {
                 backupTimeEl.textContent = data.lastBackup;
                 backupStatusEl.textContent = '☁️ 已同步到云端';
                 backupStatusEl.style.color = '#4CAF50';
             } else {
-                backupTimeEl.textContent = '未备份';
-                backupStatusEl.textContent = '⚠️ 本地数据未同步到云端';
+                backupTimeEl.textContent = '未备�?;
+                backupStatusEl.textContent = '⚠️ 本地数据未同�?;
                 backupStatusEl.style.color = '#FFA726';
             }
+            
+            // 更新设置页面
+            document.getElementById('settingsTodayOrders').textContent = data.today.orders;
+            document.getElementById('settingsTodayIncome').textContent = data.today.income;
+            document.getElementById('settingsTotalOrders').textContent = data.allOrders.length;
+            document.getElementById('settingsTotalMembers').textContent = data.members?.length || 0;
         }
         
-        // 绑定清零按钮事件
-        function bindClearButtons() {
-            const dailyClearBtn = document.getElementById('dailyClearBtn');
-            const monthlyClearBtn = document.getElementById('monthlyClearBtn');
-            const clearAllDataBtn = document.getElementById('clearAllDataBtn');
+        // 更新日期时间
+        function updateDateTime() {
+            const now = new Date();
+            const days = ['星期�?, '星期一', '星期�?, '星期�?, '星期�?, '星期�?, '星期�?];
+            const dateTimeStr = `${now.getFullYear()}�?{now.getMonth() + 1}�?{now.getDate()}�?${days[now.getDay()]} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+            document.getElementById('currentDateTime').textContent = dateTimeStr;
+        }
+        updateDateTime();
+        setInterval(updateDateTime, 60000);
+        
+        // ==================== 模态框初始�?====================
+        function initializeModals() {
+            // 快速开�?            initQuickOrderModal();
+            // 收款
+            initCollectMoneyModal();
+            // 会员充�?            initMemberRechargeModal();
+            // 新增会员
+            initAddMemberModal();
+            // 会员详情
+            initMemberDetailModal();
+            // 会员选择（余额支付）
+            initMemberSelectModal();
+        }
+        
+        // 快速开单模态框
+        function initQuickOrderModal() {
+            const modal = document.getElementById('quickOrderModal');
+            const openBtn = document.getElementById('quickOrderBtn');
+            const closeBtn = document.getElementById('closeOrderModal');
+            const clearBtn = document.getElementById('clearSelection');
+            const confirmBtn = document.getElementById('confirmOrder');
+            const serviceListEl = document.getElementById('serviceList');
             
-            if (dailyClearBtn) {
-                dailyClearBtn.addEventListener('click', function() {
-                    showClearConfirm('daily', '重置当日数据', '此操作将清空今日的所有订单、收入和客户数据。此操作不可撤销！');
-                });
+            // 渲染服务列表
+            serviceList.forEach(service => {
+                const item = document.createElement('div');
+                item.className = 'service-item';
+                item.innerHTML = `
+                    <span class="service-name">${service.name}</span>
+                    <span class="service-price">¥${service.price}</span>
+                `;
+                item.addEventListener('click', () => toggleService(item, service));
+                serviceListEl.appendChild(item);
+            });
+            
+            // 添加自定义金额选项
+            const customItem = document.createElement('div');
+            customItem.className = 'service-item';
+            customItem.id = 'customAmountItem';
+            customItem.innerHTML = `
+                <div style="display: flex; align-items: center; width: 100%;">
+                    <span style="margin-right: 10px;">✏️</span>
+                    <span class="service-name">自定义金�?/span>
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <input type="number" id="customAmountInput" placeholder="金额" 
+                        style="width: 80px; padding: 5px; border: 1px solid var(--border-color); 
+                        border-radius: 6px; text-align: right; margin-right: 8px;" 
+                        min="1" max="100000">
+                    <span class="service-price" id="customAmountDisplay">¥0</span>
+                </div>
+            `;
+            customItem.addEventListener('click', (e) => {
+                if (e.target.id !== 'customAmountInput') {
+                    document.getElementById('customAmountInput').focus();
+                }
+            });
+            serviceListEl.appendChild(customItem);
+            
+            // 自定义金额输�?            document.getElementById('customAmountInput').addEventListener('input', function() {
+                let value = parseInt(this.value) || 0;
+                // 添加金额范围校验
+                if (value > 100000) {
+                    value = 100000;
+                    this.value = value;
+                    showNotification('金额上限�?¥100,000', 'warning');
+                }
+                document.getElementById('customAmountDisplay').textContent = `¥${value}`;
+                updateOrderTotal();
+            });
+            
+            openBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                modal.style.display = 'flex';
+            });
+            
+            closeBtn.addEventListener('click', () => modal.style.display = 'none');
+            
+            clearBtn.addEventListener('click', clearServiceSelection);
+            
+            confirmBtn.addEventListener('click', confirmOrder);
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) modal.style.display = 'none';
+            });
+        }
+        
+        function toggleService(item, service) {
+            if (item.id === 'customAmountItem') return;
+            
+            const index = selectedServices.findIndex(s => s.name === service.name);
+            
+            if (index === -1) {
+                selectedServices.push(service);
+                item.classList.add('selected');
+            } else {
+                selectedServices.splice(index, 1);
+                item.classList.remove('selected');
             }
             
-            if (monthlyClearBtn) {
-                monthlyClearBtn.addEventListener('click', function() {
-                    showClearConfirm('monthly', '重置当月数据', '此操作将清空本月的所有统计数据。此操作不可撤销！');
-                });
+            updateOrderTotal();
+        }
+        
+        function updateOrderTotal() {
+            totalAmount = selectedServices.reduce((sum, s) => sum + s.price, 0);
+            
+            const customInput = document.getElementById('customAmountInput');
+            const customValue = customInput ? (parseInt(customInput.value) || 0) : 0;
+            if (customValue > 0) {
+                totalAmount += customValue;
             }
             
-            if (clearAllDataBtn) {
-                clearAllDataBtn.addEventListener('click', function() {
-                    showClearConfirm('all', '清空所有数据', '此操作将清空所有历史数据，包括订单记录和统计数据。此操作不可撤销！');
+            document.getElementById('orderTotal').textContent = `¥${totalAmount}`;
+        }
+        
+        function clearServiceSelection() {
+            selectedServices = [];
+            document.querySelectorAll('.service-item.selected').forEach(item => {
+                item.classList.remove('selected');
+            });
+            
+            const customInput = document.getElementById('customAmountInput');
+            if (customInput) customInput.value = '';
+            document.getElementById('customAmountDisplay').textContent = '¥0';
+            
+            updateOrderTotal();
+        }
+        
+        async function confirmOrder() {
+            const customInput = document.getElementById('customAmountInput');
+            const customValue = customInput ? (parseInt(customInput.value) || 0) : 0;
+            
+            if (selectedServices.length === 0 && customValue === 0) {
+                showNotification('请至少选择一项服务或输入自定义金�?, 'warning');
+                return;
+            }
+            
+            // 构建服务描述
+            let serviceNames = selectedServices.map(s => s.name).join(' + ');
+            if (customValue > 0) {
+                serviceNames = serviceNames ? `${serviceNames} + 自定义�?{customValue}` : `自定义服务�?{customValue}`;
+            }
+            
+            // 显示收款模态框
+            document.getElementById('quickOrderModal').style.display = 'none';
+            document.getElementById('amountToCollect').textContent = `¥${totalAmount}`;
+            document.getElementById('collectMoneyModal').style.display = 'flex';
+        }
+        
+        // 收款模态框
+        function initCollectMoneyModal() {
+            const modal = document.getElementById('collectMoneyModal');
+            const closeBtn = document.getElementById('closeCollectModal');
+            const closeBtn2 = document.getElementById('closeCollectBtn');
+            
+            closeBtn.addEventListener('click', () => modal.style.display = 'none');
+            closeBtn2.addEventListener('click', () => modal.style.display = 'none');
+            
+            // 微信支付
+            document.getElementById('wechatPayBtn').addEventListener('click', () => {
+                processPayment('微信支付');
+            });
+            
+            // 支付�?            document.getElementById('alipayBtn').addEventListener('click', () => {
+                processPayment('支付�?);
+            });
+            
+            // 现金支付
+            document.getElementById('cashPayBtn').addEventListener('click', () => {
+                processPayment('现金支付');
+            });
+            
+            // 会员余额支付
+            document.getElementById('memberPayBtn').addEventListener('click', () => {
+                modal.style.display = 'none';
+                document.getElementById('memberSelectModal').style.display = 'flex';
+                loadPayMemberList();
+            });
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) modal.style.display = 'none';
+            });
+        }
+        
+        async function processPayment(method) {
+            const customInput = document.getElementById('customAmountInput');
+            const customValue = customInput ? (parseInt(customInput.value) || 0) : 0;
+            let serviceNames = selectedServices.map(s => s.name).join(' + ');
+            if (customValue > 0) {
+                serviceNames = serviceNames ? `${serviceNames} + 自定义�?{customValue}` : `自定义服务�?{customValue}`;
+            }
+            
+            await dataManager.addOrder(totalAmount, serviceNames);
+            
+            document.getElementById('collectMoneyModal').style.display = 'none';
+            showNotification(`支付成功！收�?¥${totalAmount}�?{method}）`, 'success');
+            
+            // 重置
+            clearServiceSelection();
+            totalAmount = 0;
+            await loadDataToPage();
+        }
+        
+        // 会员充值模态框
+        function initMemberRechargeModal() {
+            const modal = document.getElementById('memberRechargeModal');
+            const openBtn = document.getElementById('memberRechargeBtn');
+            const closeBtn = document.getElementById('closeRechargeModal');
+            const cancelBtn = document.getElementById('cancelRechargeBtn');
+            const confirmBtn = document.getElementById('confirmRechargeBtn');
+            const searchBtn = document.getElementById('searchRechargeMemberBtn');
+            const customInput = document.getElementById('customRechargeAmount');
+            
+            openBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                modal.style.display = 'flex';
+                resetRechargeModal();
+            });
+            
+            closeBtn.addEventListener('click', () => modal.style.display = 'none');
+            cancelBtn.addEventListener('click', () => modal.style.display = 'none');
+            
+            // 搜索会员
+            searchBtn.addEventListener('click', async () => {
+                const phone = document.getElementById('rechargeSearchPhone').value.trim();
+                if (!phone) {
+                    showNotification('请输入手机号', 'warning');
+                    return;
+                }
+                
+                const data = await dataManager.getData();
+                const member = dataManager.findMember(data, phone);
+                
+                if (member) {
+                    currentRechargeMember = member;
+                    document.getElementById('rechargeMemberName').textContent = member.name;
+                    document.getElementById('rechargeMemberPhone').textContent = member.phone;
+                    document.getElementById('rechargeMemberBalance').textContent = `¥${member.balance}`;
+                    document.getElementById('rechargeMemberInfo').style.display = 'block';
+                    updateRechargePreview();
+                } else {
+                    showNotification('未找到该会员', 'error');
+                    document.getElementById('rechargeMemberInfo').style.display = 'none';
+                    currentRechargeMember = null;
+                }
+            });
+            
+            // 充值套餐选择
+            document.querySelectorAll('.recharge-package').forEach(pkg => {
+                pkg.addEventListener('click', function() {
+                    document.querySelectorAll('.recharge-package').forEach(p => p.classList.remove('selected'));
+                    this.classList.add('selected');
+                    
+                    currentRechargeAmount = parseInt(this.dataset.amount);
+                    currentRechargeBonus = parseInt(this.dataset.bonus);
+                    customInput.value = '';
+                    
+                    updateRechargePreview();
                 });
+            });
+            
+            // 自定义充值金�?            customInput.addEventListener('input', function() {
+                let value = parseInt(this.value) || 0;
+                if (value > 50000) {
+                    value = 50000;
+                    this.value = value;
+                    showNotification('单次充值上�?¥50,000', 'warning');
+                }
+                
+                document.querySelectorAll('.recharge-package').forEach(p => p.classList.remove('selected'));
+                currentRechargeAmount = value;
+                currentRechargeBonus = 0;
+                
+                // 根据金额自动计算赠�?                if (value >= 5000) currentRechargeBonus = Math.floor(value * 0.3);
+                else if (value >= 2000) currentRechargeBonus = Math.floor(value * 0.25);
+                else if (value >= 1000) currentRechargeBonus = Math.floor(value * 0.2);
+                else if (value >= 500) currentRechargeBonus = Math.floor(value * 0.16);
+                else if (value >= 200) currentRechargeBonus = Math.floor(value * 0.1);
+                
+                updateRechargePreview();
+            });
+            
+            // 确认充�?            confirmBtn.addEventListener('click', async () => {
+                if (!currentRechargeMember) {
+                    showNotification('请先选择会员', 'warning');
+                    return;
+                }
+                if (currentRechargeAmount <= 0) {
+                    showNotification('请选择或输入充值金�?, 'warning');
+                    return;
+                }
+                
+                await dataManager.rechargeMember(
+                    currentRechargeMember.id, 
+                    currentRechargeAmount, 
+                    currentRechargeBonus
+                );
+                
+                modal.style.display = 'none';
+                resetRechargeModal();
+                await loadDataToPage();
+            });
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) modal.style.display = 'none';
+            });
+        }
+        
+        function resetRechargeModal() {
+            currentRechargeMember = null;
+            currentRechargeAmount = 0;
+            currentRechargeBonus = 0;
+            document.getElementById('rechargeSearchPhone').value = '';
+            document.getElementById('rechargeMemberInfo').style.display = 'none';
+            document.getElementById('customRechargeAmount').value = '';
+            document.getElementById('rechargePreviewBalance').textContent = '¥0';
+            document.querySelectorAll('.recharge-package').forEach(p => p.classList.remove('selected'));
+        }
+        
+        function updateRechargePreview() {
+            if (currentRechargeMember) {
+                const newBalance = currentRechargeMember.balance + currentRechargeAmount + currentRechargeBonus;
+                let preview = `¥${newBalance}`;
+                if (currentRechargeBonus > 0) {
+                    preview += ` (送�?{currentRechargeBonus})`;
+                }
+                document.getElementById('rechargePreviewBalance').textContent = preview;
+            } else {
+                document.getElementById('rechargePreviewBalance').textContent = '¥0';
             }
         }
         
-        // 显示清零确认对话框
-        function showClearConfirm(type, title, description) {
+        // 新增会员模态框
+        function initAddMemberModal() {
+            const modal = document.getElementById('addMemberModal');
+            const openBtn = document.getElementById('addMemberBtn');
+            const closeBtn = document.getElementById('closeAddMemberModal');
+            const cancelBtn = document.getElementById('cancelAddMemberBtn');
+            const confirmBtn = document.getElementById('confirmAddMemberBtn');
+            
+            openBtn.addEventListener('click', () => {
+                modal.style.display = 'flex';
+                // 清空表单
+                document.getElementById('newMemberName').value = '';
+                document.getElementById('newMemberPhone').value = '';
+                document.getElementById('newMemberInitialBalance').value = '';
+                document.getElementById('newMemberNote').value = '';
+            });
+            
+            closeBtn.addEventListener('click', () => modal.style.display = 'none');
+            cancelBtn.addEventListener('click', () => modal.style.display = 'none');
+            
+            confirmBtn.addEventListener('click', async () => {
+                const name = document.getElementById('newMemberName').value.trim();
+                const phone = document.getElementById('newMemberPhone').value.trim();
+                const initialBalance = parseInt(document.getElementById('newMemberInitialBalance').value) || 0;
+                const note = document.getElementById('newMemberNote').value.trim();
+                
+                if (!name) {
+                    showNotification('请输入会员姓�?, 'warning');
+                    return;
+                }
+                if (!phone || !/^1[3-9]\d{9}$/.test(phone)) {
+                    showNotification('请输入正确的手机�?, 'warning');
+                    return;
+                }
+                if (initialBalance > 50000) {
+                    showNotification('初始充值金额上�?¥50,000', 'warning');
+                    return;
+                }
+                
+                const member = await dataManager.addMember(name, phone, initialBalance, note);
+                
+                if (member) {
+                    modal.style.display = 'none';
+                    await loadMembersPage();
+                    await loadDataToPage();
+                }
+            });
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) modal.style.display = 'none';
+            });
+        }
+        
+        // 会员详情模态框
+        function initMemberDetailModal() {
+            const modal = document.getElementById('memberDetailModal');
+            const closeBtn = document.getElementById('closeMemberDetailModal');
+            const rechargeBtn = document.getElementById('rechargeForMemberBtn');
+            
+            closeBtn.addEventListener('click', () => modal.style.display = 'none');
+            
+            rechargeBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+                // 打开充值模态框并预填会员信�?                document.getElementById('memberRechargeModal').style.display = 'flex';
+                document.getElementById('rechargeSearchPhone').value = currentRechargeMember?.phone || '';
+                document.getElementById('searchRechargeMemberBtn').click();
+            });
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) modal.style.display = 'none';
+            });
+        }
+        
+        // 会员选择模态框（余额支付）
+        function initMemberSelectModal() {
+            const modal = document.getElementById('memberSelectModal');
+            const closeBtn = document.getElementById('closeMemberSelectModal');
+            const searchInput = document.getElementById('payMemberSearch');
+            
+            closeBtn.addEventListener('click', () => modal.style.display = 'none');
+            
+            searchInput.addEventListener('input', loadPayMemberList);
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) modal.style.display = 'none';
+            });
+        }
+        
+        async function loadPayMemberList() {
+            const keyword = document.getElementById('payMemberSearch').value.trim();
+            const data = await dataManager.getData();
+            const members = dataManager.searchMembers(data, keyword);
+            const listEl = document.getElementById('payMemberList');
+            
+            listEl.innerHTML = '';
+            
+            if (members.length === 0) {
+                listEl.innerHTML = '<div class="empty-state"><p>暂无会员</p></div>';
+                return;
+            }
+            
+            members.forEach(member => {
+                const item = document.createElement('div');
+                item.className = 'member-item';
+                item.innerHTML = `
+                    <div class="member-info">
+                        <div class="name">${member.name}</div>
+                        <div class="phone">${member.phone}</div>
+                    </div>
+                    <div class="member-balance-small">
+                        <div class="label">余额</div>
+                        <div class="value">¥${member.balance}</div>
+                    </div>
+                `;
+                
+                item.addEventListener('click', async () => {
+                    if (member.balance < totalAmount) {
+                        showNotification(`余额不足！当前余额：¥${member.balance}`, 'error');
+                        return;
+                    }
+                    
+                    document.getElementById('memberSelectModal').style.display = 'none';
+                    
+                    // 构建服务描述
+                    const customInput = document.getElementById('customAmountInput');
+                    const customValue = customInput ? (parseInt(customInput.value) || 0) : 0;
+                    let serviceNames = selectedServices.map(s => s.name).join(' + ');
+                    if (customValue > 0) {
+                        serviceNames = serviceNames ? `${serviceNames} + 自定义�?{customValue}` : `自定义服务�?{customValue}`;
+                    }
+                    
+                    await dataManager.memberConsume(member.id, totalAmount, serviceNames);
+                    
+                    clearServiceSelection();
+                    totalAmount = 0;
+                    await loadDataToPage();
+                });
+                
+                listEl.appendChild(item);
+            });
+        }
+        
+        // ==================== 导航初始�?====================
+        function initializeNavigation() {
+            const navItems = document.querySelectorAll('.nav-item');
+            const homeContainer = document.querySelector('.container');
+            
+            navItems.forEach(item => {
+                item.addEventListener('click', async () => {
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    item.classList.add('active');
+                    
+                    const tab = item.getAttribute('data-tab');
+                    
+                    // 隐藏所有页�?                    homeContainer.style.display = 'none';
+                    document.getElementById('ordersPage').classList.remove('active');
+                    document.getElementById('membersPage').classList.remove('active');
+                    document.getElementById('reportsPage').classList.remove('active');
+                    document.getElementById('settingsPage').classList.remove('active');
+                    
+                    switch(tab) {
+                        case 'home':
+                            homeContainer.style.display = 'flex';
+                            break;
+                        case 'orders':
+                            document.getElementById('ordersPage').classList.add('active');
+                            await loadOrdersPage();
+                            break;
+                        case 'members':
+                            document.getElementById('membersPage').classList.add('active');
+                            await loadMembersPage();
+                            break;
+                        case 'reports':
+                            document.getElementById('reportsPage').classList.add('active');
+                            await loadReportsPage();
+                            break;
+                        case 'settings':
+                            document.getElementById('settingsPage').classList.add('active');
+                            await loadSettingsPage();
+                            break;
+                    }
+                });
+            });
+            
+            // 订单筛�?            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', async () => {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    await filterOrders(btn.dataset.filter);
+                });
+            });
+            
+            // 报表标签切换
+            document.querySelectorAll('.report-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    document.querySelectorAll('.report-tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.report-content').forEach(c => c.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(`${tab.dataset.report}Report`).classList.add('active');
+                });
+            });
+            
+            // 导出数据
+            document.getElementById('exportDataBtn').addEventListener('click', async () => {
+                const data = await dataManager.getData();
+                const exportData = {
+                    exportTime: new Date().toISOString(),
+                    today: data.today,
+                    month: data.month,
+                    orders: data.allOrders,
+                    members: data.members,
+                    transactions: data.transactions
+                };
+                
+                const dataStr = JSON.stringify(exportData, null, 2);
+                const dataBlob = new Blob([dataStr], { type: 'application/json' });
+                const url = URL.createObjectURL(dataBlob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `zimi-nail-salon-${new Date().toISOString().slice(0, 10)}.json`;
+                link.click();
+                URL.revokeObjectURL(url);
+                
+                showNotification('数据导出成功�?, 'success');
+            });
+        }
+        
+        // ==================== 页面加载函数 ====================
+        async function loadOrdersPage() {
+            const data = await dataManager.getData();
+            const listEl = document.getElementById('ordersListFull');
+            
+            if (data.allOrders.length === 0) {
+                listEl.innerHTML = '<div class="empty-state"><span style="font-size: 40px;">📋</span><p>暂无订单记录</p></div>';
+                return;
+            }
+            
+            renderOrders(data.allOrders);
+        }
+        
+        async function filterOrders(filter) {
+            const data = await dataManager.getData();
+            const now = new Date();
+            const today = getDateString(now);
+            
+            let filtered = [...data.allOrders];
+            
+            if (filter === 'today') {
+                filtered = filtered.filter(o => o.date === today);
+            } else if (filter === 'week') {
+                const weekRange = getWeekRange(now);
+                filtered = filtered.filter(o => isDateInRange(o.date, weekRange.start, weekRange.end));
+            } else if (filter === 'month') {
+                const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+                filtered = filtered.filter(o => new Date(o.date) >= monthStart);
+            }
+            
+            renderOrders(filtered);
+        }
+        
+        function renderOrders(orders) {
+            const listEl = document.getElementById('ordersListFull');
+            
+            if (orders.length === 0) {
+                listEl.innerHTML = '<div class="empty-state"><span style="font-size: 40px;">📋</span><p>暂无符合条件的订�?/p></div>';
+                return;
+            }
+            
+            // 按日期分�?            const grouped = {};
+            orders.forEach(order => {
+                if (!grouped[order.date]) grouped[order.date] = [];
+                grouped[order.date].push(order);
+            });
+            
+            const sortedDates = Object.keys(grouped).sort((a, b) => new Date(b) - new Date(a));
+            
+            listEl.innerHTML = '';
+            
+            sortedDates.forEach(date => {
+                const group = document.createElement('div');
+                group.className = 'order-date-group';
+                
+                const header = document.createElement('div');
+                header.className = 'order-date-header';
+                header.textContent = date;
+                group.appendChild(header);
+                
+                grouped[date].forEach(order => {
+                    const item = document.createElement('div');
+                    item.className = 'order-item-full';
+                    item.innerHTML = `
+                        <div class="order-item-info">
+                            <h4>订单 #${order.id}</h4>
+                            <p>${order.time}</p>
+                        </div>
+                        <div class="order-item-amount">¥${order.amount}</div>
+                    `;
+                    group.appendChild(item);
+                });
+                
+                listEl.appendChild(group);
+            });
+        }
+        
+        async function loadMembersPage() {
+            const data = await dataManager.getData();
+            const listEl = document.getElementById('memberList');
+            
+            if (!data.members || data.members.length === 0) {
+                listEl.innerHTML = '<div class="empty-state"><span style="font-size: 40px;">👑</span><p>暂无会员</p></div>';
+                return;
+            }
+            
+            listEl.innerHTML = '';
+            
+            // 按余额排�?            const sorted = [...data.members].sort((a, b) => b.balance - a.balance);
+            
+            sorted.forEach(member => {
+                const item = document.createElement('div');
+                item.className = 'member-item';
+                item.innerHTML = `
+                    <div class="member-info">
+                        <div class="name">${member.name}</div>
+                        <div class="phone">${member.phone}</div>
+                    </div>
+                    <div class="member-balance-small">
+                        <div class="label">余额</div>
+                        <div class="value">¥${member.balance}</div>
+                    </div>
+                `;
+                
+                item.addEventListener('click', () => showMemberDetail(member));
+                listEl.appendChild(item);
+            });
+            
+            // 搜索功能
+            document.getElementById('searchMemberBtn').onclick = async () => {
+                const keyword = document.getElementById('memberSearchInput').value.trim();
+                const filtered = dataManager.searchMembers(data, keyword);
+                
+                listEl.innerHTML = '';
+                
+                if (filtered.length === 0) {
+                    listEl.innerHTML = '<div class="empty-state"><p>未找到匹配的会员</p></div>';
+                    return;
+                }
+                
+                filtered.forEach(member => {
+                    const item = document.createElement('div');
+                    item.className = 'member-item';
+                    item.innerHTML = `
+                        <div class="member-info">
+                            <div class="name">${member.name}</div>
+                            <div class="phone">${member.phone}</div>
+                        </div>
+                        <div class="member-balance-small">
+                            <div class="label">余额</div>
+                            <div class="value">¥${member.balance}</div>
+                        </div>
+                    `;
+                    item.addEventListener('click', () => showMemberDetail(member));
+                    listEl.appendChild(item);
+                });
+            };
+        }
+        
+        function showMemberDetail(member) {
+            currentRechargeMember = member;
+            
+            document.getElementById('detailMemberName').textContent = member.name;
+            document.getElementById('detailMemberPhone').textContent = member.phone;
+            document.getElementById('detailMemberBalance').textContent = `¥${member.balance}`;
+            
+            // 渲染交易记录
+            const transList = document.getElementById('memberTransactionList');
+            
+            if (!member.transactions || member.transactions.length === 0) {
+                transList.innerHTML = '<div style="text-align: center; color: var(--text-light); padding: 20px;">暂无记录</div>';
+            } else {
+                transList.innerHTML = '';
+                member.transactions.slice().reverse().forEach(t => {
+                    const item = document.createElement('div');
+                    item.className = 'order-item-full';
+                    
+                    const time = new Date(t.time).toLocaleString('zh-CN', { 
+                        month: 'numeric', 
+                        day: 'numeric', 
+                        hour: '2-digit', 
+                        minute: '2-digit' 
+                    });
+                    
+                    if (t.type === 'recharge') {
+                        item.innerHTML = `
+                            <div class="order-item-info">
+                                <h4 style="color: #4CAF50;">💰 充�?/h4>
+                                <p>${time}${t.bonus > 0 ? ` (送�?{t.bonus})` : ''}</p>
+                            </div>
+                            <div class="order-item-amount" style="color: #4CAF50;">+¥${t.amount}</div>
+                        `;
+                    } else {
+                        item.innerHTML = `
+                            <div class="order-item-info">
+                                <h4>🛒 消费</h4>
+                                <p>${time}</p>
+                            </div>
+                            <div class="order-item-amount">-¥${t.amount}</div>
+                        `;
+                    }
+                    
+                    transList.appendChild(item);
+                });
+            }
+            
+            document.getElementById('memberDetailModal').style.display = 'flex';
+        }
+        
+        async function loadReportsPage() {
+            const stats = await dataManager.getMemberStats();
+            
+            // 日报
+            document.getElementById('reportTodayOrders').textContent = stats.today.orders;
+            document.getElementById('reportTodayIncome').textContent = stats.today.income.toLocaleString();
+            document.getElementById('reportTodayRecharge').textContent = stats.today.recharge.toLocaleString();
+            document.getElementById('reportTodayCustomers').textContent = stats.today.customers;
+            document.getElementById('reportTodayAvg').textContent = 
+                stats.today.orders > 0 ? Math.round(stats.today.income / stats.today.orders) : 0;
+            
+            // 周报（修复：使用真实周数据）
+            document.getElementById('reportWeekOrders').textContent = stats.week.orders;
+            document.getElementById('reportWeekIncome').textContent = stats.week.income.toLocaleString();
+            document.getElementById('reportWeekRecharge').textContent = stats.week.recharge.toLocaleString();
+            const weekDays = Math.min(7, Math.ceil((new Date() - getWeekRange(new Date()).start) / (1000 * 60 * 60 * 24)) + 1);
+            document.getElementById('reportWeekAvg').textContent = 
+                weekDays > 0 ? Math.round(stats.week.income / weekDays) : 0;
+            
+            // 月报（修复：使用真实月数据）
+            document.getElementById('reportMonthOrders').textContent = stats.month.orders;
+            document.getElementById('reportMonthIncome').textContent = stats.month.income.toLocaleString();
+            document.getElementById('reportMonthRecharge').textContent = stats.month.recharge.toLocaleString();
+            const monthDays = new Date().getDate();
+            document.getElementById('reportMonthAvg').textContent = 
+                monthDays > 0 ? Math.round(stats.month.income / monthDays) : 0;
+            
+            // 年报（修复：使用真实年数据）
+            document.getElementById('reportYearOrders').textContent = stats.year.orders;
+            document.getElementById('reportYearIncome').textContent = stats.year.income.toLocaleString();
+            document.getElementById('reportYearRecharge').textContent = stats.year.recharge.toLocaleString();
+            const yearMonths = new Date().getMonth() + 1;
+            document.getElementById('reportYearAvg').textContent = 
+                yearMonths > 0 ? Math.round(stats.year.income / yearMonths) : 0;
+        }
+        
+        async function loadSettingsPage() {
+            const data = await dataManager.getData();
+            
+            document.getElementById('settingsTodayOrders').textContent = data.today.orders;
+            document.getElementById('settingsTodayIncome').textContent = data.today.income.toLocaleString();
+            document.getElementById('settingsTotalOrders').textContent = data.allOrders.length;
+            document.getElementById('settingsTotalMembers').textContent = data.members?.length || 0;
+        }
+        
+        // ==================== 备份和清零按�?====================
+        function initializeBackupButtons() {
+            const backupBtn = document.getElementById('manualBackupBtn');
+            
+            backupBtn.addEventListener('click', async function() {
+                backupBtn.disabled = true;
+                backupBtn.textContent = '�?备份�?..';
+                
+                const success = await dataManager.backupToCloud();
+                
+                if (success) {
+                    const now = new Date().toLocaleString('zh-CN').slice(0, 16);
+                    document.getElementById('lastBackupTime').textContent = now;
+                    document.getElementById('backupStatus').textContent = '☁️ 已同步到云端';
+                    document.getElementById('backupStatus').style.color = '#4CAF50';
+                    showNotification('备份成功！数据已同步到云�?, 'success');
+                } else {
+                    showNotification('云端备份失败，请检查网络连�?, 'error');
+                }
+                
+                backupBtn.disabled = false;
+                backupBtn.textContent = '☁️ 备份';
+            });
+        }
+        
+        function initializeClearButtons() {
+            const dailyBtn = document.getElementById('dailyClearBtn');
+            const monthlyBtn = document.getElementById('monthlyClearBtn');
+            const clearAllBtn = document.getElementById('clearAllDataBtn');
+            
+            dailyBtn.addEventListener('click', () => {
+                showClearConfirm('daily', '重置当日数据', '此操作将清空今日的所有订单、收入和客户数据�?);
+            });
+            
+            monthlyBtn.addEventListener('click', () => {
+                showClearConfirm('monthly', '重置当月数据', '此操作将清空本月的所有统计数据�?);
+            });
+            
+            clearAllBtn.addEventListener('click', () => {
+                showClearConfirm('all', '清空所有数�?, '此操作将清空所有历史数据，包括订单、会员和交易记录�?);
+            });
+        }
+        
+        function showClearConfirm(type, title, desc) {
             const modal = document.getElementById('clearConfirmModal');
-            const modalTitle = document.getElementById('clearModalTitle');
-            const confirmMessage = document.getElementById('clearConfirmMessage');
-            const confirmDesc = document.getElementById('clearConfirmDesc');
-            const confirmBtn = document.getElementById('confirmClearBtn');
-            const cancelBtn = document.getElementById('cancelClearBtn');
-            const closeBtn = document.getElementById('closeClearModal');
             
-            modalTitle.textContent = title;
-            confirmMessage.textContent = `确认${title}吗？`;
-            confirmDesc.textContent = description;
+            document.getElementById('clearModalTitle').textContent = title;
+            document.getElementById('clearConfirmMessage').textContent = `确认${title}吗？`;
+            document.getElementById('clearConfirmDesc').textContent = desc;
             
             modal.style.display = 'flex';
             
+            // 移除旧事件监听器
+            const confirmBtn = document.getElementById('confirmClearBtn');
             const newConfirmBtn = confirmBtn.cloneNode(true);
             confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
             
-            const newCancelBtn = cancelBtn.cloneNode(true);
-            cancelBtn.parentNode.replaceChild(newCancelBtn, cancelBtn);
-            
-            const newCloseBtn = closeBtn.cloneNode(true);
-            closeBtn.parentNode.replaceChild(newCloseBtn, closeBtn);
-            
-newConfirmBtn.addEventListener('click', async function() {
+            newConfirmBtn.addEventListener('click', async () => {
                 if (type === 'daily') {
                     await dataManager.resetDailyData();
                 } else if (type === 'monthly') {
@@ -1845,561 +3144,13 @@ newConfirmBtn.addEventListener('click', async function() {
                 await loadDataToPage();
             });
             
-            newCancelBtn.addEventListener('click', function() {
-                modal.style.display = 'none';
-            });
+            document.getElementById('cancelClearBtn').onclick = () => modal.style.display = 'none';
+            document.getElementById('closeClearModal').onclick = () => modal.style.display = 'none';
             
-            newCloseBtn.addEventListener('click', function() {
-                modal.style.display = 'none';
-            });
-            
-            modal.addEventListener('click', function(e) {
-                if (e.target === modal) {
-                    modal.style.display = 'none';
-                }
-            });
-        }
-        
-        // 绑定备份按钮事件
-        function bindBackupButtons() {
-            const manualBackupBtn = document.getElementById('manualBackupBtn');
-            const restoreCloudBtn = document.getElementById('restoreCloudBtn');
-
-            if (manualBackupBtn) {
-                manualBackupBtn.addEventListener('click', async function() {
-                    manualBackupBtn.disabled = true;
-                    manualBackupBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 备份中...';
-
-                    const success = await dataManager.backupToCloud();
-
-                    if (success) {
-                        const now = new Date().toLocaleString('zh-CN').slice(0, 16);
-                        document.getElementById('lastBackupTime').textContent = now;
-                        document.getElementById('backupStatus').textContent = '☁️ 已同步到云端';
-                        document.getElementById('backupStatus').style.color = '#4CAF50';
-                        dataManager.showNotification('备份成功！数据已同步到云端 ☁️', 'success');
-                    } else {
-                        dataManager.showNotification('云端备份失败，请检查网络连接', 'error');
-                    }
-
-                    manualBackupBtn.disabled = false;
-                    manualBackupBtn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> 备份到云端';
-                });
-            }
-
-            if (restoreCloudBtn) {
-                restoreCloudBtn.addEventListener('click', async function() {
-                    if (!confirm('确认从云端恢复数据？这将覆盖本地当前数据！')) return;
-
-                    restoreCloudBtn.disabled = true;
-                    restoreCloudBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 恢复中...';
-
-                    const cloudData = await dataManager.restoreFromCloud();
-
-                    if (cloudData) {
-                        await loadDataToPage();
-                        const backupTime = cloudData.lastBackup || '未知';
-                        dataManager.showNotification(`数据恢复成功！备份时间：${backupTime}`, 'success');
-                    } else {
-                        dataManager.showNotification('云端暂无备份数据，请先备份', 'warning');
-                    }
-
-                    restoreCloudBtn.disabled = false;
-                    restoreCloudBtn.innerHTML = '<i class="fas fa-cloud-download-alt"></i> 从云端恢复';
-                });
-            }
-        }
-        
-        // 初始化原有功能
-        function initializeOriginalFunctions() {
-            // 更新当前日期时间
-            function updateDateTime() {
-                const now = new Date();
-                const year = now.getFullYear();
-                const month = now.getMonth() + 1;
-                const date = now.getDate();
-                const day = now.getDay();
-                const hours = now.getHours().toString().padStart(2, '0');
-                const minutes = now.getMinutes().toString().padStart(2, '0');
-                
-                const days = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
-                const dayName = days[day];
-                
-                const dateTimeStr = `${year}年${month}月${date}日 ${dayName} ${hours}:${minutes}`;
-                document.getElementById('currentDateTime').textContent = dateTimeStr;
-            }
-            
-            updateDateTime();
-            setInterval(updateDateTime, 60000);
-            
-            // 快速开单功能
-            const quickOrderBtn = document.getElementById('quickOrderBtn');
-            const quickOrderModal = document.getElementById('quickOrderModal');
-            const closeOrderModal = document.getElementById('closeOrderModal');
-            const serviceItems = document.querySelectorAll('.service-item');
-            const orderTotal = document.getElementById('orderTotal');
-            const clearSelectionBtn = document.getElementById('clearSelection');
-            const confirmOrderBtn = document.getElementById('confirmOrder');
-            
-            const customAmountItem = document.getElementById('customAmountItem');
-            const customAmountInput = document.getElementById('customAmountInput');
-            const customAmountDisplay = document.getElementById('customAmountDisplay');
-            
-            let selectedServices = [];
-            let totalAmount = 0;
-            let customAmountSelected = false;
-            let customAmountValue = 0;
-            
-            quickOrderBtn.addEventListener('click', () => {
-                quickOrderModal.style.display = 'flex';
-            });
-            
-            closeOrderModal.addEventListener('click', () => {
-                quickOrderModal.style.display = 'none';
-            });
-            
-            serviceItems.forEach(item => {
-                if (item.id === 'customAmountItem') return;
-                
-                item.addEventListener('click', () => {
-                    const price = parseInt(item.getAttribute('data-price'));
-                    const serviceName = item.querySelector('.service-name').textContent;
-                    
-                    const index = selectedServices.findIndex(s => s.name === serviceName);
-                    
-                    if (index === -1) {
-                        selectedServices.push({ name: serviceName, price: price });
-                        item.style.backgroundColor = 'var(--light-pink)';
-                        item.style.borderRadius = '10px';
-                    } else {
-                        selectedServices.splice(index, 1);
-                        item.style.backgroundColor = '';
-                    }
-                    
-                    updateTotalAmount();
-                });
-            });
-            
-            customAmountInput.addEventListener('input', function() {
-                const value = parseInt(this.value) || 0;
-                customAmountValue = value;
-                customAmountDisplay.textContent = `¥${value}`;
-                
-                if (value > 0) {
-                    if (!customAmountSelected) {
-                        customAmountSelected = true;
-                        customAmountItem.style.backgroundColor = 'var(--light-pink)';
-                        customAmountItem.style.borderRadius = '10px';
-                    }
-                } else {
-                    if (customAmountSelected) {
-                        customAmountSelected = false;
-                        customAmountItem.style.backgroundColor = '';
-                    }
-                }
-                
-                updateTotalAmount();
-            });
-            
-            customAmountItem.addEventListener('click', function(e) {
-                if (e.target !== customAmountInput) {
-                    customAmountInput.focus();
-                }
-            });
-            
-            function updateTotalAmount() {
-                totalAmount = selectedServices.reduce((sum, service) => sum + service.price, 0);
-                
-                if (customAmountSelected && customAmountValue > 0) {
-                    totalAmount += customAmountValue;
-                }
-                
-                orderTotal.textContent = `¥${totalAmount}`;
-            }
-            
-            clearSelectionBtn.addEventListener('click', () => {
-                selectedServices = [];
-                serviceItems.forEach(item => {
-                    if (item.id !== 'customAmountItem') {
-                        item.style.backgroundColor = '';
-                    }
-                });
-                
-                customAmountInput.value = '';
-                customAmountDisplay.textContent = '¥0';
-                customAmountSelected = false;
-                customAmountValue = 0;
-                customAmountItem.style.backgroundColor = '';
-                
-                updateTotalAmount();
-            });
-            
-            confirmOrderBtn.addEventListener('click', async () => {
-                if (selectedServices.length === 0 && customAmountValue === 0) {
-                    alert('请至少选择一项服务或输入自定义金额');
-                    return;
-                }
-                
-                let serviceNames = selectedServices.map(s => s.name).join(' + ');
-                
-                if (customAmountValue > 0) {
-                    if (serviceNames) {
-                        serviceNames += ` + 自定义¥${customAmountValue}`;
-                    } else {
-                        serviceNames = `自定义服务¥${customAmountValue}`;
-                    }
-                }
-                
-                const result = await dataManager.addOrder(totalAmount, serviceNames);
-                
-                await loadDataToPage();
-                
-                document.getElementById('amountToCollect').textContent = `¥${totalAmount}`;
-                
-                quickOrderModal.style.display = 'none';
-                collectMoneyModal.style.display = 'flex';
-                
-                selectedServices = [];
-                serviceItems.forEach(item => {
-                    if (item.id !== 'customAmountItem') {
-                        item.style.backgroundColor = '';
-                    }
-                });
-                
-                customAmountInput.value = '';
-                customAmountDisplay.textContent = '¥0';
-                customAmountSelected = false;
-                customAmountValue = 0;
-                customAmountItem.style.backgroundColor = '';
-                
-                updateTotalAmount();
-            });
-            
-            // 收款功能
-            const collectMoneyBtn = document.getElementById('collectMoneyBtn');
-            const collectMoneyModal = document.getElementById('collectMoneyModal');
-            const closeCollectModal = document.getElementById('closeCollectModal');
-            const closeCollectBtn = document.getElementById('closeCollectBtn');
-            const wechatPayBtn = document.getElementById('wechatPayBtn');
-            const alipayBtn = document.getElementById('alipayBtn');
-            const cashPayBtn = document.getElementById('cashPayBtn');
-            
-            collectMoneyBtn.addEventListener('click', () => {
-                if (totalAmount === 0) {
-                    alert('请先创建订单');
-                    return;
-                }
-                
-                document.getElementById('amountToCollect').textContent = `¥${totalAmount}`;
-                collectMoneyModal.style.display = 'flex';
-            });
-            
-            closeCollectModal.addEventListener('click', () => {
-                collectMoneyModal.style.display = 'none';
-            });
-            
-            closeCollectBtn.addEventListener('click', () => {
-                collectMoneyModal.style.display = 'none';
-            });
-            
-            function processPayment(method) {
-                setTimeout(() => {
-                    alert(`支付成功！收款¥${totalAmount}（${method}）`);
-                    collectMoneyModal.style.display = 'none';
-                    totalAmount = 0;
-                    document.getElementById('amountToCollect').textContent = '¥0';
-                }, 500);
-            }
-            
-            wechatPayBtn.addEventListener('click', () => processPayment('微信支付'));
-            alipayBtn.addEventListener('click', () => processPayment('支付宝'));
-            cashPayBtn.addEventListener('click', () => processPayment('现金支付'));
-            
-            // 账单查询功能
-            const viewBillsBtn = document.getElementById('viewBillsBtn');
-            viewBillsBtn.addEventListener('click', async () => {
-                const data = await dataManager.getData();
-                alert(`账单查询功能：\n\n今日收入：¥${data.today.income.toLocaleString()}\n本月收入：¥${data.month.income.toLocaleString()}\n历史总收入：¥${(data.today.income + data.month.income).toLocaleString()}\n\n详细账单请在"报表"页面查看。`);
-            });
-            
-            // 客户管理功能
-            const customerManageBtn = document.getElementById('customerManageBtn');
-            customerManageBtn.addEventListener('click', async () => {
-                const data = await dataManager.getData();
-                alert(`客户管理功能：\n\n今日客户：${data.today.customers}人\n本月客户：${data.month.customers}人\n总服务客户：${data.today.customers + data.month.customers}人\n\n点击"设置"页面可查看详细客户信息。`);
-            });
-            
-            // 底部导航切换
-            const navItems = document.querySelectorAll('.nav-item');
-            const homeContainer = document.querySelector('.container');
-            const ordersPage = document.getElementById('ordersPage');
-            const reportsPage = document.getElementById('reportsPage');
-            const settingsPage = document.getElementById('settingsPage');
-            
-            function showPage(pageName) {
-                homeContainer.style.display = 'none';
-                ordersPage.classList.remove('active');
-                reportsPage.classList.remove('active');
-                settingsPage.classList.remove('active');
-                
-                switch(pageName) {
-                    case 'home':
-                        homeContainer.style.display = 'flex';
-                        break;
-                    case 'orders':
-                        ordersPage.classList.add('active');
-                        loadOrdersPage();
-                        break;
-                    case 'reports':
-                        reportsPage.classList.add('active');
-                        loadReportsPage();
-                        break;
-                    case 'settings':
-                        settingsPage.classList.add('active');
-                        loadSettingsPage();
-                        break;
-                }
-            }
-            
-            navItems.forEach(item => {
-                item.addEventListener('click', () => {
-                    navItems.forEach(nav => nav.classList.remove('active'));
-                    item.classList.add('active');
-                    
-                    const tab = item.getAttribute('data-tab');
-                    showPage(tab);
-                });
-            });
-            
-            // 加载订单页面
-            async function loadOrdersPage() {
-                const data = await dataManager.getData();
-                const ordersListFull = document.getElementById('ordersListFull');
-                
-                if (!ordersListFull) return;
-                
-                ordersListFull.innerHTML = '';
-                
-                if (data.allOrders.length === 0) {
-                    ordersListFull.innerHTML = `
-                        <div class="empty-state">
-                            <i class="fas fa-clipboard-list"></i>
-                            <p>暂无订单记录</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                const groupedOrders = {};
-                data.allOrders.forEach(order => {
-                    if (!groupedOrders[order.date]) {
-                        groupedOrders[order.date] = [];
-                    }
-                    groupedOrders[order.date].push(order);
-                });
-                
-                const sortedDates = Object.keys(groupedOrders).sort((a, b) => new Date(b) - new Date(a));
-                
-                sortedDates.forEach(date => {
-                    const dateGroup = document.createElement('div');
-                    dateGroup.className = 'order-date-group';
-                    
-                    const dateHeader = document.createElement('div');
-                    dateHeader.className = 'order-date-header';
-                    dateHeader.textContent = date;
-                    dateGroup.appendChild(dateHeader);
-                    
-                    groupedOrders[date].forEach(order => {
-                        const orderItem = document.createElement('div');
-                        orderItem.className = 'order-item-full';
-                        orderItem.innerHTML = `
-                            <div class="order-item-info">
-                                <h4>订单 #${order.id}</h4>
-                                <p>${order.time}</p>
-                            </div>
-                            <div class="order-item-amount">¥${order.amount}</div>
-                        `;
-                        dateGroup.appendChild(orderItem);
-                    });
-                    
-                    ordersListFull.appendChild(dateGroup);
-                });
-            }
-            
-            // 加载报表页面
-            async function loadReportsPage() {
-                const data = await dataManager.getData();
-                
-                document.getElementById('reportTodayOrders').textContent = data.today.orders;
-                document.getElementById('reportTodayIncome').textContent = data.today.income.toLocaleString();
-                document.getElementById('reportTodayCustomers').textContent = data.today.customers;
-                document.getElementById('reportTodayAvg').textContent = data.today.orders > 0 ? Math.round(data.today.income / data.today.orders) : 0;
-                
-                const today = new Date();
-                const dayOfWeek = today.getDay() || 7;
-                const weekDays = ['日', '一', '二', '三', '四', '五', '六'];
-                document.getElementById('reportWeekOrders').textContent = data.today.orders;
-                document.getElementById('reportWeekIncome').textContent = data.today.income.toLocaleString();
-                document.getElementById('reportWeekCustomers').textContent = data.today.customers;
-                document.getElementById('reportWeekAvg').textContent = data.today.orders > 0 ? Math.round(data.today.income / data.today.orders) : 0;
-                
-                document.getElementById('reportMonthOrders').textContent = data.month.orders;
-                document.getElementById('reportMonthIncome').textContent = data.month.income.toLocaleString();
-                document.getElementById('reportMonthCustomers').textContent = data.month.customers;
-                document.getElementById('reportMonthAvg').textContent = data.month.orders > 0 ? Math.round(data.month.income / data.month.orders) : 0;
-                
-                const yearOrders = data.month.orders + data.today.orders;
-                const yearIncome = data.month.income + data.today.income;
-                const yearCustomers = data.month.customers + data.today.customers;
-                
-                document.getElementById('reportYearOrders').textContent = yearOrders;
-                document.getElementById('reportYearIncome').textContent = yearIncome.toLocaleString();
-                document.getElementById('reportYearCustomers').textContent = yearCustomers;
-                document.getElementById('reportYearAvg').textContent = yearOrders > 0 ? Math.round(yearIncome / yearOrders) : 0;
-            }
-            
-            // 加载设置页面
-            async function loadSettingsPage() {
-                const data = await dataManager.getData();
-                
-                document.getElementById('settingsTodayOrders').textContent = data.today.orders;
-                document.getElementById('settingsTodayIncome').textContent = data.today.income.toLocaleString();
-                document.getElementById('settingsTotalOrders').textContent = data.allOrders.length;
-                document.getElementById('settingsLastBackup').textContent = new Date(data.lastBackup).toLocaleString('zh-CN').slice(0, 16);
-            }
-            
-            // 订单筛选
-            const filterBtns = document.querySelectorAll('.filter-btn');
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    filterBtns.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    
-                    const filter = btn.getAttribute('data-filter');
-                    filterOrders(filter);
-                });
-            });
-            
-            async function filterOrders(filter) {
-                const data = await dataManager.getData();
-                const ordersListFull = document.getElementById('ordersListFull');
-                
-                if (!ordersListFull) return;
-                
-                let filteredOrders = [...data.allOrders];
-                const today = dataManager.getDateString(new Date());
-                
-                if (filter === 'today') {
-                    filteredOrders = filteredOrders.filter(order => order.date === today);
-                } else if (filter === 'week') {
-                    const now = new Date();
-                    const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-                    filteredOrders = filteredOrders.filter(order => new Date(order.date) >= weekAgo);
-                } else if (filter === 'month') {
-                    const now = new Date();
-                    const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
-                    filteredOrders = filteredOrders.filter(order => new Date(order.date) >= monthStart);
-                }
-                
-                ordersListFull.innerHTML = '';
-                
-                if (filteredOrders.length === 0) {
-                    ordersListFull.innerHTML = `
-                        <div class="empty-state">
-                            <i class="fas fa-clipboard-list"></i>
-                            <p>暂无符合条件的订单</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                const groupedOrders = {};
-                filteredOrders.forEach(order => {
-                    if (!groupedOrders[order.date]) {
-                        groupedOrders[order.date] = [];
-                    }
-                    groupedOrders[order.date].push(order);
-                });
-                
-                const sortedDates = Object.keys(groupedOrders).sort((a, b) => new Date(b) - new Date(a));
-                
-                sortedDates.forEach(date => {
-                    const dateGroup = document.createElement('div');
-                    dateGroup.className = 'order-date-group';
-                    
-                    const dateHeader = document.createElement('div');
-                    dateHeader.className = 'order-date-header';
-                    dateHeader.textContent = date;
-                    dateGroup.appendChild(dateHeader);
-                    
-                    groupedOrders[date].forEach(order => {
-                        const orderItem = document.createElement('div');
-                        orderItem.className = 'order-item-full';
-                        orderItem.innerHTML = `
-                            <div class="order-item-info">
-                                <h4>订单 #${order.id}</h4>
-                                <p>${order.time}</p>
-                            </div>
-                            <div class="order-item-amount">¥${order.amount}</div>
-                        `;
-                        dateGroup.appendChild(orderItem);
-                    });
-                    
-                    ordersListFull.appendChild(dateGroup);
-                });
-            }
-            
-            // 报表标签切换
-            const reportTabs = document.querySelectorAll('.report-tab');
-            const reportContents = document.querySelectorAll('.report-content');
-            
-            reportTabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    reportTabs.forEach(t => t.classList.remove('active'));
-                    reportContents.forEach(c => c.classList.remove('active'));
-                    
-                    tab.classList.add('active');
-                    const reportType = tab.getAttribute('data-report');
-                    document.getElementById(`${reportType}Report`).classList.add('active');
-                });
-            });
-            
-            // 导出数据
-            const exportDataBtn = document.getElementById('exportDataBtn');
-            if (exportDataBtn) {
-                exportDataBtn.addEventListener('click', async () => {
-                    const data = await dataManager.getData();
-                    const exportData = {
-                        exportTime: new Date().toISOString(),
-                        today: data.today,
-                        month: data.month,
-                        orders: data.allOrders
-                    };
-                    
-                    const dataStr = JSON.stringify(exportData, null, 2);
-                    const dataBlob = new Blob([dataStr], { type: 'application/json' });
-                    const url = URL.createObjectURL(dataBlob);
-                    const link = document.createElement('a');
-                    link.href = url;
-                    link.download = `nail-salon-data-${new Date().toISOString().slice(0, 10)}.json`;
-                    link.click();
-                    URL.revokeObjectURL(url);
-                    
-                    alert('数据导出成功！');
-                });
-            }
-            
-            // 点击模态框外部关闭
-            window.addEventListener('click', (e) => {
-                if (e.target === quickOrderModal) {
-                    quickOrderModal.style.display = 'none';
-                }
-                if (e.target === collectMoneyModal) {
-                    collectMoneyModal.style.display = 'none';
-                }
-            });
+            modal.onclick = (e) => {
+                if (e.target === modal) modal.style.display = 'none';
+            };
         }
     </script>
 </body>
 </html>
-
