@@ -1,1376 +1,155 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💅 ZIMI美甲美睫</title>
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="ZIMI">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=17">
-    <link rel="shortcut icon" type="image/png" href="favicon.svg?v=17">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=17">
-    <meta name="theme-color" content="#F2A8C2">
-    <meta property="og:title" content="ZIMI美甲美睫">
-    <meta property="og:type" content="website">
+    <title>ZIMI美甲美睫</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-        }
-        
-        :root {
-            --primary-pink: #F8D7E3;
-            --light-pink: #FDF2F7;
-            --accent-pink: #F2A8C2;
-            --text-dark: #5A5A5A;
-            --text-light: #888888;
-            --border-color: #E8D1DA;
-            --shadow: 0 4px 12px rgba(242, 168, 194, 0.1);
-            --gold: #FFD700;
-            --gold-light: #FFF8DC;
-        }
-        
-        body {
-            background-color: #FFFFFF;
-            color: var(--text-dark);
-            line-height: 1.6;
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 0;
-            min-height: 100vh;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.03);
-        }
-        
-        .container {
-            padding: 20px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        /* 头部样式 */
-        header {
-            text-align: center;
-            padding: 20px 0 30px;
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 25px;
-            position: relative;
-        }
-        
-        .app-title {
-            font-size: 24px;
-            font-weight: 300;
-            color: var(--accent-pink);
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-        }
-        
-        .shop-name {
-            font-size: 16px;
-            color: var(--text-light);
-            font-weight: 400;
-        }
-        
-        .date-time {
-            font-size: 14px;
-            color: var(--text-light);
-            margin-top: 10px;
-            background-color: var(--light-pink);
-            padding: 8px 15px;
-            border-radius: 20px;
-            display: inline-block;
-        }
-        
-        /* 功能按钮区域 */
-        .functions-section {
-            flex: 1;
-        }
-        
-        .section-title {
-            font-size: 18px;
-            margin-bottom: 20px;
-            color: var(--accent-pink);
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-        }
-        
-        .section-title i {
-            margin-right: 10px;
-        }
-        
-        .function-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        
-        .function-btn {
-            background-color: var(--light-pink);
-            border: 2px solid var(--primary-pink);
-            border-radius: 16px;
-            padding: 20px 15px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            color: inherit;
-        }
-        
-        .function-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow);
-            background-color: white;
-            border-color: var(--accent-pink);
-        }
-        
-        .function-btn i {
-            font-size: 28px;
-            color: var(--accent-pink);
-            margin-bottom: 10px;
-        }
-        
-        .function-btn .btn-title {
-            font-size: 16px;
-            font-weight: 500;
-            margin-bottom: 3px;
-        }
-        
-        .function-btn .btn-desc {
-            font-size: 12px;
-            color: var(--text-light);
-        }
-        
-        /* 会员按钮特殊样式 */
-        .function-btn.member-btn {
-            background: linear-gradient(135deg, var(--gold-light) 0%, #FFF 100%);
-            border-color: var(--gold);
-        }
-        
-        .function-btn.member-btn i {
-            color: #DAA520;
-        }
-        
-        /* 数据概览 */
-        .stats-section {
-            background-color: var(--light-pink);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 25px;
-            box-shadow: var(--shadow);
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            text-align: center;
-        }
-        
-        .stat-item {
-            padding: 12px 5px;
-        }
-        
-        .stat-value {
-            font-size: 22px;
-            font-weight: 600;
-            color: var(--accent-pink);
-            margin-bottom: 5px;
-        }
-        
-        .stat-label {
-            font-size: 13px;
-            color: var(--text-light);
-        }
-        
-        /* 数据周期信息 */
-        .period-info {
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px dashed var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .period-label {
-            font-size: 13px;
-            color: var(--text-light);
-        }
-        
-        .period-value {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--accent-pink);
-        }
-        
-        /* 清零管理区域 */
-        .clear-management {
-            background-color: var(--light-pink);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 25px;
-        }
-        
-        .clear-buttons {
-            display: flex;
-            gap: 12px;
-            margin-top: 15px;
-        }
-        
-        .clear-btn {
-            flex: 1;
-            padding: 10px;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            background-color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 13px;
-            font-weight: 500;
-        }
-        
-        .clear-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
-        
-        .clear-btn.daily {
-            border-color: var(--accent-pink);
-            color: var(--accent-pink);
-        }
-        
-        .clear-btn.monthly {
-            border-color: #6c5ce7;
-            color: #6c5ce7;
-        }
-        
-        /* 数据备份区域 */
-        .backup-section {
-            background-color: var(--light-pink);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 25px;
-        }
-        
-        .backup-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        /* 页面内容区域 */
-        .page-content {
-            display: none;
-            flex: 1;
-        }
-        
-        .page-content.active {
-            display: block;
-        }
-        
-        /* 页面头部 */
-        .page-header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px 0;
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 25px;
-            position: relative;
-        }
-        
-        .page-title {
-            font-size: 20px;
-            color: var(--accent-pink);
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .back-btn {
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            font-size: 18px;
-            color: var(--accent-pink);
-            cursor: pointer;
-            padding: 8px 12px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .back-btn:hover {
-            background-color: var(--light-pink);
-        }
-        
-        /* 模态框样式 */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 100;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .modal-content {
-            background-color: white;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 450px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-        
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .modal-title {
-            font-size: 20px;
-            color: var(--accent-pink);
-            font-weight: 500;
-        }
-        
-        .close-btn {
-            font-size: 24px;
-            color: var(--text-light);
-            cursor: pointer;
-            background: none;
-            border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-        
-        .close-btn:hover {
-            background-color: var(--light-pink);
-            color: var(--accent-pink);
-        }
-        
-        .service-list {
-            max-height: 280px;
-            overflow-y: auto;
-            margin-bottom: 20px;
-        }
-        
-        .service-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px;
-            border-bottom: 1px solid var(--border-color);
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        
-        .service-item:hover {
-            background-color: var(--light-pink);
-        }
-        
-        .service-item.selected {
-            background-color: var(--light-pink);
-            border-radius: 10px;
-        }
-        
-        .service-name {
-            font-size: 14px;
-        }
-        
-        .service-price {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--accent-pink);
-        }
-        
-        .total-section {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 15px;
-            border-top: 2px solid var(--border-color);
-            font-size: 18px;
-            font-weight: 600;
-        }
-        
-        .action-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-            gap: 10px;
-        }
-        
-        .btn {
-            padding: 12px 20px;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
-            flex: 1;
-        }
-        
-        .btn-primary {
-            background-color: var(--accent-pink);
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background-color: #e893b1;
-            transform: translateY(-2px);
-        }
-        
-        .btn-secondary {
-            background-color: var(--light-pink);
-            color: var(--text-dark);
-            border: 1px solid var(--border-color);
-        }
-        
-        .btn-secondary:hover {
-            background-color: #f9e4ec;
-        }
-        
-        .btn-danger {
-            background-color: #ff6b6b;
-            color: white;
-        }
-        
-        .btn-danger:hover {
-            background-color: #ff5252;
-        }
-        
-        .btn-gold {
-            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-            color: white;
-        }
-        
-        .btn-gold:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
-        }
-        
-        /* 底部导航 */
-        footer {
-            background-color: var(--light-pink);
-            border-top: 1px solid var(--border-color);
-            padding: 12px 0;
-            margin-top: auto;
-        }
-        
-        .nav-tabs {
-            display: flex;
-            justify-content: space-around;
-            list-style: none;
-        }
-        
-        .nav-item {
-            text-align: center;
-            cursor: pointer;
-            padding: 8px;
-            flex: 1;
-            transition: all 0.2s ease;
-            border-radius: 10px;
-        }
-        
-        .nav-item.active {
-            background-color: white;
-            box-shadow: 0 3px 10px rgba(242, 168, 194, 0.2);
-        }
-        
-        .nav-item i {
-            font-size: 20px;
-            color: var(--accent-pink);
-            margin-bottom: 3px;
-        }
-        
-        .nav-item span {
-            font-size: 12px;
-            color: var(--text-dark);
-            display: block;
-        }
-        
-        /* 订单页面样式 */
-        .orders-filter {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-        }
-        
-        .filter-btn {
-            padding: 6px 14px;
-            border: 1px solid var(--border-color);
-            background: white;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 13px;
-            transition: all 0.3s;
-        }
-        
-        .filter-btn.active {
-            background: var(--accent-pink);
-            color: white;
-            border-color: var(--accent-pink);
-        }
-        
-        .orders-list-full {
-            max-height: 450px;
-            overflow-y: auto;
-        }
-        
-        .order-date-group {
-            margin-bottom: 15px;
-        }
-        
-        .order-date-header {
-            font-size: 13px;
-            color: var(--text-light);
-            padding: 8px 0;
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 8px;
-        }
-        
-        .order-item-full {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px;
-            background: var(--light-pink);
-            border-radius: 10px;
-            margin-bottom: 8px;
-        }
-        
-        .order-item-info h4 {
-            font-size: 14px;
-            margin-bottom: 3px;
-        }
-        
-        .order-item-info p {
-            font-size: 12px;
-            color: var(--text-light);
-        }
-        
-        .order-item-amount {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--accent-pink);
-        }
-        
-        /* 报表页面样式 */
-        .report-tabs {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-        
-        .report-tab {
-            flex: 1;
-            padding: 10px;
-            text-align: center;
-            background: white;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 13px;
-        }
-        
-        .report-tab.active {
-            background: var(--accent-pink);
-            color: white;
-            border-color: var(--accent-pink);
-        }
-        
-        .report-content {
-            display: none;
-        }
-        
-        .report-content.active {
-            display: block;
-        }
-        
-        .report-card {
-            background: var(--light-pink);
-            border-radius: 16px;
-            padding: 18px;
-            margin-bottom: 15px;
-        }
-        
-        .report-card h3 {
-            font-size: 15px;
-            margin-bottom: 12px;
-            color: var(--text-dark);
-        }
-        
-        .report-stat-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px dashed var(--border-color);
-        }
-        
-        .report-stat-row:last-child {
-            border-bottom: none;
-        }
-        
-        .report-stat-label {
-            color: var(--text-light);
-            font-size: 14px;
-        }
-        
-        .report-stat-value {
-            font-weight: 600;
-            color: var(--accent-pink);
-            font-size: 14px;
-        }
-        
-        /* 设置页面样式 */
-        .settings-section {
-            background: var(--light-pink);
-            border-radius: 16px;
-            padding: 18px;
-            margin-bottom: 15px;
-        }
-        
-        .settings-section h3 {
-            font-size: 15px;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .settings-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        .settings-item:last-child {
-            border-bottom: none;
-        }
-        
-        .settings-label {
-            font-size: 14px;
-        }
-        
-        .settings-value {
-            color: var(--text-light);
-            font-size: 13px;
-        }
-        
-        .settings-btn {
-            padding: 6px 14px;
-            background: white;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 12px;
-        }
-        
-        .settings-btn:hover {
-            background: var(--accent-pink);
-            color: white;
-            border-color: var(--accent-pink);
-        }
-        
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--text-light);
-        }
-        
-        .empty-state i {
-            font-size: 40px;
-            margin-bottom: 12px;
-            color: var(--primary-pink);
-        }
-        
-        /* 会员模块样式 */
-        .member-card {
-            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 20px;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .member-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
-        }
-        
-        .member-card-content {
-            position: relative;
-            z-index: 1;
-        }
-        
-        .member-name {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-        
-        .member-phone {
-            font-size: 13px;
-            opacity: 0.9;
-            margin-bottom: 15px;
-        }
-        
-        .member-balance {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .balance-label {
-            font-size: 13px;
-            opacity: 0.9;
-        }
-        
-        .balance-value {
-            font-size: 28px;
-            font-weight: 700;
-        }
-        
-        .member-list {
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        
-        .member-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            background: var(--light-pink);
-            border-radius: 12px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .member-item:hover {
-            transform: translateX(5px);
-            box-shadow: var(--shadow);
-        }
-        
-        .member-info {
-            flex: 1;
-        }
-        
-        .member-info .name {
-            font-size: 15px;
-            font-weight: 500;
-            margin-bottom: 3px;
-        }
-        
-        .member-info .phone {
-            font-size: 12px;
-            color: var(--text-light);
-        }
-        
-        .member-balance-small {
-            text-align: right;
-        }
-        
-        .member-balance-small .label {
-            font-size: 11px;
-            color: var(--text-light);
-        }
-        
-        .member-balance-small .value {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--accent-pink);
-        }
-        
-        .recharge-packages {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin: 15px 0;
-        }
-        
-        .recharge-package {
-            padding: 15px;
-            background: var(--light-pink);
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .recharge-package:hover {
-            border-color: var(--accent-pink);
-            transform: translateY(-2px);
-        }
-        
-        .recharge-package.selected {
-            border-color: var(--accent-pink);
-            background: white;
-        }
-        
-        .recharge-package .amount {
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--accent-pink);
-        }
-        
-        .recharge-package .bonus {
-            font-size: 12px;
-            color: #FF6B6B;
-            margin-top: 5px;
-        }
-        
-        .recharge-package .desc {
-            font-size: 11px;
-            color: var(--text-light);
-            margin-top: 3px;
-        }
-        
-        .custom-recharge {
-            margin-top: 15px;
-        }
-        
-        .custom-recharge input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid var(--border-color);
-            border-radius: 10px;
-            font-size: 16px;
-            text-align: center;
-        }
-        
-        .custom-recharge input:focus {
-            outline: none;
-            border-color: var(--accent-pink);
-        }
-        
-        .search-box {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        
-        .search-box input {
-            flex: 1;
-            padding: 10px 15px;
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .search-box input:focus {
-            outline: none;
-            border-color: var(--accent-pink);
-        }
-        
-        .search-box button {
-            padding: 10px 20px;
-            background: var(--accent-pink);
-            color: white;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-        }
-        
-        .form-group {
-            margin-bottom: 15px;
-        }
-        
-        .form-group label {
-            display: block;
-            font-size: 14px;
-            color: var(--text-dark);
-            margin-bottom: 5px;
-        }
-        
-        .form-group input {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            font-size: 14px;
-        }
-        
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--accent-pink);
-        }
-        
-        /* 响应式调整 */
-        @media (max-width: 480px) {
-            .container {
-                padding: 15px;
-            }
-            
-            .function-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 10px;
-            }
-            
-            .stats-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 8px;
-            }
-            
-            .clear-buttons {
-                flex-direction: row;
-            }
-            
-            .recharge-packages {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'PingFang SC', sans-serif; }
+        :root { --primary: #F2A8C2; --light: #FDF2F7; --dark: #5A5A5A; --border: #E8D1DA; }
+        body { max-width: 500px; margin: 0 auto; background: #fff; min-height: 100vh; }
+        .container { padding: 20px; min-height: 100vh; display: flex; flex-direction: column; }
+        header { text-align: center; padding: 20px 0; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+        .app-title { font-size: 24px; color: var(--primary); font-weight: 300; }
+        .shop-name { font-size: 14px; color: var(--dark); margin-top: 5px; }
+        .section-title { font-size: 16px; margin: 20px 0 15px; color: var(--primary); font-weight: 500; }
+        .function-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+        .function-btn { background: var(--light); border: 2px solid var(--primary); border-radius: 12px; padding: 20px; text-align: center; cursor: pointer; transition: all 0.3s; }
+        .function-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(242,168,194,0.2); }
+        .function-btn i { font-size: 28px; display: block; margin-bottom: 8px; }
+        .function-btn .btn-title { font-size: 15px; font-weight: 500; }
+        .stats-section { background: var(--light); border-radius: 12px; padding: 15px; margin-bottom: 20px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; text-align: center; }
+        .stat-value { font-size: 20px; font-weight: 600; color: var(--primary); }
+        .stat-label { font-size: 12px; color: var(--dark); }
+        footer { background: var(--light); border-top: 1px solid var(--border); padding: 10px 0; margin-top: auto; }
+        .nav-tabs { display: flex; justify-content: space-around; list-style: none; }
+        .nav-item { text-align: center; padding: 8px 15px; cursor: pointer; border-radius: 8px; }
+        .nav-item.active { background: #fff; }
+        .page-content { display: none; padding: 20px; }
+        .page-content.active { display: block; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 100; justify-content: center; align-items: center; }
+        .modal-content { background: #fff; border-radius: 16px; width: 90%; max-width: 400px; padding: 20px; max-height: 80vh; overflow-y: auto; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .close-btn { font-size: 24px; cursor: pointer; background: none; border: none; }
+        .service-item { display: flex; justify-content: space-between; padding: 12px; border-bottom: 1px solid var(--border); cursor: pointer; }
+        .service-item:hover { background: var(--light); }
+        .service-item.selected { background: var(--light); border-radius: 8px; }
+        .btn { padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; font-size: 14px; margin: 5px; }
+        .btn-primary { background: var(--primary); color: #fff; }
+        .btn-secondary { background: var(--light); color: var(--dark); border: 1px solid var(--border); }
+        .total-section { display: flex; justify-content: space-between; padding: 15px 0; border-top: 2px solid var(--border); font-weight: 600; }
+        .action-buttons { display: flex; gap: 10px; margin-top: 15px; }
+        .member-card { background: linear-gradient(135deg, #FFD700, #FFA500); border-radius: 12px; padding: 15px; color: #fff; margin-bottom: 15px; }
+        .recharge-package { background: var(--light); border: 2px solid var(--border); border-radius: 10px; padding: 15px; text-align: center; cursor: pointer; margin: 5px; display: inline-block; width: 45%; }
+        .recharge-package.selected { border-color: var(--primary); }
+        input { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px; margin: 5px 0; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- 头部信息 -->
+    <div class="container" id="homePage">
         <header>
-            <h1 class="app-title">美甲美睫收银台</h1>
-            <div class="shop-name">ZIMI子蜜美甲美睫（城市广场店）</div>
-            <div class="date-time" id="currentDateTime">2026年4月1日 星期三 18:00</div>
+            <h1 class="app-title">ZIMI美甲美睫</h1>
+            <div class="shop-name">收银台系统 v1.1.0</div>
         </header>
         
-        <!-- 主要功能区 -->
-        <main class="functions-section">
-            <h2 class="section-title">✨ 核心功能</h2>
-            
-            <div class="function-grid">
-                <a href="#" class="function-btn" id="quickOrderBtn">
-                    <i>⚡</i>
-                    <div class="btn-title">快速开单</div>
-                    <div class="btn-desc">3步完成新订单</div>
-                </a>
-                
-                <a href="#" class="function-btn" id="collectMoneyBtn">
-                    <i>💳</i>
-                    <div class="btn-title">收款</div>
-                    <div class="btn-desc">扫码/现金/刷卡</div>
-                </a>
-                
-                <a href="#" class="function-btn member-btn" id="memberRechargeBtn">
-                    <i>👑</i>
-                    <div class="btn-title">会员充值</div>
-                    <div class="btn-desc">储值管理</div>
-                </a>
-                
-                <a href="#" class="function-btn" id="memberManageBtn">
-                    <i>👥</i>
-                    <div class="btn-title">会员管理</div>
-                    <div class="btn-desc">查询与编辑</div>
-                </a>
+        <div class="section-title">核心功能</div>
+        <div class="function-grid">
+            <div class="function-btn" id="quickOrderBtn">
+                <i>⚡</i>
+                <div class="btn-title">快速开单</div>
             </div>
-            
-            <!-- 今日数据概览 -->
-            <div class="stats-section">
-                <h2 class="section-title">📊 今日数据</h2>
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-value" id="todayOrders">0</div>
-                        <div class="stat-label">订单数</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="todayIncome">¥0</div>
-                        <div class="stat-label">收入</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="todayRecharge">¥0</div>
-                        <div class="stat-label">充值</div>
-                    </div>
-                </div>
+            <div class="function-btn" id="collectMoneyBtn">
+                <i>💳</i>
+                <div class="btn-title">收款</div>
             </div>
-            
-            <!-- 数据清零管理 -->
-            <div class="clear-management">
-                <h2 class="section-title">🔄 数据周期管理</h2>
-                
-                <div class="period-info">
-                    <div>
-                        <div class="period-label">当前统计日期</div>
-                        <div class="period-value" id="currentStatDate">2026年4月1日</div>
-                    </div>
-                    <div>
-                        <div class="period-label">当前统计月份</div>
-                        <div class="period-value" id="currentStatMonth">2026年4月</div>
-                    </div>
-                </div>
-                
-                <div class="clear-buttons">
-                    <button class="clear-btn daily" id="dailyClearBtn">☀️ 重置当日数据</button>
-                    <button class="clear-btn monthly" id="monthlyClearBtn">📅 重置当月数据</button>
-                </div>
+            <div class="function-btn" id="memberRechargeBtn">
+                <i>👑</i>
+                <div class="btn-title">会员充值</div>
             </div>
-            
-            <!-- 数据备份区域 -->
-            <div class="backup-section">
-                <h2 class="section-title">💾 数据管理</h2>
-                
-                <div class="backup-info">
-                    <div>
-                        <div class="period-label">上次云端备份</div>
-                        <div class="period-value" id="lastBackupTime">未备份</div>
-                        <div style="font-size: 12px; margin-top: 4px;" id="backupStatus">⚠️ 本地数据未同步到云端</div>
-                    </div>
-                    <button class="btn btn-secondary" id="manualBackupBtn" style="padding: 8px 15px; font-size: 13px;">
-                        ☁️ 备份
-                    </button>
-                </div>
-                
-                <div style="margin-top: 10px;">
-                    <button class="btn btn-danger" id="clearAllDataBtn" style="width: 100%; padding: 10px; font-size: 13px;">
-                        🗑️ 清空所有历史数据
-                    </button>
-                </div>
+            <div class="function-btn" id="memberManageBtn">
+                <i>👥</i>
+                <div class="btn-title">会员管理</div>
             </div>
-        </main>
+        </div>
         
-        <!-- 底部导航 -->
+        <div class="stats-section">
+            <div class="section-title">今日数据</div>
+            <div class="stats-grid">
+                <div><div class="stat-value" id="todayOrders">0</div><div class="stat-label">订单</div></div>
+                <div><div class="stat-value" id="todayIncome">¥0</div><div class="stat-label">收入</div></div>
+                <div><div class="stat-value" id="todayRecharge">¥0</div><div class="stat-label">充值</div></div>
+            </div>
+        </div>
+        
         <footer>
             <ul class="nav-tabs">
-                <li class="nav-item active" data-tab="home">
-                    <i>🏠</i>
-                    <span>首页</span>
-                </li>
-                <li class="nav-item" data-tab="orders">
-                    <i>📋</i>
-                    <span>订单</span>
-                </li>
-                <li class="nav-item" data-tab="members">
-                    <i>👑</i>
-                    <span>会员</span>
-                </li>
-                <li class="nav-item" data-tab="reports">
-                    <i>📊</i>
-                    <span>报表</span>
-                </li>
-                <li class="nav-item" data-tab="settings">
-                    <i>⚙️</i>
-                    <span>设置</span>
-                </li>
+                <li class="nav-item active" data-tab="home">🏠<br>首页</li>
+                <li class="nav-item" data-tab="orders">📋<br>订单</li>
+                <li class="nav-item" data-tab="members">👑<br>会员</li>
+                <li class="nav-item" data-tab="reports">📊<br>报表</li>
+                <li class="nav-item" data-tab="settings">⚙️<br>设置</li>
             </ul>
         </footer>
     </div>
     
-    <!-- 订单页面 -->
     <div class="page-content" id="ordersPage">
-        <div class="page-header">
-            <button class="back-btn" onclick="goBackToHome()">← 返回</button>
-            <h2 class="page-title">📋 订单列表</h2>
-        </div>
-        <div style="padding: 0 20px 20px;">
-            <div class="orders-filter">
-                <button class="filter-btn active" data-filter="all">全部</button>
-                <button class="filter-btn" data-filter="today">今日</button>
-                <button class="filter-btn" data-filter="week">本周</button>
-                <button class="filter-btn" data-filter="month">本月</button>
-            </div>
-            <div class="orders-list-full" id="ordersListFull"></div>
-        </div>
+        <h2>订单列表</h2>
+        <div id="ordersList"></div>
+        <button class="btn btn-secondary" onclick="showPage('home')">返回</button>
     </div>
     
-    <!-- 会员页面 -->
     <div class="page-content" id="membersPage">
-        <div class="page-header">
-            <button class="back-btn" onclick="goBackToHome()">← 返回</button>
-            <h2 class="page-title">👑 会员管理</h2>
-        </div>
-        <div style="padding: 0 20px 20px;">
-            <div class="search-box">
-                <input type="text" id="memberSearchInput" placeholder="搜索会员姓名或手机号">
-                <button id="searchMemberBtn">搜索</button>
-            </div>
-            <button class="btn btn-gold" style="width: 100%; margin-bottom: 15px;" id="addMemberBtn">
-                ➕ 新增会员
-            </button>
-            <div class="member-list" id="memberList"></div>
-        </div>
+        <h2>会员管理</h2>
+        <button class="btn btn-primary" id="addMemberBtn">新增会员</button>
+        <div id="memberList"></div>
+        <button class="btn btn-secondary" onclick="showPage('home')">返回</button>
     </div>
     
-    <!-- 报表页面 -->
     <div class="page-content" id="reportsPage">
-        <div class="page-header">
-            <button class="back-btn" onclick="goBackToHome()">← 返回</button>
-            <h2 class="page-title">📊 数据报表</h2>
-        </div>
-        <div style="padding: 0 20px 20px;">
-            <div class="report-tabs">
-                <button class="report-tab active" data-report="day">日报</button>
-                <button class="report-tab" data-report="week">周报</button>
-                <button class="report-tab" data-report="month">月报</button>
-                <button class="report-tab" data-report="year">年报</button>
-            </div>
-            
-            <!-- 日报 -->
-            <div class="report-content active" id="dayReport">
-                <div class="report-card">
-                    <h3>📅 今日数据</h3>
-                    <div class="report-stat-row">
-                        <span class="report-stat-label">订单数量</span>
-                        <span class="report-stat-value" id="reportTodayOrders">0</span>
-                    </div>
-                    <div class="report-stat-row">
-                        <span class="report-stat-label">营业收入</span>
-                        <span class="report-stat-value">¥<span id="reportTodayIncome">0</span></span>
-                    </div>
-                    <div class="report-stat-row">
-                        <span class="report-stat-label">会员充值</span>
-                        <span class="report-stat-value">¥<span id="reportTodayRecharge">0</span></span>
-                    </div>
-                    <div class="report-stat-row">
-                        <span class="report-stat-label">服务客户</span>
-                        <span class="report-stat-value" id="reportTodayCustomers">0</span>
-                    </div>
-                    <div class="report-stat-row">
-                        <span class="report-stat-label">客单价</span>
-                        <span class="report-stat-value">¥<span id="reportTodayAvg">0</span></span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 周报 -->
-            <div class="report-content" id="weekReport">
-                <div class="report-card">
-                    <h3>📆 本周数据</h3>
-                    <div class="report-stat-row">
-                        <span class="report-stat-label">订单数量</span>
-                        <span class="report-stat-value" id="reportWeekOrders">0</span>
-                    </div>
-                    <div class="report-stat-row">
-                        <span class="report-stat-label">营业收入</span>
-                        <span class="report-stat-value">¥<span id="reportWeekIncome">0</span></span>
-                    </div>
-                    <div class="report-stat-row">
-                        <span class="report-stat-label">会员充值</span>
-                        <span class="report-stat-value">¥<span id="reportWeekRecharge">0</span></span>
-                    </div>
-                    <div class="report-stat-row">
-                        <span class="report-stat-label">日均收入</span>
-                        <span class="report-stat-value">¥<span id="reportWeekAvg">0</span></span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 月报 -->
-            <div class="report-content" id="monthReport">
-                <div class="report-card">
-                    <h3>🗓️ 本月数据</h3>
-                    <div class="report-stat-row">
-                        <span class="report-stat-label">订单数量</span>
-                        <span class="report-stat-value" id="reportMonthOrders">0</span>
-                    </div>
-                    <div class="report-stat-row">
-                        <span class="report-stat-label">营业收入</span>
-                        <span class="report-stat-value">¥<span id="reportMonthIncome">0</span></span>
-                    </div>
-                    <div class="report-stat-row">
-                        <span class="report-stat-label">会员充值</span>
-                        <span class="report-stat-value">¥<span id="reportMonthRecharge">0</span></span>
-                    </div>
-                    <div class="report-stat-row">
-                        <span class="report-stat-label">日均收入</span>
-                        <span class="report-stat-value">¥<span id="reportMonthAvg">0</span></span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 年报 -->
-            <div class="report-content" id="yearReport">
-                <div class="report-card">
-                    <h3>📊 本年数据</h3>
-                    <div class="report-stat-row">
-                        <span class="report-stat-label">订单数量</span>
-                        <span class="report-stat-value" id="reportYearOrders">0</span>
-                    </div>
-                    <div class="report-stat-row">
-                        <span class="report-stat-label">营业收入</span>
-                        <span class="report-stat-value">¥<span id="reportYearIncome">0</span></span>
-                    </div>
-                    <div class="report-stat-row">
-                        <span class="report-stat-label">会员充值</span>
-                        <span class="report-stat-value">¥<span id="reportYearRecharge">0</span></span>
-                    </div>
-                    <div class="report-stat-row">
-                        <span class="report-stat-label">月均收入</span>
-                        <span class="report-stat-value">¥<span id="reportYearAvg">0</span></span>
-                    </div>
-                </div>
-            </div>
-            
-            <div style="margin-top: 15px;">
-                <button class="btn btn-secondary" style="width: 100%;" id="exportDataBtn">
-                    📥 导出数据
-                </button>
-            </div>
-        </div>
+        <h2>数据报表</h2>
+        <div id="reportContent"></div>
+        <button class="btn btn-secondary" onclick="showPage('home')">返回</button>
     </div>
     
-    <!-- 设置页面 -->
     <div class="page-content" id="settingsPage">
-        <div class="page-header">
-            <button class="back-btn" onclick="goBackToHome()">← 返回</button>
-            <h2 class="page-title">⚙️ 系统设置</h2>
-        </div>
-        <div style="padding: 0 20px 20px;">
-            <div class="settings-section">
-                <h3>🏪 店铺信息</h3>
-                <div class="settings-item">
-                    <span class="settings-label">店铺名称</span>
-                    <span class="settings-value">ZIMI子蜜美甲美睫（城市广场店）</span>
-                </div>
-                <div class="settings-item">
-                    <span class="settings-label">系统版本</span>
-                    <span class="settings-value">v1.1.0</span>
-                </div>
-            </div>
-            
-            <div class="settings-section">
-                <h3>📊 数据管理</h3>
-                <div class="settings-item">
-                    <span class="settings-label">今日订单</span>
-                    <span class="settings-value" id="settingsTodayOrders">0</span>
-                </div>
-                <div class="settings-item">
-                    <span class="settings-label">今日收入</span>
-                    <span class="settings-value">¥<span id="settingsTodayIncome">0</span></span>
-                </div>
-                <div class="settings-item">
-                    <span class="settings-label">会员总数</span>
-                    <span class="settings-value" id="settingsTotalMembers">0</span>
-                </div>
-                <div class="settings-item">
-                    <span class="settings-label">历史总订单</span>
-                    <span class="settings-value" id="settingsTotalOrders">0</span>
-                </div>
-            </div>
-            
-            <!-- 云端备份配置 -->
-            <div class="settings-section">
-                <h3>🔑 云端备份配置</h3>
-                <div class="settings-item" style="flex-direction: column; align-items: flex-start; gap: 10px;">
-                    <span class="settings-label">JSONBin API Key</span>
-                    <div style="display: flex; width: 100%; gap: 8px;">
-                        <input type="password" id="apiKeyInput" placeholder="输入你的 JSONBin Master Key"
-                            style="flex: 1; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 13px;">
-                        <button class="settings-btn" onclick="saveApiKey()">保存</button>
-                    </div>
-                </div>
-            </div>
-            
-            <div style="margin-top: 20px; text-align: center; color: var(--text-light); font-size: 12px;">
-                <p>ZIMI子蜜美甲美睫（城市广场店）</p>
-                <p>Copyright © 2026 · 技术支持: Charlie饼干</p>
-            </div>
-        </div>
+        <h2>系统设置</h2>
+        <p>版本: v1.1.0</p>
+        <button class="btn btn-secondary" onclick="showPage('home')">返回</button>
     </div>
     
     <!-- 快速开单模态框 -->
     <div class="modal" id="quickOrderModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">⚡ 快速开单</h3>
-                <button class="close-btn" id="closeOrderModal">&times;</button>
+                <h3>选择服务</h3>
+                <button class="close-btn" onclick="closeModal('quickOrderModal')">&times;</button>
             </div>
-            
-            <div class="service-list" id="serviceList"></div>
-            
+            <div id="serviceList"></div>
             <div class="total-section">
-                <span>总计：</span>
+                <span>总计:</span>
                 <span id="orderTotal">¥0</span>
             </div>
-            
             <div class="action-buttons">
-                <button class="btn btn-secondary" id="clearSelection">清空</button>
-                <button class="btn btn-primary" id="confirmOrder">确认开单</button>
+                <button class="btn btn-secondary" onclick="clearSelection()">清空</button>
+                <button class="btn btn-primary" onclick="confirmOrder()">确认</button>
             </div>
         </div>
     </div>
     
-    <!--<!-- 收款模态框 -->
+    <!-- 收款模态框 -->
     <div class="modal" id="collectMoneyModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">💳 收款</h3>
-                <button class="close-btn" id="closeCollectModal">&times;</button>
+                <h3>收款</h3>
+                <button class="close-btn" onclick="closeModal('collectMoneyModal')">&times;</button>
             </div>
-            
-            <div style="text-align: center; padding: 30px 15px;">
-                <div style="font-size: 18px; margin-bottom: 15px; color: var(--text-light);">应收金额</div>
-                <div style="font-size: 42px; font-weight: 700; color: var(--accent-pink); margin-bottom: 30px;" id="amountToCollect">¥0</div>
-                
-                <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 30px;">
-                    <div style="text-align: center; cursor: pointer;" id="wechatPayBtn">
-                        <div style="width: 70px; height: 70px; background-color: var(--light-pink); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px;">
-                            <span style="font-size: 32px;">💚</span>
-                        </div>
-                        <div style="font-size: 14px;">微信支付</div>
-                    </div>
-                    
-                    <div style="text-align: center; cursor: pointer;" id="alipayBtn">
-                        <div style="width: 70px; height: 70px; background-color: var(--light-pink); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px;">
-                            <span style="font-size: 32px;">💙</span>
-                        </div>
-                        <div style="font-size: 14px;">支付�?/div>
-                    </div>
-                    
-                    <div style="text-align: center; cursor: pointer;" id="cashPayBtn">
-                        <div style="width: 70px; height: 70px; background-color: var(--light-pink); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px;">
-                            <span style="font-size: 32px;">💵</span>
-                        </div>
-                        <div style="font-size: 14px;">现金支付</div>
-                    </div>
-                    
-                    <div style="text-align: center; cursor: pointer;" id="memberPayBtn">
-                        <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px;">
-                            <span style="font-size: 32px;">👑</span>
-                        </div>
-                        <div style="font-size: 14px;">会员余额</div>
-                    </div>
-                </div>
-                
-                <button class="btn btn-secondary" id="closeCollectBtn" style="width: 100%;">取消</button>
+            <div style="text-align: center; padding: 20px;">
+                <div style="font-size: 32px; color: var(--primary); margin: 20px 0;" id="collectAmount">¥0</div>
+                <button class="btn btn-primary" onclick="processPayment('cash')">现金支付</button>
+                <button class="btn btn-primary" onclick="processPayment('wechat')">微信支付</button>
+                <button class="btn btn-primary" onclick="processPayment('alipay')">支付宝</button>
+                <button class="btn btn-primary" onclick="processPayment('member')">会员余额</button>
             </div>
         </div>
     </div>
@@ -1379,62 +158,22 @@
     <div class="modal" id="memberRechargeModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">👑 会员充�?/h3>
-                <button class="close-btn" id="closeRechargeModal">&times;</button>
+                <h3>会员充值</h3>
+                <button class="close-btn" onclick="closeModal('memberRechargeModal')">&times;</button>
             </div>
-            
-            <div class="search-box" style="margin-bottom: 15px;">
-                <input type="text" id="rechargeSearchPhone" placeholder="输入手机号搜索会�?>
-                <button id="searchRechargeMemberBtn">搜索</button>
-            </div>
-            
-            <div id="rechargeMemberInfo" style="display: none; margin-bottom: 15px;">
+            <input type="text" id="searchPhone" placeholder="输入手机号搜索">
+            <button class="btn btn-secondary" onclick="searchMember()">搜索</button>
+            <div id="memberInfo" style="display: none;">
                 <div class="member-card">
-                    <div class="member-card-content">
-                        <div class="member-name" id="rechargeMemberName">-</div>
-                        <div class="member-phone" id="rechargeMemberPhone">-</div>
-                        <div class="member-balance">
-                            <span class="balance-label">当前余额</span>
-                            <span class="balance-value" id="rechargeMemberBalance">¥0</span>
-                        </div>
-                    </div>
+                    <div id="memberName">-</div>
+                    <div>余额: ¥<span id="memberBalance">0</span></div>
                 </div>
-            </div>
-            
-            <div class="recharge-packages" id="rechargePackages">
-                <div class="recharge-package" data-amount="100" data-bonus="0">
-                    <div class="amount">¥100</div>
-                    <div class="desc">充�?00�?/div>
-                </div>
-                <div class="recharge-package" data-amount="200" data-bonus="20">
-                    <div class="amount">¥200</div>
-                    <div class="bonus">送�?0</div>
-                    <div class="desc">实际¥220</div>
-                </div>
-                <div class="recharge-package" data-amount="500" data-bonus="80">
-                    <div class="amount">¥500</div>
-                    <div class="bonus">送�?0</div>
-                    <div class="desc">实际¥580</div>
-                </div>
-                <div class="recharge-package" data-amount="1000" data-bonus="200">
-                    <div class="amount">¥1000</div>
-                    <div class="bonus">送�?00</div>
-                    <div class="desc">实际¥1200</div>
-                </div>
-            </div>
-            
-            <div class="custom-recharge">
-                <input type="number" id="customRechargeAmount" placeholder="自定义充值金额（元）" min="1" max="50000">
-            </div>
-            
-            <div class="total-section" style="margin-top: 15px;">
-                <span>充值后余额�?/span>
-                <span id="rechargePreviewBalance">¥0</span>
-            </div>
-            
-            <div class="action-buttons" style="margin-top: 15px;">
-                <button class="btn btn-secondary" id="cancelRechargeBtn">取消</button>
-                <button class="btn btn-gold" id="confirmRechargeBtn">确认充�?/button>
+                <div class="recharge-package" data-amount="100" onclick="selectRecharge(100, 0)">¥100</div>
+                <div class="recharge-package" data-amount="200" onclick="selectRecharge(200, 20)">¥200 送¥20</div>
+                <div class="recharge-package" data-amount="500" onclick="selectRecharge(500, 80)">¥500 送¥80</div>
+                <div class="recharge-package" data-amount="1000" onclick="selectRecharge(1000, 200)">¥1000 送¥200</div>
+                <input type="number" id="customRecharge" placeholder="自定义金额">
+                <button class="btn btn-primary" onclick="confirmRecharge()">确认充值</button>
             </div>
         </div>
     </div>
@@ -1443,1750 +182,300 @@
     <div class="modal" id="addMemberModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">�?新增会员</h3>
-                <button class="close-btn" id="closeAddMemberModal">&times;</button>
+                <h3>新增会员</h3>
+                <button class="close-btn" onclick="closeModal('addMemberModal')">&times;</button>
             </div>
-            
-            <div class="form-group">
-                <label>姓名 *</label>
-                <input type="text" id="newMemberName" placeholder="请输入会员姓�?>
-            </div>
-            
-            <div class="form-group">
-                <label>手机�?*</label>
-                <input type="tel" id="newMemberPhone" placeholder="请输入手机号" maxlength="11">
-            </div>
-            
-            <div class="form-group">
-                <label>初始充值金额（可选）</label>
-                <input type="number" id="newMemberInitialBalance" placeholder="0" min="0" max="50000">
-            </div>
-            
-            <div class="form-group">
-                <label>备注</label>
-                <input type="text" id="newMemberNote" placeholder="备注信息（选填�?>
-            </div>
-            
-            <div class="action-buttons">
-                <button class="btn btn-secondary" id="cancelAddMemberBtn">取消</button>
-                <button class="btn btn-gold" id="confirmAddMemberBtn">确认添加</button>
-            </div>
+            <input type="text" id="newMemberName" placeholder="姓名">
+            <input type="tel" id="newMemberPhone" placeholder="手机号">
+            <input type="number" id="newMemberBalance" placeholder="初始余额(可选)">
+            <button class="btn btn-primary" onclick="saveMember()">保存</button>
         </div>
     </div>
-    
-    <!-- 会员详情模态框 -->
-    <div class="modal" id="memberDetailModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">👤 会员详情</h3>
-                <button class="close-btn" id="closeMemberDetailModal">&times;</button>
-            </div>
-            
-            <div class="member-card" id="memberDetailCard">
-                <div class="member-card-content">
-                    <div class="member-name" id="detailMemberName">-</div>
-                    <div class="member-phone" id="detailMemberPhone">-</div>
-                    <div class="member-balance">
-                        <span class="balance-label">账户余额</span>
-                        <span class="balance-value" id="detailMemberBalance">¥0</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div style="margin-bottom: 15px;">
-                <div style="font-size: 14px; color: var(--text-dark); margin-bottom: 8px;">📜 消费记录</div>
-                <div id="memberTransactionList" style="max-height: 200px; overflow-y: auto;"></div>
-            </div>
-            
-            <div class="action-buttons">
-                <button class="btn btn-secondary" id="editMemberBtn">编辑</button>
-                <button class="btn btn-gold" id="rechargeForMemberBtn">充�?/button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- 数据清零确认模态框 -->
-    <div class="modal" id="clearConfirmModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title" id="clearModalTitle">确认操作</h3>
-                <button class="close-btn" id="closeClearModal">&times;</button>
-            </div>
-            
-            <div style="padding: 25px 15px; text-align: center;">
-                <div style="font-size: 50px; margin-bottom: 15px;">⚠️</div>
-                <div style="font-size: 16px; margin-bottom: 8px; font-weight: 600;" id="clearConfirmMessage"></div>
-                <div style="font-size: 13px; color: var(--text-light); margin-bottom: 20px;" id="clearConfirmDesc"></div>
-                
-                <div class="action-buttons">
-                    <button class="btn btn-secondary" id="cancelClearBtn">取消</button>
-                    <button class="btn btn-danger" id="confirmClearBtn">确认</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- 会员余额支付选择模态框 -->
-    <div class="modal" id="memberSelectModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">👑 选择会员</h3>
-                <button class="close-btn" id="closeMemberSelectModal">&times;</button>
-            </div>
-            
-            <div class="search-box" style="margin-bottom: 15px;">
-                <input type="text" id="payMemberSearch" placeholder="搜索会员姓名或手机号">
-            </div>
-            
-            <div class="member-list" id="payMemberList" style="max-height: 300px;"></div>
-        </div>
-    </div>
+
 <script>
-        // ==================== 工具函数 ====================
-        
-        // 生成唯一订单号（修复：动态年�?+ 时间戳保证唯一性）
-        function generateOrderId(orderCount) {
-            const now = new Date();
-            const year = now.getFullYear().toString().slice(2); // 动态获取年份后两位
-            const month = (now.getMonth() + 1).toString().padStart(2, '0');
-            const day = now.getDate().toString().padStart(2, '0');
-            const timestamp = now.getTime().toString().slice(-6); // 使用时间戳后6位保证唯一
-            return `${year}${month}${day}${timestamp}`;
-        }
-        
-        // 生成唯一会员ID
-        function generateMemberId() {
-            return 'M' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2, 6).toUpperCase();
-        }
-        
-        // 获取日期字符�?        function getDateString(date) {
-            return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
-        }
-        
-        // 获取周范围（周一到周日）
-        function getWeekRange(date) {
-            const d = new Date(date);
-            const day = d.getDay() || 7; // 周日�?
-            const monday = new Date(d);
-            monday.setDate(d.getDate() - day + 1);
-            monday.setHours(0, 0, 0, 0);
-            const sunday = new Date(monday);
-            sunday.setDate(monday.getDate() + 6);
-            sunday.setHours(23, 59, 59, 999);
-            return { start: monday, end: sunday };
-        }
-        
-        // 获取年范�?        function getYearRange(date) {
-            return {
-                start: new Date(date.getFullYear(), 0, 1),
-                end: new Date(date.getFullYear(), 11, 31, 23, 59, 59, 999)
-            };
-        }
-        
-        // 判断日期是否在范围内
-        function isDateInRange(dateStr, start, end) {
-            const d = new Date(dateStr);
-            return d >= start && d <= end;
-        }
-        
-        // 显示 Toast 通知
-        function showNotification(message, type = 'info') {
-            const existing = document.getElementById('toastNotification');
-            if (existing) existing.remove();
-
-            const colors = {
-                success: '#4CAF50',
-                error: '#ff6b6b',
-                warning: '#FFA726',
-                info: '#F2A8C2'
-            };
-            const icons = {
-                success: '�?,
-                error: '�?,
-                warning: '⚠️',
-                info: 'ℹ️'
-            };
-
-            const toast = document.createElement('div');
-            toast.id = 'toastNotification';
-            toast.style.cssText = `
-                position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%);
-                background: ${colors[type] || colors.info}; color: white;
-                padding: 12px 20px; border-radius: 24px; font-size: 14px;
-                box-shadow: 0 4px 16px rgba(0,0,0,0.2); z-index: 9999;
-                max-width: 320px; text-align: center; line-height: 1.5;
-            `;
-            toast.textContent = `${icons[type] || ''} ${message}`;
-            document.body.appendChild(toast);
-            setTimeout(() => { if (toast.parentNode) toast.remove(); }, 3000);
-        }
-        
-        // ==================== 服务项目数据 ====================
-        const serviceList = [
-            { name: '款式本甲|卸甲|【美甲款式】任意款小红薯推�?, price: 189 },
-            { name: '【纯色美甲】手部纯�?加固微建�?, price: 101 },
-            { name: '【闪耀上新】瓷白猫眼美�?, price: 159 },
-            { name: '美甲建构+冰透色/极光海莉同款二选一', price: 159 },
-            { name: '《畅销》网红爆款美睫任意款式设�?, price: 159 },
-            { name: '【自然款】纯欲仿真婴儿弯妈生设计�?, price: 189 },
-            { name: '【网红美甲款】小红薯随心款式+甲片', price: 279 },
-            { name: '【美甲款式】热门美甲简约风', price: 149 },
-            { name: '【美睫嫁接】美睫任意款�?下睫毛套�?, price: 279 },
-            { name: '【款式任选】纯欲小精灵漫画款美�?, price: 219 },
-            { name: '【自然款】灵动随心淡妆、裸妆感美睫', price: 121 },
-            { name: '2次卡|【美甲款式】热门美甲简约风', price: 291 },
-            { name: '【闪耀碎钻】脚部纯色美�?, price: 159 },
-            { name: '【自然款】自然微密空气睫�?健康嫁接', price: 179 },
-            { name: '【爆款】自然下睫毛', price: 54.9 },
-            { name: '3次【自然款】自然微密空气睫毛卡', price: 498 },
-            { name: '【闪耀】瓷白猫眼脚部美�?, price: 179 },
-            { name: '2次卡【款式任选】纯欲小精灵漫画款美�?, price: 424 }
-        ];
-        
-        // 充值套�?        const rechargePackages = [
-            { amount: 100, bonus: 0 },
-            { amount: 200, bonus: 20 },
-            { amount: 500, bonus: 80 },
-            { amount: 1000, bonus: 200 },
-            { amount: 2000, bonus: 500 },
-            { amount: 5000, bonus: 1500 }
-        ];
-        
-        // ==================== 数据管理�?====================
-        const dataManager = {
-            // JSONBin.io 配置
-            jsonBinConfig: {
-                apiKey: localStorage.getItem('nailSalonApiKey') || '',
-                binId: null,
-                apiUrl: 'https://api.jsonbin.io/v3',
-                collectionId: '69bca581aa77b81da9fed6cf'
-            },
-
-            // 获取或创�?Bin ID
-            getBinId: async function() {
-                const cached = localStorage.getItem('nailSalonBinId');
-                if (cached) return cached;
-
-                try {
-                    const res = await fetch(
-                        `${this.jsonBinConfig.apiUrl}/c/${this.jsonBinConfig.collectionId}/bins`,
-                        { headers: { 'X-Master-Key': this.jsonBinConfig.apiKey } }
-                    );
-                    if (res.ok) {
-                        const bins = await res.json();
-                        if (Array.isArray(bins) && bins.length > 0) {
-                            const id = bins[0].record;
-                            localStorage.setItem('nailSalonBinId', id);
-                            return id;
-                        }
-                    }
-                } catch (e) { }
-
-                try {
-                    const createRes = await fetch(`${this.jsonBinConfig.apiUrl}/b`, {
-                        method: 'POST',
-                        headers: {
-                            'X-Master-Key': this.jsonBinConfig.apiKey,
-                            'X-Collection-Id': this.jsonBinConfig.collectionId,
-                            'Content-Type': 'application/json',
-                            'X-Bin-Name': 'nail-salon-main'
-                        },
-                        body: JSON.stringify({ _init: true })
-                    });
-                    if (createRes.ok) {
-                        const result = await createRes.json();
-                        const id = result.metadata?.id;
-                        if (id) {
-                            localStorage.setItem('nailSalonBinId', id);
-                            return id;
-                        }
-                    }
-                } catch (e) { console.error('创建 Bin 失败:', e); }
-
-                return null;
-            },
-
-            fetchFromCloud: async function() {
-                try {
-                    const binId = await this.getBinId();
-                    if (!binId) return null;
-
-                    const res = await fetch(`${this.jsonBinConfig.apiUrl}/b/${binId}/latest`, {
-                        headers: {
-                            'X-Master-Key': this.jsonBinConfig.apiKey,
-                            'X-Bin-Meta': 'false'
-                        }
-                    });
-                    if (!res.ok) return null;
-                    const data = await res.json();
-                    if (data && data._init) return null;
-                    return data;
-                } catch (e) {
-                    console.error('云端读取失败:', e);
-                    return null;
-                }
-            },
-
-            saveToCloud: async function(data) {
-                try {
-                    const binId = await this.getBinId();
-                    if (!binId) return false;
-
-                    const res = await fetch(`${this.jsonBinConfig.apiUrl}/b/${binId}`, {
-                        method: 'PUT',
-                        headers: {
-                            'X-Master-Key': this.jsonBinConfig.apiKey,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(data)
-                    });
-                    return res.ok;
-                } catch (e) {
-                    console.error('云端保存失败:', e);
-                    return false;
-                }
-            },
-
-            // 获取数据
-            getData: async function() {
-                const savedData = localStorage.getItem('nailSalonData');
-                if (savedData) {
-                    return JSON.parse(savedData);
-                }
-
-                const cloudData = await this.fetchFromCloud();
-                if (cloudData && cloudData.allOrders !== undefined) {
-                    localStorage.setItem('nailSalonData', JSON.stringify(cloudData));
-                    return cloudData;
-                }
-
-                return this.initData();
-            },
-            
-            // 初始化数�?            initData: function() {
-                const now = new Date();
-                const initData = {
-                    today: {
-                        date: getDateString(now),
-                        orders: 0,
-                        income: 0,
-                        recharge: 0,
-                        customers: 0
-                    },
-                    month: {
-                        year: now.getFullYear(),
-                        month: now.getMonth() + 1,
-                        orders: 0,
-                        income: 0,
-                        recharge: 0,
-                        customers: 0
-                    },
-                    lastReset: {
-                        daily: getDateString(now),
-                        monthly: `${now.getFullYear()}-${now.getMonth() + 1}-01`
-                    },
-                    lastBackup: null,
-                    allOrders: [],
-                    members: [], // 会员列表
-                    transactions: [] // 会员交易记录
-                };
-                localStorage.setItem('nailSalonData', JSON.stringify(initData));
-                return initData;
-            },
-
-            saveData: async function(data) {
-                localStorage.setItem('nailSalonData', JSON.stringify(data));
-            },
-
-            backupToCloud: async function() {
-                const data = await this.getData();
-                data.lastBackup = new Date().toISOString().slice(0, 19).replace('T', ' ');
-                const success = await this.saveToCloud(data);
-                if (success) {
-                    localStorage.setItem('nailSalonData', JSON.stringify(data));
-                }
-                return success;
-            },
-
-            restoreFromCloud: async function() {
-                const cloudData = await this.fetchFromCloud();
-                if (cloudData && cloudData.allOrders !== undefined) {
-                    // 确保会员数据存在
-                    if (!cloudData.members) cloudData.members = [];
-                    if (!cloudData.transactions) cloudData.transactions = [];
-                    localStorage.setItem('nailSalonData', JSON.stringify(cloudData));
-                    return cloudData;
-                }
-                return null;
-            },
-            
-            // 检查每日重�?            checkDailyReset: async function() {
-                const data = await this.getData();
-                const today = getDateString(new Date());
-                
-                if (data.lastReset.daily !== today) {
-                    data.today = {
-                        date: today,
-                        orders: 0,
-                        income: 0,
-                        recharge: 0,
-                        customers: 0
-                    };
-                    data.lastReset.daily = today;
-                    await this.saveData(data);
-                    showNotification('新的一天开始了！今日数据已自动重置�?, 'success');
-                }
-                
-                return data;
-            },
-            
-            // 检查每月重�?            checkMonthlyReset: async function() {
-                const data = await this.getData();
-                const now = new Date();
-                
-                if (data.lastReset.monthly !== `${now.getFullYear()}-${now.getMonth() + 1}-01`) {
-                    data.month = {
-                        year: now.getFullYear(),
-                        month: now.getMonth() + 1,
-                        orders: 0,
-                        income: 0,
-                        recharge: 0,
-                        customers: 0
-                    };
-                    data.lastReset.monthly = `${now.getFullYear()}-${now.getMonth() + 1}-01`;
-                    await this.saveData(data);
-                    showNotification('新的月份开始了！本月数据已自动重置�?, 'success');
-                }
-                
-                return data;
-            },
-            
-            // 重置当日数据
-            resetDailyData: async function() {
-                const data = await this.getData();
-                const today = getDateString(new Date());
-                
-                data.today = {
-                    date: today,
-                    orders: 0,
-                    income: 0,
-                    recharge: 0,
-                    customers: 0
-                };
-                data.lastReset.daily = today;
-                
-                await this.saveData(data);
-                showNotification('当日数据已成功重置！', 'success');
-                
-                return data;
-            },
-            
-            // 重置当月数据
-            resetMonthlyData: async function() {
-                const data = await this.getData();
-                const now = new Date();
-                
-                data.month = {
-                    year: now.getFullYear(),
-                    month: now.getMonth() + 1,
-                    orders: 0,
-                    income: 0,
-                    recharge: 0,
-                    customers: 0
-                };
-                data.lastReset.monthly = `${now.getFullYear()}-${now.getMonth() + 1}-01`;
-                
-                await this.saveData(data);
-                showNotification('当月数据已成功重置！', 'success');
-                
-                return data;
-            },
-            
-            // 添加订单（修复：使用新的订单号生成逻辑�?            addOrder: async function(amount, services, memberId = null) {
-                const data = await this.getData();
-                const now = new Date();
-                const today = getDateString(now);
-                
-                // 检查日�?                if (data.today.date !== today) {
-                    data.today = {
-                        date: today,
-                        orders: 0,
-                        income: 0,
-                        recharge: 0,
-                        customers: 0
-                    };
-                    data.lastReset.daily = today;
-                }
-                
-                data.today.orders += 1;
-                data.today.income += amount;
-                data.today.customers += 1;
-                
-                // 检查月�?                if (data.month.year === now.getFullYear() && data.month.month === now.getMonth() + 1) {
-                    data.month.orders += 1;
-                    data.month.income += amount;
-                    data.month.customers += 1;
-                } else {
-                    data.month = {
-                        year: now.getFullYear(),
-                        month: now.getMonth() + 1,
-                        orders: 1,
-                        income: amount,
-                        recharge: 0,
-                        customers: 1
-                    };
-                    data.lastReset.monthly = `${now.getFullYear()}-${now.getMonth() + 1}-01`;
-                }
-                
-                // 生成唯一订单�?                const orderId = generateOrderId(data.allOrders.length);
-                
-                const order = {
-                    id: orderId,
-                    time: `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')} ${services}`,
-                    amount: amount,
-                    date: today,
-                    memberId: memberId,
-                    timestamp: now.getTime()
-                };
-                
-                data.allOrders.unshift(order);
-                
-                // 保留最�?500 条订�?                if (data.allOrders.length > 500) {
-                    data.allOrders = data.allOrders.slice(0, 500);
-                }
-                
-                await this.saveData(data);
-                return { data, orderId };
-            },
-            
-            // 清空所有数�?            clearAllData: async function() {
-                const resetData = this.initData();
-                showNotification('所有历史数据已清空�?, 'success');
-                return resetData;
-            },
-            
-            // ==================== 会员管理 ====================
-            
-            // 添加会员
-            addMember: async function(name, phone, initialBalance = 0, note = '') {
-                const data = await this.getData();
-                
-                // 检查手机号是否已存�?                if (data.members.some(m => m.phone === phone)) {
-                    showNotification('该手机号已注册会员！', 'error');
-                    return null;
-                }
-                
-                const member = {
-                    id: generateMemberId(),
-                    name: name,
-                    phone: phone,
-                    balance: initialBalance,
-                    note: note,
-                    createdAt: new Date().toISOString(),
-                    transactions: []
-                };
-                
-                data.members.push(member);
-                
-                // 如果有初始充值，记录交易
-                if (initialBalance > 0) {
-                    const transaction = {
-                        type: 'recharge',
-                        amount: initialBalance,
-                        bonus: 0,
-                        balanceAfter: initialBalance,
-                        time: new Date().toISOString()
-                    };
-                    member.transactions.push(transaction);
-                    data.transactions.push({
-                        ...transaction,
-                        memberId: member.id,
-                        memberName: member.name
-                    });
-                    
-                    // 更新今日充值统�?                    const today = getDateString(new Date());
-                    if (data.today.date === today) {
-                        data.today.recharge = (data.today.recharge || 0) + initialBalance;
-                    }
-                }
-                
-                await this.saveData(data);
-                showNotification(`会员 ${name} 添加成功！`, 'success');
-                return member;
-            },
-            
-            // 查找会员
-            findMember: function(data, phone) {
-                return data.members.find(m => m.phone === phone);
-            },
-            
-            // 根据ID查找会员
-            findMemberById: function(data, id) {
-                return data.members.find(m => m.id === id);
-            },
-            
-            // 会员充�?            rechargeMember: async function(memberId, amount, bonus = 0) {
-                const data = await this.getData();
-                const member = this.findMemberById(data, memberId);
-                
-                if (!member) {
-                    showNotification('会员不存在！', 'error');
-                    return null;
-                }
-                
-                const totalAdd = amount + bonus;
-                member.balance += totalAdd;
-                
-                const transaction = {
-                    type: 'recharge',
-                    amount: amount,
-                    bonus: bonus,
-                    balanceAfter: member.balance,
-                    time: new Date().toISOString()
-                };
-                
-                member.transactions.push(transaction);
-                data.transactions.push({
-                    ...transaction,
-                    memberId: member.id,
-                    memberName: member.name
-                });
-                
-                // 更新今日/本月充值统�?                const today = getDateString(new Date());
-                if (data.today.date === today) {
-                    data.today.recharge = (data.today.recharge || 0) + amount;
-                }
-                if (data.month.year === new Date().getFullYear() && 
-                    data.month.month === new Date().getMonth() + 1) {
-                    data.month.recharge = (data.month.recharge || 0) + amount;
-                }
-                
-                await this.saveData(data);
-                showNotification(`充值成功！${member.name} 余额：�?{member.balance}`, 'success');
-                return member;
-            },
-            
-            // 会员消费（使用余额支付）
-            memberConsume: async function(memberId, amount, services) {
-                const data = await this.getData();
-                const member = this.findMemberById(data, memberId);
-                
-                if (!member) {
-                    showNotification('会员不存在！', 'error');
-                    return null;
-                }
-                
-                if (member.balance < amount) {
-                    showNotification(`余额不足！当前余额：¥${member.balance}`, 'error');
-                    return null;
-                }
-                
-                member.balance -= amount;
-                
-                const transaction = {
-                    type: 'consume',
-                    amount: amount,
-                    balanceAfter: member.balance,
-                    services: services,
-                    time: new Date().toISOString()
-                };
-                
-                member.transactions.push(transaction);
-                data.transactions.push({
-                    ...transaction,
-                    memberId: member.id,
-                    memberName: member.name
-                });
-                
-                await this.saveData(data);
-                
-                // 同时记录订单
-                await this.addOrder(amount, services, memberId);
-                
-                showNotification(`支付成功�?{member.name} 剩余余额：�?{member.balance}`, 'success');
-                return member;
-            },
-            
-            // 搜索会员
-            searchMembers: function(data, keyword) {
-                if (!keyword) return data.members;
-                const kw = keyword.toLowerCase();
-                return data.members.filter(m => 
-                    m.name.toLowerCase().includes(kw) || 
-                    m.phone.includes(kw)
-                );
-            },
-            
-            // 获取会员统计数据
-            getMemberStats: async function() {
-                const data = await this.getData();
-                const now = new Date();
-                const today = getDateString(now);
-                const weekRange = getWeekRange(now);
-                const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
-                const yearRange = getYearRange(now);
-                
-                const stats = {
-                    today: { orders: 0, income: 0, recharge: 0, customers: 0 },
-                    week: { orders: 0, income: 0, recharge: 0 },
-                    month: { orders: 0, income: 0, recharge: 0 },
-                    year: { orders: 0, income: 0, recharge: 0 }
-                };
-                
-                // 统计订单
-                data.allOrders.forEach(order => {
-                    const orderDate = order.date;
-                    
-                    // 今日
-                    if (orderDate === today) {
-                        stats.today.orders++;
-                        stats.today.income += order.amount;
-                    }
-                    
-                    // 本周
-                    if (isDateInRange(orderDate, weekRange.start, weekRange.end)) {
-                        stats.week.orders++;
-                        stats.week.income += order.amount;
-                    }
-                    
-                    // 本月
-                    if (new Date(orderDate) >= monthStart) {
-                        stats.month.orders++;
-                        stats.month.income += order.amount;
-                    }
-                    
-                    // 本年
-                    if (isDateInRange(orderDate, yearRange.start, yearRange.end)) {
-                        stats.year.orders++;
-                        stats.year.income += order.amount;
-                    }
-                });
-                
-                stats.today.customers = data.today.customers;
-                
-                // 统计充�?                data.transactions.filter(t => t.type === 'recharge').forEach(t => {
-                    const tDate = t.time.slice(0, 10);
-                    
-                    if (tDate === today) {
-                        stats.today.recharge += t.amount;
-                    }
-                    if (isDateInRange(tDate, weekRange.start, weekRange.end)) {
-                        stats.week.recharge += t.amount;
-                    }
-                    if (new Date(tDate) >= monthStart) {
-                        stats.month.recharge += t.amount;
-                    }
-                    if (isDateInRange(tDate, yearRange.start, yearRange.end)) {
-                        stats.year.recharge += t.amount;
-                    }
-                });
-                
-                return stats;
-            }
+// 数据管理
+const dataManager = {
+    getData: function() {
+        const saved = localStorage.getItem('nailData');
+        if (saved) return JSON.parse(saved);
+        return {
+            today: { orders: 0, income: 0, recharge: 0 },
+            members: [],
+            orders: []
         };
-        
-        // ==================== 页面初始�?====================
-        
-        // 返回首页
-        function goBackToHome() {
-            document.getElementById('ordersPage').classList.remove('active');
-            document.getElementById('membersPage').classList.remove('active');
-            document.getElementById('reportsPage').classList.remove('active');
-            document.getElementById('settingsPage').classList.remove('active');
-            document.querySelector('.container').style.display = 'flex';
-            
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            document.querySelector('.nav-item[data-tab="home"]').classList.add('active');
-        }
-
-        // 保存 API Key
-        function saveApiKey() {
-            const input = document.getElementById('apiKeyInput');
-            const key = input ? input.value.trim() : '';
-            if (!key) {
-                alert('请输�?API Key');
-                return;
-            }
-            localStorage.setItem('nailSalonApiKey', key);
-            dataManager.jsonBinConfig.apiKey = key;
-            showNotification('API Key 已保存！', 'success');
-        }
-        
-        // ==================== 全局变量 ====================
-        let selectedServices = [];
-        let totalAmount = 0;
-        let currentRechargeMember = null;
-        let currentRechargeAmount = 0;
-        let currentRechargeBonus = 0;
-        
-        // ==================== 页面加载初始�?====================
-        document.addEventListener('DOMContentLoaded', async function() {
-            await dataManager.checkDailyReset();
-            await dataManager.checkMonthlyReset();
-            await loadDataToPage();
-            initializeModals();
-            initializeNavigation();
-            initializeBackupButtons();
-            initializeClearButtons();
-            
-            // 加载已保存的 API Key
-            const saved = localStorage.getItem('nailSalonApiKey');
-            const input = document.getElementById('apiKeyInput');
-            if (saved && input) input.value = saved;
+    },
+    saveData: function(data) {
+        localStorage.setItem('nailData', JSON.stringify(data));
+    },
+    addOrder: function(amount, services) {
+        const data = this.getData();
+        data.today.orders++;
+        data.today.income += amount;
+        data.orders.unshift({
+            id: Date.now(),
+            amount: amount,
+            services: services,
+            time: new Date().toLocaleString()
         });
-        
-        // 加载数据到页�?        async function loadDataToPage() {
-            const data = await dataManager.getData();
-            const now = new Date();
-            
-            // 更新日期显示
-            document.getElementById('currentStatDate').textContent = 
-                `${now.getFullYear()}�?{now.getMonth() + 1}�?{now.getDate()}日`;
-            document.getElementById('currentStatMonth').textContent = 
-                `${now.getFullYear()}�?{now.getMonth() + 1}月`;
-            
-            // 更新今日数据
-            document.getElementById('todayOrders').textContent = data.today.orders;
-            document.getElementById('todayIncome').textContent = `¥${data.today.income}`;
-            document.getElementById('todayRecharge').textContent = `¥${data.today.recharge || 0}`;
-            
-            // 更新备份状�?            const backupTimeEl = document.getElementById('lastBackupTime');
-            const backupStatusEl = document.getElementById('backupStatus');
-            if (data.lastBackup) {
-                backupTimeEl.textContent = data.lastBackup;
-                backupStatusEl.textContent = '☁️ 已同步到云端';
-                backupStatusEl.style.color = '#4CAF50';
-            } else {
-                backupTimeEl.textContent = '未备�?;
-                backupStatusEl.textContent = '⚠️ 本地数据未同�?;
-                backupStatusEl.style.color = '#FFA726';
-            }
-            
-            // 更新设置页面
-            document.getElementById('settingsTodayOrders').textContent = data.today.orders;
-            document.getElementById('settingsTodayIncome').textContent = data.today.income;
-            document.getElementById('settingsTotalOrders').textContent = data.allOrders.length;
-            document.getElementById('settingsTotalMembers').textContent = data.members?.length || 0;
+        this.saveData(data);
+        return data;
+    },
+    addMember: function(name, phone, balance) {
+        const data = this.getData();
+        if (data.members.find(m => m.phone === phone)) {
+            alert('该手机号已存在');
+            return null;
         }
-        
-        // 更新日期时间
-        function updateDateTime() {
-            const now = new Date();
-            const days = ['星期�?, '星期一', '星期�?, '星期�?, '星期�?, '星期�?, '星期�?];
-            const dateTimeStr = `${now.getFullYear()}�?{now.getMonth() + 1}�?{now.getDate()}�?${days[now.getDay()]} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
-            document.getElementById('currentDateTime').textContent = dateTimeStr;
+        const member = { id: Date.now(), name, phone, balance: balance || 0 };
+        data.members.push(member);
+        this.saveData(data);
+        return member;
+    },
+    findMember: function(phone) {
+        return this.getData().members.find(m => m.phone === phone);
+    },
+    rechargeMember: function(phone, amount, bonus) {
+        const data = this.getData();
+        const member = data.members.find(m => m.phone === phone);
+        if (member) {
+            member.balance += amount + bonus;
+            data.today.recharge += amount;
+            this.saveData(data);
         }
-        updateDateTime();
-        setInterval(updateDateTime, 60000);
-        
-        // ==================== 模态框初始�?====================
-        function initializeModals() {
-            // 快速开�?            initQuickOrderModal();
-            // 收款按钮
-            initCollectMoneyBtn();
-            // 会员管理按钮
-            initMemberManageBtn();
-            // 收款
-            initCollectMoneyModal();
-            // 会员充�?            initMemberRechargeModal();
-            // 新增会员
-            initAddMemberModal();
-            // 会员详情
-            initMemberDetailModal();
-            // 会员选择（余额支付）
-            initMemberSelectModal();
+        return member;
+    }
+};
+
+// 服务列表
+const services = [
+    { name: '纯色美甲', price: 101 },
+    { name: '款式本甲', price: 189 },
+    { name: '猫眼美甲', price: 159 },
+    { name: '美睫任意款', price: 159 },
+    { name: '甲片款式', price: 279 },
+    { name: '热门简约款', price: 149 },
+    { name: '脚部美甲', price: 159 },
+    { name: '下睫毛', price: 55 }
+];
+
+let selectedServices = [];
+let currentMember = null;
+let rechargeAmount = 0;
+let rechargeBonus = 0;
+
+// 初始化
+document.addEventListener('DOMContentLoaded', function() {
+    updateStats();
+    initNav();
+    initButtons();
+});
+
+function initNav() {
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', function() {
+            const tab = this.dataset.tab;
+            showPage(tab);
+        });
+    });
+}
+
+function initButtons() {
+    // 快速开单
+    document.getElementById('quickOrderBtn').addEventListener('click', function() {
+        selectedServices = [];
+        renderServices();
+        document.getElementById('orderTotal').textContent = '¥0';
+        showModal('quickOrderModal');
+    });
+    
+    // 收款
+    document.getElementById('collectMoneyBtn').addEventListener('click', function() {
+        const total = selectedServices.reduce((sum, s) => sum + s.price, 0);
+        if (total === 0) {
+            alert('请先选择服务');
+            return;
         }
-        
-        // 快速开单模态框
-        function initQuickOrderModal() {
-            const modal = document.getElementById('quickOrderModal');
-            const openBtn = document.getElementById('quickOrderBtn');
-            const closeBtn = document.getElementById('closeOrderModal');
-            const clearBtn = document.getElementById('clearSelection');
-            const confirmBtn = document.getElementById('confirmOrder');
-            const serviceListEl = document.getElementById('serviceList');
-            
-            // 渲染服务列表
-            serviceList.forEach(service => {
-                const item = document.createElement('div');
-                item.className = 'service-item';
-                item.innerHTML = `
-                    <span class="service-name">${service.name}</span>
-                    <span class="service-price">¥${service.price}</span>
-                `;
-                item.addEventListener('click', () => toggleService(item, service));
-                serviceListEl.appendChild(item);
-            });
-            
-            // 添加自定义金额选项
-            const customItem = document.createElement('div');
-            customItem.className = 'service-item';
-            customItem.id = 'customAmountItem';
-            customItem.innerHTML = `
-                <div style="display: flex; align-items: center; width: 100%;">
-                    <span style="margin-right: 10px;">✏️</span>
-                    <span class="service-name">自定义金�?/span>
-                </div>
-                <div style="display: flex; align-items: center;">
-                    <input type="number" id="customAmountInput" placeholder="金额" 
-                        style="width: 80px; padding: 5px; border: 1px solid var(--border-color); 
-                        border-radius: 6px; text-align: right; margin-right: 8px;" 
-                        min="1" max="100000">
-                    <span class="service-price" id="customAmountDisplay">¥0</span>
-                </div>
-            `;
-            customItem.addEventListener('click', (e) => {
-                if (e.target.id !== 'customAmountInput') {
-                    document.getElementById('customAmountInput').focus();
-                }
-            });
-            serviceListEl.appendChild(customItem);
-            
-            // 自定义金额输�?            document.getElementById('customAmountInput').addEventListener('input', function() {
-                let value = parseInt(this.value) || 0;
-                // 添加金额范围校验
-                if (value > 100000) {
-                    value = 100000;
-                    this.value = value;
-                    showNotification('金额上限�?¥100,000', 'warning');
-                }
-                document.getElementById('customAmountDisplay').textContent = `¥${value}`;
-                updateOrderTotal();
-            });
-            
-            openBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                modal.style.display = 'flex';
-            });
-            
-            closeBtn.addEventListener('click', () => modal.style.display = 'none');
-            
-            clearBtn.addEventListener('click', clearServiceSelection);
-            
-            confirmBtn.addEventListener('click', confirmOrder);
-            
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) modal.style.display = 'none';
-            });
-        }
-        
-        function toggleService(item, service) {
-            if (item.id === 'customAmountItem') return;
-            
-            const index = selectedServices.findIndex(s => s.name === service.name);
-            
-            if (index === -1) {
-                selectedServices.push(service);
-                item.classList.add('selected');
-            } else {
-                selectedServices.splice(index, 1);
-                item.classList.remove('selected');
-            }
-            
-            updateOrderTotal();
-        }
-        
-        function updateOrderTotal() {
-            totalAmount = selectedServices.reduce((sum, s) => sum + s.price, 0);
-            
-            const customInput = document.getElementById('customAmountInput');
-            const customValue = customInput ? (parseInt(customInput.value) || 0) : 0;
-            if (customValue > 0) {
-                totalAmount += customValue;
-            }
-            
-            document.getElementById('orderTotal').textContent = `¥${totalAmount}`;
-        }
-        
-        function clearServiceSelection() {
-            selectedServices = [];
-            document.querySelectorAll('.service-item.selected').forEach(item => {
-                item.classList.remove('selected');
-            });
-            
-            const customInput = document.getElementById('customAmountInput');
-            if (customInput) customInput.value = '';
-            document.getElementById('customAmountDisplay').textContent = '¥0';
-            
-            updateOrderTotal();
-        }
-        
-        async function confirmOrder() {
-            const customInput = document.getElementById('customAmountInput');
-            const customValue = customInput ? (parseInt(customInput.value) || 0) : 0;
-            
-            if (selectedServices.length === 0 && customValue === 0) {
-                showNotification('请至少选择一项服务或输入自定义金�?, 'warning');
-                return;
-            }
-            
-            // 构建服务描述
-            let serviceNames = selectedServices.map(s => s.name).join(' + ');
-            if (customValue > 0) {
-                serviceNames = serviceNames ? `${serviceNames} + 自定义�?{customValue}` : `自定义服务�?{customValue}`;
-            }
-            
-            // 显示收款模态框
-            document.getElementById('quickOrderModal').style.display = 'none';
-            document.getElementById('amountToCollect').textContent = `¥${totalAmount}`;
-            document.getElementById('collectMoneyModal').style.display = 'flex';
-        }
-        
-        // 收款按钮绑定
-        function initCollectMoneyBtn() {
-            const btn = document.getElementById('collectMoneyBtn');
-            if (btn) {
-                btn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    if (totalAmount === 0) {
-                        showNotification('请先创建订单', 'warning');
-                        return;
-                    }
-                    document.getElementById('amountToCollect').textContent = '¥' + totalAmount;
-                    document.getElementById('collectMoneyModal').style.display = 'flex';
-                });
-            }
-        }
-        
-        // 会员管理按钮绑定
-        function initMemberManageBtn() {
-            const btn = document.getElementById('memberManageBtn');
-            if (btn) {
-                btn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    document.querySelector('.container').style.display = 'none';
-                    document.getElementById('membersPage').classList.add('active');
-                    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-                    document.querySelector('.nav-item[data-tab="members"]').classList.add('active');
-                    loadMembersPage();
-                });
-            }
-        }
-        
-        // 收款模态框
-        function initCollectMoneyModal() {
-            const modal = document.getElementById('collectMoneyModal');
-            const closeBtn = document.getElementById('closeCollectModal');
-            const closeBtn2 = document.getElementById('closeCollectBtn');
-            
-            closeBtn.addEventListener('click', () => modal.style.display = 'none');
-            closeBtn2.addEventListener('click', () => modal.style.display = 'none');
-            
-            // 微信支付
-            document.getElementById('wechatPayBtn').addEventListener('click', () => {
-                processPayment('微信支付');
-            });
-            
-            // 支付�?            document.getElementById('alipayBtn').addEventListener('click', () => {
-                processPayment('支付�?);
-            });
-            
-            // 现金支付
-            document.getElementById('cashPayBtn').addEventListener('click', () => {
-                processPayment('现金支付');
-            });
-            
-            // 会员余额支付
-            document.getElementById('memberPayBtn').addEventListener('click', () => {
-                modal.style.display = 'none';
-                document.getElementById('memberSelectModal').style.display = 'flex';
-                loadPayMemberList();
-            });
-            
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) modal.style.display = 'none';
-            });
-        }
-        
-        async function processPayment(method) {
-            const customInput = document.getElementById('customAmountInput');
-            const customValue = customInput ? (parseInt(customInput.value) || 0) : 0;
-            let serviceNames = selectedServices.map(s => s.name).join(' + ');
-            if (customValue > 0) {
-                serviceNames = serviceNames ? `${serviceNames} + 自定义�?{customValue}` : `自定义服务�?{customValue}`;
-            }
-            
-            await dataManager.addOrder(totalAmount, serviceNames);
-            
-            document.getElementById('collectMoneyModal').style.display = 'none';
-            showNotification(`支付成功！收�?¥${totalAmount}�?{method}）`, 'success');
-            
-            // 重置
-            clearServiceSelection();
-            totalAmount = 0;
-            await loadDataToPage();
-        }
-        
-        // 会员充值模态框
-        function initMemberRechargeModal() {
-            const modal = document.getElementById('memberRechargeModal');
-            const openBtn = document.getElementById('memberRechargeBtn');
-            const closeBtn = document.getElementById('closeRechargeModal');
-            const cancelBtn = document.getElementById('cancelRechargeBtn');
-            const confirmBtn = document.getElementById('confirmRechargeBtn');
-            const searchBtn = document.getElementById('searchRechargeMemberBtn');
-            const customInput = document.getElementById('customRechargeAmount');
-            
-            openBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                modal.style.display = 'flex';
-                resetRechargeModal();
-            });
-            
-            closeBtn.addEventListener('click', () => modal.style.display = 'none');
-            cancelBtn.addEventListener('click', () => modal.style.display = 'none');
-            
-            // 搜索会员
-            searchBtn.addEventListener('click', async () => {
-                const phone = document.getElementById('rechargeSearchPhone').value.trim();
-                if (!phone) {
-                    showNotification('请输入手机号', 'warning');
-                    return;
-                }
-                
-                const data = await dataManager.getData();
-                const member = dataManager.findMember(data, phone);
-                
-                if (member) {
-                    currentRechargeMember = member;
-                    document.getElementById('rechargeMemberName').textContent = member.name;
-                    document.getElementById('rechargeMemberPhone').textContent = member.phone;
-                    document.getElementById('rechargeMemberBalance').textContent = `¥${member.balance}`;
-                    document.getElementById('rechargeMemberInfo').style.display = 'block';
-                    updateRechargePreview();
-                } else {
-                    showNotification('未找到该会员', 'error');
-                    document.getElementById('rechargeMemberInfo').style.display = 'none';
-                    currentRechargeMember = null;
-                }
-            });
-            
-            // 充值套餐选择
-            document.querySelectorAll('.recharge-package').forEach(pkg => {
-                pkg.addEventListener('click', function() {
-                    document.querySelectorAll('.recharge-package').forEach(p => p.classList.remove('selected'));
-                    this.classList.add('selected');
-                    
-                    currentRechargeAmount = parseInt(this.dataset.amount);
-                    currentRechargeBonus = parseInt(this.dataset.bonus);
-                    customInput.value = '';
-                    
-                    updateRechargePreview();
-                });
-            });
-            
-            // 自定义充值金�?            customInput.addEventListener('input', function() {
-                let value = parseInt(this.value) || 0;
-                if (value > 50000) {
-                    value = 50000;
-                    this.value = value;
-                    showNotification('单次充值上�?¥50,000', 'warning');
-                }
-                
-                document.querySelectorAll('.recharge-package').forEach(p => p.classList.remove('selected'));
-                currentRechargeAmount = value;
-                currentRechargeBonus = 0;
-                
-                // 根据金额自动计算赠�?                if (value >= 5000) currentRechargeBonus = Math.floor(value * 0.3);
-                else if (value >= 2000) currentRechargeBonus = Math.floor(value * 0.25);
-                else if (value >= 1000) currentRechargeBonus = Math.floor(value * 0.2);
-                else if (value >= 500) currentRechargeBonus = Math.floor(value * 0.16);
-                else if (value >= 200) currentRechargeBonus = Math.floor(value * 0.1);
-                
-                updateRechargePreview();
-            });
-            
-            // 确认充�?            confirmBtn.addEventListener('click', async () => {
-                if (!currentRechargeMember) {
-                    showNotification('请先选择会员', 'warning');
-                    return;
-                }
-                if (currentRechargeAmount <= 0) {
-                    showNotification('请选择或输入充值金�?, 'warning');
-                    return;
-                }
-                
-                await dataManager.rechargeMember(
-                    currentRechargeMember.id, 
-                    currentRechargeAmount, 
-                    currentRechargeBonus
-                );
-                
-                modal.style.display = 'none';
-                resetRechargeModal();
-                await loadDataToPage();
-            });
-            
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) modal.style.display = 'none';
-            });
-        }
-        
-        function resetRechargeModal() {
-            currentRechargeMember = null;
-            currentRechargeAmount = 0;
-            currentRechargeBonus = 0;
-            document.getElementById('rechargeSearchPhone').value = '';
-            document.getElementById('rechargeMemberInfo').style.display = 'none';
-            document.getElementById('customRechargeAmount').value = '';
-            document.getElementById('rechargePreviewBalance').textContent = '¥0';
-            document.querySelectorAll('.recharge-package').forEach(p => p.classList.remove('selected'));
-        }
-        
-        function updateRechargePreview() {
-            if (currentRechargeMember) {
-                const newBalance = currentRechargeMember.balance + currentRechargeAmount + currentRechargeBonus;
-                let preview = `¥${newBalance}`;
-                if (currentRechargeBonus > 0) {
-                    preview += ` (送�?{currentRechargeBonus})`;
-                }
-                document.getElementById('rechargePreviewBalance').textContent = preview;
-            } else {
-                document.getElementById('rechargePreviewBalance').textContent = '¥0';
-            }
-        }
-        
-        // 新增会员模态框
-        function initAddMemberModal() {
-            const modal = document.getElementById('addMemberModal');
-            const openBtn = document.getElementById('addMemberBtn');
-            const closeBtn = document.getElementById('closeAddMemberModal');
-            const cancelBtn = document.getElementById('cancelAddMemberBtn');
-            const confirmBtn = document.getElementById('confirmAddMemberBtn');
-            
-            openBtn.addEventListener('click', () => {
-                modal.style.display = 'flex';
-                // 清空表单
-                document.getElementById('newMemberName').value = '';
-                document.getElementById('newMemberPhone').value = '';
-                document.getElementById('newMemberInitialBalance').value = '';
-                document.getElementById('newMemberNote').value = '';
-            });
-            
-            closeBtn.addEventListener('click', () => modal.style.display = 'none');
-            cancelBtn.addEventListener('click', () => modal.style.display = 'none');
-            
-            confirmBtn.addEventListener('click', async () => {
-                const name = document.getElementById('newMemberName').value.trim();
-                const phone = document.getElementById('newMemberPhone').value.trim();
-                const initialBalance = parseInt(document.getElementById('newMemberInitialBalance').value) || 0;
-                const note = document.getElementById('newMemberNote').value.trim();
-                
-                if (!name) {
-                    showNotification('请输入会员姓�?, 'warning');
-                    return;
-                }
-                if (!phone || !/^1[3-9]\d{9}$/.test(phone)) {
-                    showNotification('请输入正确的手机�?, 'warning');
-                    return;
-                }
-                if (initialBalance > 50000) {
-                    showNotification('初始充值金额上�?¥50,000', 'warning');
-                    return;
-                }
-                
-                const member = await dataManager.addMember(name, phone, initialBalance, note);
-                
-                if (member) {
-                    modal.style.display = 'none';
-                    await loadMembersPage();
-                    await loadDataToPage();
-                }
-            });
-            
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) modal.style.display = 'none';
-            });
-        }
-        
-        // 会员详情模态框
-        function initMemberDetailModal() {
-            const modal = document.getElementById('memberDetailModal');
-            const closeBtn = document.getElementById('closeMemberDetailModal');
-            const rechargeBtn = document.getElementById('rechargeForMemberBtn');
-            
-            closeBtn.addEventListener('click', () => modal.style.display = 'none');
-            
-            rechargeBtn.addEventListener('click', () => {
-                modal.style.display = 'none';
-                // 打开充值模态框并预填会员信�?                document.getElementById('memberRechargeModal').style.display = 'flex';
-                document.getElementById('rechargeSearchPhone').value = currentRechargeMember?.phone || '';
-                document.getElementById('searchRechargeMemberBtn').click();
-            });
-            
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) modal.style.display = 'none';
-            });
-        }
-        
-        // 会员选择模态框（余额支付）
-        function initMemberSelectModal() {
-            const modal = document.getElementById('memberSelectModal');
-            const closeBtn = document.getElementById('closeMemberSelectModal');
-            const searchInput = document.getElementById('payMemberSearch');
-            
-            closeBtn.addEventListener('click', () => modal.style.display = 'none');
-            
-            searchInput.addEventListener('input', loadPayMemberList);
-            
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) modal.style.display = 'none';
-            });
-        }
-        
-        async function loadPayMemberList() {
-            const keyword = document.getElementById('payMemberSearch').value.trim();
-            const data = await dataManager.getData();
-            const members = dataManager.searchMembers(data, keyword);
-            const listEl = document.getElementById('payMemberList');
-            
-            listEl.innerHTML = '';
-            
-            if (members.length === 0) {
-                listEl.innerHTML = '<div class="empty-state"><p>暂无会员</p></div>';
-                return;
-            }
-            
-            members.forEach(member => {
-                const item = document.createElement('div');
-                item.className = 'member-item';
-                item.innerHTML = `
-                    <div class="member-info">
-                        <div class="name">${member.name}</div>
-                        <div class="phone">${member.phone}</div>
-                    </div>
-                    <div class="member-balance-small">
-                        <div class="label">余额</div>
-                        <div class="value">¥${member.balance}</div>
-                    </div>
-                `;
-                
-                item.addEventListener('click', async () => {
-                    if (member.balance < totalAmount) {
-                        showNotification(`余额不足！当前余额：¥${member.balance}`, 'error');
-                        return;
-                    }
-                    
-                    document.getElementById('memberSelectModal').style.display = 'none';
-                    
-                    // 构建服务描述
-                    const customInput = document.getElementById('customAmountInput');
-                    const customValue = customInput ? (parseInt(customInput.value) || 0) : 0;
-                    let serviceNames = selectedServices.map(s => s.name).join(' + ');
-                    if (customValue > 0) {
-                        serviceNames = serviceNames ? `${serviceNames} + 自定义�?{customValue}` : `自定义服务�?{customValue}`;
-                    }
-                    
-                    await dataManager.memberConsume(member.id, totalAmount, serviceNames);
-                    
-                    clearServiceSelection();
-                    totalAmount = 0;
-                    await loadDataToPage();
-                });
-                
-                listEl.appendChild(item);
-            });
-        }
-        
-        // ==================== 导航初始�?====================
-        function initializeNavigation() {
-            const navItems = document.querySelectorAll('.nav-item');
-            const homeContainer = document.querySelector('.container');
-            
-            navItems.forEach(item => {
-                item.addEventListener('click', async () => {
-                    navItems.forEach(nav => nav.classList.remove('active'));
-                    item.classList.add('active');
-                    
-                    const tab = item.getAttribute('data-tab');
-                    
-                    // 隐藏所有页�?                    homeContainer.style.display = 'none';
-                    document.getElementById('ordersPage').classList.remove('active');
-                    document.getElementById('membersPage').classList.remove('active');
-                    document.getElementById('reportsPage').classList.remove('active');
-                    document.getElementById('settingsPage').classList.remove('active');
-                    
-                    switch(tab) {
-                        case 'home':
-                            homeContainer.style.display = 'flex';
-                            break;
-                        case 'orders':
-                            document.getElementById('ordersPage').classList.add('active');
-                            await loadOrdersPage();
-                            break;
-                        case 'members':
-                            document.getElementById('membersPage').classList.add('active');
-                            await loadMembersPage();
-                            break;
-                        case 'reports':
-                            document.getElementById('reportsPage').classList.add('active');
-                            await loadReportsPage();
-                            break;
-                        case 'settings':
-                            document.getElementById('settingsPage').classList.add('active');
-                            await loadSettingsPage();
-                            break;
-                    }
-                });
-            });
-            
-            // 订单筛�?            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.addEventListener('click', async () => {
-                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    await filterOrders(btn.dataset.filter);
-                });
-            });
-            
-            // 报表标签切换
-            document.querySelectorAll('.report-tab').forEach(tab => {
-                tab.addEventListener('click', () => {
-                    document.querySelectorAll('.report-tab').forEach(t => t.classList.remove('active'));
-                    document.querySelectorAll('.report-content').forEach(c => c.classList.remove('active'));
-                    tab.classList.add('active');
-                    document.getElementById(`${tab.dataset.report}Report`).classList.add('active');
-                });
-            });
-            
-            // 导出数据
-            document.getElementById('exportDataBtn').addEventListener('click', async () => {
-                const data = await dataManager.getData();
-                const exportData = {
-                    exportTime: new Date().toISOString(),
-                    today: data.today,
-                    month: data.month,
-                    orders: data.allOrders,
-                    members: data.members,
-                    transactions: data.transactions
-                };
-                
-                const dataStr = JSON.stringify(exportData, null, 2);
-                const dataBlob = new Blob([dataStr], { type: 'application/json' });
-                const url = URL.createObjectURL(dataBlob);
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = `zimi-nail-salon-${new Date().toISOString().slice(0, 10)}.json`;
-                link.click();
-                URL.revokeObjectURL(url);
-                
-                showNotification('数据导出成功�?, 'success');
-            });
-        }
-        
-        // ==================== 页面加载函数 ====================
-        async function loadOrdersPage() {
-            const data = await dataManager.getData();
-            const listEl = document.getElementById('ordersListFull');
-            
-            if (data.allOrders.length === 0) {
-                listEl.innerHTML = '<div class="empty-state"><span style="font-size: 40px;">📋</span><p>暂无订单记录</p></div>';
-                return;
-            }
-            
-            renderOrders(data.allOrders);
-        }
-        
-        async function filterOrders(filter) {
-            const data = await dataManager.getData();
-            const now = new Date();
-            const today = getDateString(now);
-            
-            let filtered = [...data.allOrders];
-            
-            if (filter === 'today') {
-                filtered = filtered.filter(o => o.date === today);
-            } else if (filter === 'week') {
-                const weekRange = getWeekRange(now);
-                filtered = filtered.filter(o => isDateInRange(o.date, weekRange.start, weekRange.end));
-            } else if (filter === 'month') {
-                const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
-                filtered = filtered.filter(o => new Date(o.date) >= monthStart);
-            }
-            
-            renderOrders(filtered);
-        }
-        
-        function renderOrders(orders) {
-            const listEl = document.getElementById('ordersListFull');
-            
-            if (orders.length === 0) {
-                listEl.innerHTML = '<div class="empty-state"><span style="font-size: 40px;">📋</span><p>暂无符合条件的订�?/p></div>';
-                return;
-            }
-            
-            // 按日期分�?            const grouped = {};
-            orders.forEach(order => {
-                if (!grouped[order.date]) grouped[order.date] = [];
-                grouped[order.date].push(order);
-            });
-            
-            const sortedDates = Object.keys(grouped).sort((a, b) => new Date(b) - new Date(a));
-            
-            listEl.innerHTML = '';
-            
-            sortedDates.forEach(date => {
-                const group = document.createElement('div');
-                group.className = 'order-date-group';
-                
-                const header = document.createElement('div');
-                header.className = 'order-date-header';
-                header.textContent = date;
-                group.appendChild(header);
-                
-                grouped[date].forEach(order => {
-                    const item = document.createElement('div');
-                    item.className = 'order-item-full';
-                    item.innerHTML = `
-                        <div class="order-item-info">
-                            <h4>订单 #${order.id}</h4>
-                            <p>${order.time}</p>
-                        </div>
-                        <div class="order-item-amount">¥${order.amount}</div>
-                    `;
-                    group.appendChild(item);
-                });
-                
-                listEl.appendChild(group);
-            });
-        }
-        
-        async function loadMembersPage() {
-            const data = await dataManager.getData();
-            const listEl = document.getElementById('memberList');
-            
-            if (!data.members || data.members.length === 0) {
-                listEl.innerHTML = '<div class="empty-state"><span style="font-size: 40px;">👑</span><p>暂无会员</p></div>';
-                return;
-            }
-            
-            listEl.innerHTML = '';
-            
-            // 按余额排�?            const sorted = [...data.members].sort((a, b) => b.balance - a.balance);
-            
-            sorted.forEach(member => {
-                const item = document.createElement('div');
-                item.className = 'member-item';
-                item.innerHTML = `
-                    <div class="member-info">
-                        <div class="name">${member.name}</div>
-                        <div class="phone">${member.phone}</div>
-                    </div>
-                    <div class="member-balance-small">
-                        <div class="label">余额</div>
-                        <div class="value">¥${member.balance}</div>
-                    </div>
-                `;
-                
-                item.addEventListener('click', () => showMemberDetail(member));
-                listEl.appendChild(item);
-            });
-            
-            // 搜索功能
-            document.getElementById('searchMemberBtn').onclick = async () => {
-                const keyword = document.getElementById('memberSearchInput').value.trim();
-                const filtered = dataManager.searchMembers(data, keyword);
-                
-                listEl.innerHTML = '';
-                
-                if (filtered.length === 0) {
-                    listEl.innerHTML = '<div class="empty-state"><p>未找到匹配的会员</p></div>';
-                    return;
-                }
-                
-                filtered.forEach(member => {
-                    const item = document.createElement('div');
-                    item.className = 'member-item';
-                    item.innerHTML = `
-                        <div class="member-info">
-                            <div class="name">${member.name}</div>
-                            <div class="phone">${member.phone}</div>
-                        </div>
-                        <div class="member-balance-small">
-                            <div class="label">余额</div>
-                            <div class="value">¥${member.balance}</div>
-                        </div>
-                    `;
-                    item.addEventListener('click', () => showMemberDetail(member));
-                    listEl.appendChild(item);
-                });
-            };
-        }
-        
-        function showMemberDetail(member) {
-            currentRechargeMember = member;
-            
-            document.getElementById('detailMemberName').textContent = member.name;
-            document.getElementById('detailMemberPhone').textContent = member.phone;
-            document.getElementById('detailMemberBalance').textContent = `¥${member.balance}`;
-            
-            // 渲染交易记录
-            const transList = document.getElementById('memberTransactionList');
-            
-            if (!member.transactions || member.transactions.length === 0) {
-                transList.innerHTML = '<div style="text-align: center; color: var(--text-light); padding: 20px;">暂无记录</div>';
-            } else {
-                transList.innerHTML = '';
-                member.transactions.slice().reverse().forEach(t => {
-                    const item = document.createElement('div');
-                    item.className = 'order-item-full';
-                    
-                    const time = new Date(t.time).toLocaleString('zh-CN', { 
-                        month: 'numeric', 
-                        day: 'numeric', 
-                        hour: '2-digit', 
-                        minute: '2-digit' 
-                    });
-                    
-                    if (t.type === 'recharge') {
-                        item.innerHTML = `
-                            <div class="order-item-info">
-                                <h4 style="color: #4CAF50;">💰 充�?/h4>
-                                <p>${time}${t.bonus > 0 ? ` (送�?{t.bonus})` : ''}</p>
-                            </div>
-                            <div class="order-item-amount" style="color: #4CAF50;">+¥${t.amount}</div>
-                        `;
-                    } else {
-                        item.innerHTML = `
-                            <div class="order-item-info">
-                                <h4>🛒 消费</h4>
-                                <p>${time}</p>
-                            </div>
-                            <div class="order-item-amount">-¥${t.amount}</div>
-                        `;
-                    }
-                    
-                    transList.appendChild(item);
-                });
-            }
-            
-            document.getElementById('memberDetailModal').style.display = 'flex';
-        }
-        
-        async function loadReportsPage() {
-            const stats = await dataManager.getMemberStats();
-            
-            // 日报
-            document.getElementById('reportTodayOrders').textContent = stats.today.orders;
-            document.getElementById('reportTodayIncome').textContent = stats.today.income.toLocaleString();
-            document.getElementById('reportTodayRecharge').textContent = stats.today.recharge.toLocaleString();
-            document.getElementById('reportTodayCustomers').textContent = stats.today.customers;
-            document.getElementById('reportTodayAvg').textContent = 
-                stats.today.orders > 0 ? Math.round(stats.today.income / stats.today.orders) : 0;
-            
-            // 周报（修复：使用真实周数据）
-            document.getElementById('reportWeekOrders').textContent = stats.week.orders;
-            document.getElementById('reportWeekIncome').textContent = stats.week.income.toLocaleString();
-            document.getElementById('reportWeekRecharge').textContent = stats.week.recharge.toLocaleString();
-            const weekDays = Math.min(7, Math.ceil((new Date() - getWeekRange(new Date()).start) / (1000 * 60 * 60 * 24)) + 1);
-            document.getElementById('reportWeekAvg').textContent = 
-                weekDays > 0 ? Math.round(stats.week.income / weekDays) : 0;
-            
-            // 月报（修复：使用真实月数据）
-            document.getElementById('reportMonthOrders').textContent = stats.month.orders;
-            document.getElementById('reportMonthIncome').textContent = stats.month.income.toLocaleString();
-            document.getElementById('reportMonthRecharge').textContent = stats.month.recharge.toLocaleString();
-            const monthDays = new Date().getDate();
-            document.getElementById('reportMonthAvg').textContent = 
-                monthDays > 0 ? Math.round(stats.month.income / monthDays) : 0;
-            
-            // 年报（修复：使用真实年数据）
-            document.getElementById('reportYearOrders').textContent = stats.year.orders;
-            document.getElementById('reportYearIncome').textContent = stats.year.income.toLocaleString();
-            document.getElementById('reportYearRecharge').textContent = stats.year.recharge.toLocaleString();
-            const yearMonths = new Date().getMonth() + 1;
-            document.getElementById('reportYearAvg').textContent = 
-                yearMonths > 0 ? Math.round(stats.year.income / yearMonths) : 0;
-        }
-        
-        async function loadSettingsPage() {
-            const data = await dataManager.getData();
-            
-            document.getElementById('settingsTodayOrders').textContent = data.today.orders;
-            document.getElementById('settingsTodayIncome').textContent = data.today.income.toLocaleString();
-            document.getElementById('settingsTotalOrders').textContent = data.allOrders.length;
-            document.getElementById('settingsTotalMembers').textContent = data.members?.length || 0;
-        }
-        
-        // ==================== 备份和清零按�?====================
-        function initializeBackupButtons() {
-            const backupBtn = document.getElementById('manualBackupBtn');
-            
-            backupBtn.addEventListener('click', async function() {
-                backupBtn.disabled = true;
-                backupBtn.textContent = '�?备份�?..';
-                
-                const success = await dataManager.backupToCloud();
-                
-                if (success) {
-                    const now = new Date().toLocaleString('zh-CN').slice(0, 16);
-                    document.getElementById('lastBackupTime').textContent = now;
-                    document.getElementById('backupStatus').textContent = '☁️ 已同步到云端';
-                    document.getElementById('backupStatus').style.color = '#4CAF50';
-                    showNotification('备份成功！数据已同步到云�?, 'success');
-                } else {
-                    showNotification('云端备份失败，请检查网络连�?, 'error');
-                }
-                
-                backupBtn.disabled = false;
-                backupBtn.textContent = '☁️ 备份';
-            });
-        }
-        
-        function initializeClearButtons() {
-            const dailyBtn = document.getElementById('dailyClearBtn');
-            const monthlyBtn = document.getElementById('monthlyClearBtn');
-            const clearAllBtn = document.getElementById('clearAllDataBtn');
-            
-            dailyBtn.addEventListener('click', () => {
-                showClearConfirm('daily', '重置当日数据', '此操作将清空今日的所有订单、收入和客户数据�?);
-            });
-            
-            monthlyBtn.addEventListener('click', () => {
-                showClearConfirm('monthly', '重置当月数据', '此操作将清空本月的所有统计数据�?);
-            });
-            
-            clearAllBtn.addEventListener('click', () => {
-                showClearConfirm('all', '清空所有数�?, '此操作将清空所有历史数据，包括订单、会员和交易记录�?);
-            });
-        }
-        
-        function showClearConfirm(type, title, desc) {
-            const modal = document.getElementById('clearConfirmModal');
-            
-            document.getElementById('clearModalTitle').textContent = title;
-            document.getElementById('clearConfirmMessage').textContent = `确认${title}吗？`;
-            document.getElementById('clearConfirmDesc').textContent = desc;
-            
-            modal.style.display = 'flex';
-            
-            // 移除旧事件监听器
-            const confirmBtn = document.getElementById('confirmClearBtn');
-            const newConfirmBtn = confirmBtn.cloneNode(true);
-            confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
-            
-            newConfirmBtn.addEventListener('click', async () => {
-                if (type === 'daily') {
-                    await dataManager.resetDailyData();
-                } else if (type === 'monthly') {
-                    await dataManager.resetMonthlyData();
-                } else if (type === 'all') {
-                    await dataManager.clearAllData();
-                }
-                
-                modal.style.display = 'none';
-                await loadDataToPage();
-            });
-            
-            document.getElementById('cancelClearBtn').onclick = () => modal.style.display = 'none';
-            document.getElementById('closeClearModal').onclick = () => modal.style.display = 'none';
-            
-            modal.onclick = (e) => {
-                if (e.target === modal) modal.style.display = 'none';
-            };
-        }
-    </script>
+        document.getElementById('collectAmount').textContent = '¥' + total;
+        showModal('collectMoneyModal');
+    });
+    
+    // 会员充值
+    document.getElementById('memberRechargeBtn').addEventListener('click', function() {
+        document.getElementById('searchPhone').value = '';
+        document.getElementById('memberInfo').style.display = 'none';
+        showModal('memberRechargeModal');
+    });
+    
+    // 会员管理
+    document.getElementById('memberManageBtn').addEventListener('click', function() {
+        showPage('members');
+        loadMembers();
+    });
+    
+    // 新增会员按钮
+    document.getElementById('addMemberBtn').addEventListener('click', function() {
+        document.getElementById('newMemberName').value = '';
+        document.getElementById('newMemberPhone').value = '';
+        document.getElementById('newMemberBalance').value = '';
+        showModal('addMemberModal');
+    });
+}
+
+function showPage(page) {
+    document.querySelectorAll('.container, .page-content').forEach(el => {
+        el.classList.remove('active');
+        el.style.display = 'none';
+    });
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    
+    if (page === 'home') {
+        document.getElementById('homePage').style.display = 'flex';
+        document.querySelector('.nav-item[data-tab="home"]').classList.add('active');
+    } else {
+        document.getElementById(page + 'Page').classList.add('active');
+        document.getElementById(page + 'Page').style.display = 'block';
+        document.querySelector('.nav-item[data-tab="' + page + '"]').classList.add('active');
+    }
+}
+
+function showModal(id) {
+    document.getElementById(id).style.display = 'flex';
+}
+
+function closeModal(id) {
+    document.getElementById(id).style.display = 'none';
+}
+
+function renderServices() {
+    const list = document.getElementById('serviceList');
+    list.innerHTML = '';
+    services.forEach(service => {
+        const div = document.createElement('div');
+        div.className = 'service-item';
+        div.innerHTML = '<span>' + service.name + '</span><span>¥' + service.price + '</span>';
+        div.onclick = function() {
+            toggleService(service, this);
+        };
+        list.appendChild(div);
+    });
+}
+
+function toggleService(service, el) {
+    const idx = selectedServices.findIndex(s => s.name === service.name);
+    if (idx === -1) {
+        selectedServices.push(service);
+        el.classList.add('selected');
+    } else {
+        selectedServices.splice(idx, 1);
+        el.classList.remove('selected');
+    }
+    updateTotal();
+}
+
+function updateTotal() {
+    const total = selectedServices.reduce((sum, s) => sum + s.price, 0);
+    document.getElementById('orderTotal').textContent = '¥' + total;
+}
+
+function clearSelection() {
+    selectedServices = [];
+    renderServices();
+    document.getElementById('orderTotal').textContent = '¥0';
+}
+
+function confirmOrder() {
+    if (selectedServices.length === 0) {
+        alert('请选择服务');
+        return;
+    }
+    closeModal('quickOrderModal');
+    document.getElementById('collectAmount').textContent = '¥' + selectedServices.reduce((sum, s) => sum + s.price, 0);
+    showModal('collectMoneyModal');
+}
+
+function processPayment(method) {
+    const total = selectedServices.reduce((sum, s) => sum + s.price, 0);
+    dataManager.addOrder(total, selectedServices.map(s => s.name).join('+'));
+    closeModal('collectMoneyModal');
+    selectedServices = [];
+    updateStats();
+    alert('支付成功: ¥' + total);
+}
+
+function searchMember() {
+    const phone = document.getElementById('searchPhone').value;
+    const member = dataManager.findMember(phone);
+    if (member) {
+        currentMember = member;
+        document.getElementById('memberName').textContent = member.name;
+        document.getElementById('memberBalance').textContent = member.balance;
+        document.getElementById('memberInfo').style.display = 'block';
+    } else {
+        alert('未找到会员');
+    }
+}
+
+function selectRecharge(amount, bonus) {
+    rechargeAmount = amount;
+    rechargeBonus = bonus;
+    document.querySelectorAll('.recharge-package').forEach(el => el.classList.remove('selected'));
+    event.target.classList.add('selected');
+}
+
+function confirmRecharge() {
+    if (!currentMember) {
+        alert('请先搜索会员');
+        return;
+    }
+    const custom = parseInt(document.getElementById('customRecharge').value) || 0;
+    if (custom > 0) {
+        rechargeAmount = custom;
+        rechargeBonus = Math.floor(custom * 0.2);
+    }
+    if (rechargeAmount === 0) {
+        alert('请选择或输入充值金额');
+        return;
+    }
+    dataManager.rechargeMember(currentMember.phone, rechargeAmount, rechargeBonus);
+    closeModal('memberRechargeModal');
+    updateStats();
+    alert('充值成功');
+}
+
+function saveMember() {
+    const name = document.getElementById('newMemberName').value;
+    const phone = document.getElementById('newMemberPhone').value;
+    const balance = parseInt(document.getElementById('newMemberBalance').value) || 0;
+    if (!name || !phone) {
+        alert('请填写姓名和手机号');
+        return;
+    }
+    const member = dataManager.addMember(name, phone, balance);
+    if (member) {
+        closeModal('addMemberModal');
+        loadMembers();
+        alert('会员添加成功');
+    }
+}
+
+function loadMembers() {
+    const data = dataManager.getData();
+    const list = document.getElementById('memberList');
+    list.innerHTML = '';
+    data.members.forEach(m => {
+        const div = document.createElement('div');
+        div.className = 'service-item';
+        div.innerHTML = '<span>' + m.name + ' (' + m.phone + ')</span><span>¥' + m.balance + '</span>';
+        list.appendChild(div);
+    });
+}
+
+function updateStats() {
+    const data = dataManager.getData();
+    document.getElementById('todayOrders').textContent = data.today.orders;
+    document.getElementById('todayIncome').textContent = '¥' + data.today.income;
+    document.getElementById('todayRecharge').textContent = '¥' + data.today.recharge;
+}
+</script>
 </body>
 </html>
-
