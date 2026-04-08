@@ -2239,12 +2239,14 @@ newConfirmBtn.addEventListener('click', async function() {
                 alert(`账单查询功能：\n\n今日收入：¥${data.today.income.toLocaleString()}\n本月收入：¥${data.month.income.toLocaleString()}\n历史总收入：¥${(data.today.income + data.month.income).toLocaleString()}\n\n详细账单请在"报表"页面查看。`);
             });
             
-            // 客户管理功能
+            // 客户管理功能（已移至会员管理按钮）
             const customerManageBtn = document.getElementById('customerManageBtn');
-            customerManageBtn.addEventListener('click', async () => {
-                const data = await dataManager.getData();
-                alert(`客户管理功能：\n\n今日客户：${data.today.customers}人\n本月客户：${data.month.customers}人\n总服务客户：${data.today.customers + data.month.customers}人\n\n点击"设置"页面可查看详细客户信息。`);
-            });
+            if (customerManageBtn) {
+                customerManageBtn.addEventListener('click', async () => {
+                    const data = await dataManager.getData();
+                    alert('请使用"会员管理"按钮查看客户信息。');
+                });
+            }
             
             // 底部导航切换
             const navItems = document.querySelectorAll('.nav-item');
@@ -2564,7 +2566,8 @@ newConfirmBtn.addEventListener('click', async function() {
             if (closeRechargeModal) closeRechargeModal.addEventListener('click', () => memberRechargeModal.style.display = 'none');
             if (cancelRechargeBtn) cancelRechargeBtn.addEventListener('click', () => memberRechargeModal.style.display = 'none');
             
-            document.getElementById('rechargeMemberSearch').addEventListener('input', loadRechargeMemberList);
+            const rechargeSearchInput = document.getElementById('rechargeMemberSearch');
+            if (rechargeSearchInput) rechargeSearchInput.addEventListener('input', loadRechargeMemberList);
             
             async function loadRechargeMemberList() {
                 const keyword = document.getElementById('rechargeMemberSearch').value.trim();
@@ -2636,7 +2639,8 @@ newConfirmBtn.addEventListener('click', async function() {
             
             if (closeMemberManageModal) closeMemberManageModal.addEventListener('click', () => memberManageModal.style.display = 'none');
             
-            document.getElementById('memberManageSearch').addEventListener('input', loadMemberManageList);
+            const memberSearchInput = document.getElementById('memberManageSearch');
+            if (memberSearchInput) memberSearchInput.addEventListener('input', loadMemberManageList);
             
             async function loadMemberManageList() {
                 const keyword = document.getElementById('memberManageSearch').value.trim();
