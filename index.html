@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -1522,7 +1522,7 @@
                     });
                     if (createRes.ok) {
                         const result = await createRes.json();
-                        const id = result.metadata?.id;
+                        const id = result.metadata && result.metadata.id;
                         if (id) {
                             localStorage.setItem('nailSalonBinId', id);
                             return id;
@@ -1581,7 +1581,7 @@
             getData: async function() {
                 const savedData = localStorage.getItem('nailSalonData');
                 if (savedData) {
-                    return JSON.parse(savedData);
+                    try { return JSON.parse(savedData); } catch(e) { console.error("Data parse error:", e); }
                 }
 
                 // 本地没有数据，尝试从云端恢复
