@@ -2579,15 +2579,266 @@
         // 预约按钮绑定
         function initAppointmentBtn() {
             const btn = document.getElementById('appointmentBtn');
+            const listBtn = document.getElementById('newAppointmentBtn');
+            const closeBtn = document.getElementById('closeAppointmentModal');
+            const cancelBtn = document.getElementById('cancelAppointmentBtn');
+            const confirmBtn = document.getElementById('confirmAppointmentBtn');
+            const closeListBtn = document.getElementById('closeAppointmentListModal');
+            const closeDetailBtn = document.getElementById('closeAppointmentDetailModal');
+            const completeBtn = document.getElementById('completeAppointmentBtn');
+            const cancelConfirmBtn = document.getElementById('cancelAppointmentConfirmBtn');
+            
             if (btn) {
                 btn.addEventListener('click', (e) => {
                     e.preventDefault();
-                    document.getElementById('appointmentModal').style.display = 'flex';
-                    // 设置默认日期为今天
-                    const today = new Date().toISOString().split('T')[0];
-                    document.getElementById('appointmentDate').value = today;
+                    document.getElementById('appointmentListModal').style.display = 'flex';
+                    loadAppointmentList();
                 });
             }
+            
+            if (listBtn) {
+                listBtn.addEventListener('click', () => {
+                    document.getElementById('appointmentListModal').style.display = 'none';
+                    document.getElementById('appointmentModal').style.display = 'flex';
+                    const today = new Date().toISOString().split('T')[0];
+                    document.getElementById('appointmentDate').value = today;
+                    document.getElementById('appointmentName').value = '';
+                    document.getElementById('appointmentPhone').value = '';
+                    document.getElementById('appointmentTime').value = '10:00';
+                    document.getElementById('appointmentService').value = '';
+                    document.getElementById('appointmentNote').value = '';
+                });
+            }
+            
+            if (closeBtn) {
+                closeBtn.addEventListener('click', () => {
+                    document.getElementById('appointmentModal').style.display = 'none';
+                });
+            }
+            
+            if (cancelBtn) {
+                cancelBtn.addEventListener('click', () => {
+                    document.getElementById('appointmentModal').style.display = 'none';
+                });
+            }
+            
+            if (confirmBtn) {
+                confirmBtn.addEventListener('click', saveAppointment);
+            }
+            
+            if (closeListBtn) {
+                closeListBtn.addEventListener('click', () => {
+                    document.getElementById('appointmentListModal').style.display = 'none';
+                });
+            }
+            
+            if (closeDetailBtn) {
+                closeDetailBtn.addEventListener('click', () => {
+                    document.getElementById('appointmentDetailModal').style.display = 'none';
+                });
+            }
+            
+            if (completeBtn) {
+                completeBtn.addEventListener('click', completeAppointment);
+            }
+            
+            if (cancelConfirmBtn) {
+                cancelConfirmBtn.addEventListener('click', cancelAppointment);
+            }
+        }
+        
+        // 加载预约列表
+        async function loadAppointmentList() {
+            const data = await dataManager.getData();
+            const appointments = data.appointments || [];
+            const container = document.getElementById('appointmentListContent');
+            const now = new Date();
+            const today = now.toISOString().split('T')[0];
+            
+            const activeAppointments = appointments.filter(a => a.status !== 'cancelled');
+            
+            if (activeAppointments.length === 0) {
+                container.innerHTML = '<div style="text-align: center; padding: 40px; color: var(--text-light);">暂无预约记录</div>';
+                return;
+            }
+            
+            activeAppointments.sort((a, b) => {
+                if (a.date === b.date) {
+                    return a.time.localeCompare(b.time);
+                }
+                return a.date.localeCompare(b.date);
+            });
+            
+            let html = '';
+            activeAppointments.forEach((apt, index) => {
+                const isToday = apt.date === today;
+                const statusColor = apt.status === 'completed' ? '#4CAF50' : '#F2A8C2';
+                const statusText = apt.status === 'completed' ? '已完成' : '待服务';
+                html += `
+                    <div class="member-item" style="cursor: pointer;" onclick="showAppointmentDetail(${index})">
+                        <div class="member-info">
+                            <div class="name">${apt.name}</div>
+                            <div class="phone">${apt.phone}</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="color: ${isToday ? '#FF69B4' : '#666'}; font-size: 13px;">${isToday ? '今日' : apt.date}</div>
+                            <div style="font-size: 12px; color: var(--text-light);">${apt.time}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        let currentAppointmentIndex = -1;
+        
+        // 显示预约详情
+        window.showAppointmentDetail = async function(index) {
+            const data = await dataManager.getData();
+            const appointments = (data.appointments || []).filter(a => a.status !== 'cancelled');
+            appointments.sort((a, b) => {
+                if (a.date === b.date) return a.time.localeCompare(b.time);
+                return a.date.localeCompare(b.date);
+            });
+            
+            if (index < 0 || index >= appointments.length) return;
+            
+            const apt = appointments[index];
+            currentAppointmentIndex = index;
+            
+            document.getElementById('appointmentDetailContent').innerHTML = `
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div style="font-size: 48px; margin-bottom: 10px;">📅</div>
+                    <div style="font-size: 16px; font-weight: 600;">${apt.name}</div>
+                    <div style="color: var(--text-light); font-size: 14px;">${apt.phone}</div>
+                </div>
+                <div style="background: var(--light-pink); border-radius: 12px; padding: 15px; margin-bottom: 15px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span style="color: var(--text-light);">预约日期</span>
+                        <span style="font-weight: 500;">${apt.date}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span style="color: var(--text-light);">预约时间</span>
+                        <span style="font-weight: 500;">${apt.time}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span style="color: var(--text-light);">服务项目</span>
+                        <span style="font-weight: 500;">${apt.service || '未指定'}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="color: var(--text-light);">备注</span>
+                        <span style="font-weight: 500;">${apt.note || '无'}</span>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('appointmentListModal').style.display = 'none';
+            document.getElementById('appointmentDetailModal').style.display = 'flex';
+            
+            const completeBtn = document.getElementById('completeAppointmentBtn');
+            const cancelBtn = document.getElementById('cancelAppointmentConfirmBtn');
+            if (apt.status === 'completed') {
+                completeBtn.style.display = 'none';
+                cancelBtn.style.display = 'none';
+            } else {
+                completeBtn.style.display = 'inline-block';
+                cancelBtn.style.display = 'inline-block';
+            }
+        };
+        
+        // 保存预约
+        async function saveAppointment() {
+            const name = document.getElementById('appointmentName').value.trim();
+            const phone = document.getElementById('appointmentPhone').value.trim();
+            const date = document.getElementById('appointmentDate').value;
+            const time = document.getElementById('appointmentTime').value;
+            const service = document.getElementById('appointmentService').value;
+            const note = document.getElementById('appointmentNote').value.trim();
+            
+            if (!name) {
+                showNotification('请输入客户姓名', 'warning');
+                return;
+            }
+            if (!phone) {
+                showNotification('请输入手机号码', 'warning');
+                return;
+            }
+            if (!date) {
+                showNotification('请选择预约日期', 'warning');
+                return;
+            }
+            
+            const data = await dataManager.getData();
+            if (!data.appointments) data.appointments = [];
+            
+            const appointment = {
+                id: 'APT' + Date.now(),
+                name: name,
+                phone: phone,
+                date: date,
+                time: time,
+                service: service,
+                note: note,
+                status: 'pending',
+                createdAt: new Date().toISOString()
+            };
+            
+            data.appointments.push(appointment);
+            await dataManager.saveData(data);
+            
+            document.getElementById('appointmentModal').style.display = 'none';
+            showNotification('预约成功！', 'success');
+        }
+        
+        // 完成预约
+        async function completeAppointment() {
+            if (currentAppointmentIndex === -1) return;
+            
+            const data = await dataManager.getData();
+            const appointments = data.appointments || [];
+            const activeAppointments = appointments.filter(a => a.status !== 'cancelled');
+            activeAppointments.sort((a, b) => {
+                if (a.date === b.date) return a.time.localeCompare(b.time);
+                return a.date.localeCompare(b.date);
+            });
+            
+            const apt = activeAppointments[currentAppointmentIndex];
+            const aptIndex = appointments.findIndex(a => a.id === apt.id);
+            
+            if (aptIndex !== -1) {
+                appointments[aptIndex].status = 'completed';
+                await dataManager.saveData(data);
+            }
+            
+            document.getElementById('appointmentDetailModal').style.display = 'none';
+            showNotification('预约已完成！', 'success');
+            currentAppointmentIndex = -1;
+        }
+        
+        // 取消预约
+        async function cancelAppointment() {
+            if (currentAppointmentIndex === -1) return;
+            
+            const data = await dataManager.getData();
+            const appointments = data.appointments || [];
+            const activeAppointments = appointments.filter(a => a.status !== 'cancelled');
+            activeAppointments.sort((a, b) => {
+                if (a.date === b.date) return a.time.localeCompare(b.time);
+                return a.date.localeCompare(b.date);
+            });
+            
+            const apt = activeAppointments[currentAppointmentIndex];
+            const aptIndex = appointments.findIndex(a => a.id === apt.id);
+            
+            if (aptIndex !== -1) {
+                appointments[aptIndex].status = 'cancelled';
+                await dataManager.saveData(data);
+            }
+            
+            document.getElementById('appointmentDetailModal').style.display = 'none';
+            showNotification('预约已取消', 'warning');
+            currentAppointmentIndex = -1;
         }
         
         // 收款模态框
