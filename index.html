@@ -1103,7 +1103,7 @@
                 <h3><span class="icon">✂️</span> 服务项目 (<span id="serviceCount">18</span>项)</h3>
                 <div class="settings-item">
                     <span class="settings-label">快速开单项目</span>
-                    <button class="settings-btn" onclick="alert('请在首页点击"快速开单"查看和编辑服务项目')">管理项目</button>
+                    <button class="settings-btn" id="manageQuickOrderBtn">管理项目</button>
                 </div>
             </div>
             
@@ -1458,6 +1458,26 @@
         </div>
     </div>
     
+    <!-- 快速开单项目管理模态框 -->
+    <div class="modal" id="serviceManageModal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3 class="modal-title">管理快速开单项目</h3>
+                <button class="close-btn" id="closeServiceManageModal">×</button>
+            </div>
+            <div style="padding: 15px;">
+                <div style="margin-bottom: 15px; display: flex; gap: 10px;">
+                    <input type="text" id="newServiceName" placeholder="服务名称" style="flex: 1; padding: 10px; border: 1px solid var(--border-color); border-radius: 10px;">
+                    <input type="number" id="newServicePrice" placeholder="价格" style="width: 80px; padding: 10px; border: 1px solid var(--border-color); border-radius: 10px;">
+                    <button class="btn btn-primary" id="addServiceBtn" style="padding: 10px 15px;">添加</button>
+                </div>
+                <div id="serviceManageList" style="max-height: 400px; overflow-y: auto;">
+                    <!-- 服务项目列表将在这里动态生成 -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <script>
         // 返回首页函数
         function goBackToHome() {
@@ -1612,7 +1632,27 @@
                         monthly: `${now.getFullYear()}-${now.getMonth() + 1}-01`
                     },
                     lastBackup: null,
-                    allOrders: []
+                    allOrders: [],
+                    quickOrderServices: [
+                        { id: 1, name: '款式本甲|卸甲|【美甲款式】任意款小红薯推荐', price: 189 },
+                        { id: 2, name: '【纯色美甲】手部纯色+加固微建构', price: 101 },
+                        { id: 3, name: '【闪耀上新】瓷白猫眼美甲', price: 159 },
+                        { id: 4, name: '美甲建构+冰透色/极光海莉同款二选一', price: 159 },
+                        { id: 5, name: '《畅销》网红爆款美睫任意款式设计', price: 159 },
+                        { id: 6, name: '【自然款】纯欲仿真婴儿弯妈生设计款', price: 189 },
+                        { id: 7, name: '【网红美甲款】小红薯随心款式+甲片', price: 279 },
+                        { id: 8, name: '【美甲款式】热门美甲简约风', price: 149 },
+                        { id: 9, name: '【美睫嫁接】美睫任意款式+下睫毛套餐', price: 279 },
+                        { id: 10, name: '【款式任选】纯欲小精灵漫画款美睫', price: 219 },
+                        { id: 11, name: '【自然款】灵动随心淡妆、裸妆感美睫', price: 121 },
+                        { id: 12, name: '2次卡|【美甲款式】热门美甲简约风', price: 291 },
+                        { id: 13, name: '【闪耀碎钻】脚部纯色美甲', price: 159 },
+                        { id: 14, name: '【自然款】自然微密空气睫毛-健康嫁接', price: 179 },
+                        { id: 15, name: '【爆款】自然下睫毛', price: 54.9 },
+                        { id: 16, name: '【款式任选】纯欲小精灵漫画款美睫', price: 219 },
+                        { id: 17, name: '【美睫款式】美睫款式设计', price: 159 },
+                        { id: 18, name: '【手部护理】手部护理+纯色美甲', price: 99 }
+                    ]
                 };
                 localStorage.setItem('nailSalonData', JSON.stringify(initData));
                 return initData;
@@ -1873,7 +1913,195 @@
             bindClearButtons();
             bindBackupButtons();
             initializeOriginalFunctions();
+            initializeServiceManagement();
+            await renderQuickOrderServices();
+            updateServiceCount();
         });
+        
+        // 服务项目管理功能
+        function initializeServiceManagement() {
+            const manageBtn = document.getElementById('manageQuickOrderBtn');
+            const serviceManageModal = document.getElementById('serviceManageModal');
+            const closeServiceManageModal = document.getElementById('closeServiceManageModal');
+            const addServiceBtn = document.getElementById('addServiceBtn');
+            
+            if (manageBtn) {
+                manageBtn.addEventListener('click', async function() {
+                    await renderServiceManageList();
+                    serviceManageModal.style.display = 'flex';
+                });
+            }
+            
+            if (closeServiceManageModal) {
+                closeServiceManageModal.addEventListener('click', function() {
+                    serviceManageModal.style.display = 'none';
+                });
+            }
+            
+            if (addServiceBtn) {
+                addServiceBtn.addEventListener('click', async function() {
+                    const nameInput = document.getElementById('newServiceName');
+                    const priceInput = document.getElementById('newServicePrice');
+                    const name = nameInput.value.trim();
+                    const price = parseFloat(priceInput.value);
+                    
+                    if (!name || isNaN(price) || price <= 0) {
+                        dataManager.showNotification('请输入有效的服务名称和价格', 'error');
+                        return;
+                    }
+                    
+                    const data = await dataManager.getData();
+                    if (!data.quickOrderServices) {
+                        data.quickOrderServices = [];
+                    }
+                    
+                    const newId = data.quickOrderServices.length > 0 
+                        ? Math.max(...data.quickOrderServices.map(s => s.id)) + 1 
+                        : 1;
+                    
+                    data.quickOrderServices.push({ id: newId, name: name, price: price });
+                    await dataManager.saveData(data);
+                    
+                    nameInput.value = '';
+                    priceInput.value = '';
+                    
+                    await renderServiceManageList();
+                    await renderQuickOrderServices();
+                    updateServiceCount();
+                    dataManager.showNotification('服务项目添加成功', 'success');
+                });
+            }
+            
+            window.addEventListener('click', function(e) {
+                if (e.target === serviceManageModal) {
+                    serviceManageModal.style.display = 'none';
+                }
+            });
+        }
+        
+        async function renderServiceManageList() {
+            const data = await dataManager.getData();
+            const services = data.quickOrderServices || [];
+            const listContainer = document.getElementById('serviceManageList');
+            
+            if (!listContainer) return;
+            
+            if (services.length === 0) {
+                listContainer.innerHTML = '<div style="text-align: center; color: var(--text-light); padding: 20px;">暂无服务项目</div>';
+                return;
+            }
+            
+            listContainer.innerHTML = services.map(service => 
+                '<div class="service-manage-item" data-id="' + service.id + '" style="display: flex; align-items: center; padding: 12px; border-bottom: 1px solid var(--border-color); gap: 10px;">' +
+                    '<span style="flex: 1; font-size: 14px;">' + service.name + '</span>' +
+                    '<span style="color: var(--accent-pink); font-weight: 600; min-width: 60px; text-align: right;">¥' + service.price + '</span>' +
+                    '<button onclick="editService(' + service.id + ')" style="background: var(--light-pink); border: none; border-radius: 5px; padding: 5px 10px; cursor: pointer;">编辑</button>' +
+                    '<button onclick="deleteService(' + service.id + ')" style="background: #ffebee; border: none; border-radius: 5px; padding: 5px 10px; cursor: pointer; color: #f44336;">删除</button>' +
+                '</div>'
+            ).join('');
+        }
+        
+        async function editService(serviceId) {
+            const data = await dataManager.getData();
+            const services = data.quickOrderServices || [];
+            const service = services.find(s => s.id === serviceId);
+            
+            if (!service) return;
+            
+            const newName = prompt('请输入新的服务名称：', service.name);
+            if (newName === null) return;
+            
+            const newPrice = prompt('请输入新的价格：', service.price);
+            if (newPrice === null) return;
+            
+            const price = parseFloat(newPrice);
+            if (isNaN(price) || price <= 0) {
+                dataManager.showNotification('请输入有效的价格', 'error');
+                return;
+            }
+            
+            service.name = newName.trim() || service.name;
+            service.price = price;
+            
+            await dataManager.saveData(data);
+            await renderServiceManageList();
+            await renderQuickOrderServices();
+            dataManager.showNotification('服务项目更新成功', 'success');
+        }
+        
+        async function deleteService(serviceId) {
+            if (!confirm('确定要删除这个服务项目吗？')) return;
+            
+            const data = await dataManager.getData();
+            data.quickOrderServices = (data.quickOrderServices || []).filter(s => s.id !== serviceId);
+            await dataManager.saveData(data);
+            
+            await renderServiceManageList();
+            await renderQuickOrderServices();
+            updateServiceCount();
+            dataManager.showNotification('服务项目已删除', 'success');
+        }
+        
+        function updateServiceCount() {
+            const countEl = document.getElementById('serviceCount');
+            if (countEl) {
+                dataManager.getData().then(data => {
+                    countEl.textContent = (data.quickOrderServices || []).length;
+                });
+            }
+        }
+        
+        async function renderQuickOrderServices() {
+            const data = await dataManager.getData();
+            const services = data.quickOrderServices || [];
+            const serviceListEl = document.querySelector('#quickOrderModal .service-list');
+            
+            if (!serviceListEl) return;
+            
+            serviceListEl.innerHTML = services.map(service => 
+                '<div class="service-item" data-price="' + service.price + '">' +
+                    '<span class="service-name">' + service.name + '</span>' +
+                    '<span class="service-price">¥' + service.price + '</span>' +
+                '</div>'
+            ).join('') +
+                '<div class="service-item" id="customAmountItem" data-price="0">' +
+                    '<span class="service-name">自定义金额</span>' +
+                    '<span class="service-price">' +
+                        '<input type="number" id="customAmountInput" placeholder="输入金额" style="width: 80px; border: none; text-align: right; background: transparent;">' +
+                        '<span id="customAmountDisplay">¥0</span>' +
+                    '</span>' +
+                '</div>';
+            
+            const serviceItems = serviceListEl.querySelectorAll('.service-item:not(#customAmountItem)');
+            serviceItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const price = parseFloat(this.getAttribute('data-price'));
+                    const serviceName = this.querySelector('.service-name').textContent;
+                    const index = selectedServices.findIndex(s => s.name === serviceName);
+                    
+                    if (index === -1) {
+                        selectedServices.push({ name: serviceName, price: price });
+                        this.style.backgroundColor = 'var(--light-pink)';
+                        this.style.borderRadius = '10px';
+                    } else {
+                        selectedServices.splice(index, 1);
+                        this.style.backgroundColor = '';
+                    }
+                    
+                    updateTotalAmount();
+                });
+            });
+            
+            const customAmountInput = document.getElementById('customAmountInput');
+            if (customAmountInput) {
+                customAmountInput.addEventListener('input', function() {
+                    const value = parseFloat(this.value) || 0;
+                    customAmountValue = value;
+                    document.getElementById('customAmountDisplay').textContent = '¥' + value;
+                    updateTotalAmount();
+                });
+            }
+        }
         
         // 加载数据到页面
         async function loadDataToPage() {
