@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -1136,111 +1136,10 @@
             </div>
             
             <div class="service-list">
-                <div class="service-item" data-price="189">
-                    <span class="service-name">款式本甲|卸甲|【美甲款式】任意款小红薯推荐</span>
-                    <span class="service-price">¥189</span>
-                </div>
-                
-                <div class="service-item" data-price="101">
-                    <span class="service-name">【纯色美甲】手部纯色+加固微建构</span>
-                    <span class="service-price">¥101</span>
-                </div>
-                
-                <div class="service-item" data-price="159">
-                    <span class="service-name">【闪耀上新】瓷白猫眼美甲</span>
-                    <span class="service-price">¥159</span>
-                </div>
-                
-                <div class="service-item" data-price="159">
-                    <span class="service-name">美甲建构+冰透色/极光海莉同款二选一</span>
-                    <span class="service-price">¥159</span>
-                </div>
-                
-                <div class="service-item" data-price="159">
-                    <span class="service-name">《畅销》网红爆款美睫任意款式设计</span>
-                    <span class="service-price">¥159</span>
-                </div>
-                
-                <div class="service-item" data-price="189">
-                    <span class="service-name">【自然款】纯欲仿真婴儿弯妈生设计款</span>
-                    <span class="service-price">¥189</span>
-                </div>
-                
-                <div class="service-item" data-price="279">
-                    <span class="service-name">【网红美甲款】小红薯随心款式+甲片</span>
-                    <span class="service-price">¥279</span>
-                </div>
-                
-                <div class="service-item" data-price="149">
-                    <span class="service-name">【美甲款式】热门美甲简约风</span>
-                    <span class="service-price">¥149</span>
-                </div>
-                
-                <div class="service-item" data-price="279">
-                    <span class="service-name">【美睫嫁接】美睫任意款式+下睫毛套餐</span>
-                    <span class="service-price">¥279</span>
-                </div>
-                
-                <div class="service-item" data-price="219">
-                    <span class="service-name">【款式任选】纯欲小精灵漫画款美睫</span>
-                    <span class="service-price">¥219</span>
-                </div>
-                
-                <div class="service-item" data-price="121">
-                    <span class="service-name">【自然款】灵动随心淡妆、裸妆感美睫</span>
-                    <span class="service-price">¥121</span>
-                </div>
-                
-                <div class="service-item" data-price="291">
-                    <span class="service-name">2次卡|【美甲款式】热门美甲简约风</span>
-                    <span class="service-price">¥291</span>
-                </div>
-                
-                <div class="service-item" data-price="159">
-                    <span class="service-name">【闪耀碎钻】脚部纯色美甲</span>
-                    <span class="service-price">¥159</span>
-                </div>
-                
-                <div class="service-item" data-price="179">
-                    <span class="service-name">【自然款】自然微密空气睫毛-健康嫁接</span>
-                    <span class="service-price">¥179</span>
-                </div>
-                
-                <div class="service-item" data-price="54.9">
-                    <span class="service-name">【爆款】自然下睫毛</span>
-                    <span class="service-price">¥54.9</span>
-                </div>
-                
-                <div class="service-item" data-price="498">
-                    <span class="service-name">3次【自然款】自然微密空气睫毛卡</span>
-                    <span class="service-price">¥498</span>
-                </div>
-                
-                <div class="service-item" data-price="179">
-                    <span class="service-name">【闪耀】瓷白猫眼脚部美甲</span>
-                    <span class="service-price">¥179</span>
-                </div>
-                
-                <div class="service-item" data-price="424">
-                    <span class="service-name">2次卡【款式任选】纯欲小精灵漫画款美睫</span>
-                    <span class="service-price">¥424</span>
-                </div>
-                
-                <!-- 自定义金额选项 -->
-                <div class="service-item" id="customAmountItem">
-                    <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
-                        <div style="display: flex; align-items: center;">
-                            <i class="fas fa-edit" style="margin-right: 10px; color: var(--accent-pink);"></i>
-                            <span class="service-name">自定义金额</span>
-                        </div>
-                        <div style="display: flex; align-items: center;">
-                            <input type="number" id="customAmountInput" placeholder="输入金额" 
-                            style="width: 100px; padding: 5px 10px; border: 1px solid var(--border-color); 
-                            border-radius: 6px; text-align: right; margin-right: 10px;"
-                            min="0" step="1">
-                            <span class="service-price" id="customAmountDisplay">¥0</span>
-                        </div>
-                    </div>
+                <!-- 服务项将由 renderQuickOrderServices() 动态生成 -->
+                <div style="text-align: center; padding: 40px; color: var(--text-light);">
+                    <span class="icon">⏳</span>
+                    <p>正在加载服务项目...</p>
                 </div>
             </div>
             
@@ -2058,49 +1957,89 @@
             
             if (!serviceListEl) return;
             
+            // 重置选择状态
+            window.selectedServices = [];
+            window.totalAmount = 0;
+            window.customAmountSelected = false;
+            window.customAmountValue = 0;
+            
             serviceListEl.innerHTML = services.map(service => 
                 '<div class="service-item" data-price="' + service.price + '">' +
                     '<span class="service-name">' + service.name + '</span>' +
                     '<span class="service-price">¥' + service.price + '</span>' +
                 '</div>'
             ).join('') +
-                '<div class="service-item" id="customAmountItem" data-price="0">' +
+                '<div class="service-item" id="customAmountItem" data-price="0" style="cursor: pointer;">' +
                     '<span class="service-name">自定义金额</span>' +
                     '<span class="service-price">' +
-                        '<input type="number" id="customAmountInput" placeholder="输入金额" style="width: 80px; border: none; text-align: right; background: transparent;">' +
+                        '<input type="number" id="customAmountInput" placeholder="输入金额" style="width: 80px; border: none; text-align: right; background: transparent; padding: 5px;">' +
                         '<span id="customAmountDisplay">¥0</span>' +
                     '</span>' +
                 '</div>';
             
+            const orderTotal = document.getElementById('orderTotal');
+            
+            // 绑定服务项点击事件
             const serviceItems = serviceListEl.querySelectorAll('.service-item:not(#customAmountItem)');
             serviceItems.forEach(item => {
                 item.addEventListener('click', function() {
                     const price = parseFloat(this.getAttribute('data-price'));
                     const serviceName = this.querySelector('.service-name').textContent;
-                    const index = selectedServices.findIndex(s => s.name === serviceName);
+                    const index = window.selectedServices.findIndex(s => s.name === serviceName);
                     
                     if (index === -1) {
-                        selectedServices.push({ name: serviceName, price: price });
+                        window.selectedServices.push({ name: serviceName, price: price });
                         this.style.backgroundColor = 'var(--light-pink)';
                         this.style.borderRadius = '10px';
                     } else {
-                        selectedServices.splice(index, 1);
+                        window.selectedServices.splice(index, 1);
                         this.style.backgroundColor = '';
                     }
                     
-                    updateTotalAmount();
+                    window.updateTotalAmount();
                 });
             });
             
+            // 绑定自定义金额输入事件
             const customAmountInput = document.getElementById('customAmountInput');
+            const customAmountItem = document.getElementById('customAmountItem');
+            const customAmountDisplay = document.getElementById('customAmountDisplay');
+            
             if (customAmountInput) {
-                customAmountInput.addEventListener('input', function() {
+                customAmountInput.addEventListener('input', function(e) {
+                    e.stopPropagation();
                     const value = parseFloat(this.value) || 0;
-                    customAmountValue = value;
-                    document.getElementById('customAmountDisplay').textContent = '¥' + value;
-                    updateTotalAmount();
+                    window.customAmountValue = value;
+                    window.customAmountSelected = value > 0;
+                    customAmountDisplay.textContent = '¥' + value;
+                    
+                    if (value > 0) {
+                        customAmountItem.style.backgroundColor = 'var(--light-pink)';
+                        customAmountItem.style.borderRadius = '10px';
+                    } else {
+                        customAmountItem.style.backgroundColor = '';
+                    }
+                    
+                    window.updateTotalAmount();
+                });
+                
+                // 阻止输入框点击冒泡
+                customAmountInput.addEventListener('click', function(e) {
+                    e.stopPropagation();
                 });
             }
+            
+            // 自定义金额项点击聚焦输入框
+            if (customAmountItem) {
+                customAmountItem.addEventListener('click', function(e) {
+                    if (e.target !== customAmountInput) {
+                        customAmountInput.focus();
+                    }
+                });
+            }
+            
+            // 更新总计显示
+            window.updateTotalAmount();
         }
         
         // 加载数据到页面
@@ -2277,23 +2216,29 @@ newConfirmBtn.addEventListener('click', async function() {
             updateDateTime();
             setInterval(updateDateTime, 60000);
             
-            // 快速开单功能
+            // 快速开单功能 - 全局变量声明
+            window.selectedServices = [];
+            window.totalAmount = 0;
+            window.customAmountSelected = false;
+            window.customAmountValue = 0;
+            
             const quickOrderBtn = document.getElementById('quickOrderBtn');
             const quickOrderModal = document.getElementById('quickOrderModal');
             const closeOrderModal = document.getElementById('closeOrderModal');
-            const serviceItems = document.querySelectorAll('.service-item');
             const orderTotal = document.getElementById('orderTotal');
             const clearSelectionBtn = document.getElementById('clearSelection');
             const confirmOrderBtn = document.getElementById('confirmOrder');
             
-            const customAmountItem = document.getElementById('customAmountItem');
-            const customAmountInput = document.getElementById('customAmountInput');
-            const customAmountDisplay = document.getElementById('customAmountDisplay');
-            
-            let selectedServices = [];
-            let totalAmount = 0;
-            let customAmountSelected = false;
-            let customAmountValue = 0;
+            // 全局更新总计函数
+            window.updateTotalAmount = function() {
+                window.totalAmount = window.selectedServices.reduce((sum, service) => sum + service.price, 0);
+                
+                if (window.customAmountSelected && window.customAmountValue > 0) {
+                    window.totalAmount += window.customAmountValue;
+                }
+                
+                orderTotal.textContent = `¥${window.totalAmount}`;
+            };
             
             quickOrderBtn.addEventListener('click', () => {
                 quickOrderModal.style.display = 'flex';
@@ -2303,121 +2248,69 @@ newConfirmBtn.addEventListener('click', async function() {
                 quickOrderModal.style.display = 'none';
             });
             
-            serviceItems.forEach(item => {
-                if (item.id === 'customAmountItem') return;
-                
-                item.addEventListener('click', () => {
-                    const price = parseInt(item.getAttribute('data-price'));
-                    const serviceName = item.querySelector('.service-name').textContent;
-                    
-                    const index = selectedServices.findIndex(s => s.name === serviceName);
-                    
-                    if (index === -1) {
-                        selectedServices.push({ name: serviceName, price: price });
-                        item.style.backgroundColor = 'var(--light-pink)';
-                        item.style.borderRadius = '10px';
-                    } else {
-                        selectedServices.splice(index, 1);
-                        item.style.backgroundColor = '';
-                    }
-                    
-                    updateTotalAmount();
-                });
-            });
-            
-            customAmountInput.addEventListener('input', function() {
-                const value = parseInt(this.value) || 0;
-                customAmountValue = value;
-                customAmountDisplay.textContent = `¥${value}`;
-                
-                if (value > 0) {
-                    if (!customAmountSelected) {
-                        customAmountSelected = true;
-                        customAmountItem.style.backgroundColor = 'var(--light-pink)';
-                        customAmountItem.style.borderRadius = '10px';
-                    }
-                } else {
-                    if (customAmountSelected) {
-                        customAmountSelected = false;
-                        customAmountItem.style.backgroundColor = '';
-                    }
-                }
-                
-                updateTotalAmount();
-            });
-            
-            customAmountItem.addEventListener('click', function(e) {
-                if (e.target !== customAmountInput) {
-                    customAmountInput.focus();
-                }
-            });
-            
-            function updateTotalAmount() {
-                totalAmount = selectedServices.reduce((sum, service) => sum + service.price, 0);
-                
-                if (customAmountSelected && customAmountValue > 0) {
-                    totalAmount += customAmountValue;
-                }
-                
-                orderTotal.textContent = `¥${totalAmount}`;
-            }
-            
             clearSelectionBtn.addEventListener('click', () => {
-                selectedServices = [];
-                serviceItems.forEach(item => {
-                    if (item.id !== 'customAmountItem') {
-                        item.style.backgroundColor = '';
-                    }
+                window.selectedServices = [];
+                window.customAmountSelected = false;
+                window.customAmountValue = 0;
+                
+                // 重置所有服务项的背景色
+                const allServiceItems = document.querySelectorAll('#quickOrderModal .service-item');
+                allServiceItems.forEach(item => {
+                    item.style.backgroundColor = '';
                 });
                 
-                customAmountInput.value = '';
-                customAmountDisplay.textContent = '¥0';
-                customAmountSelected = false;
-                customAmountValue = 0;
-                customAmountItem.style.backgroundColor = '';
+                // 重置自定义金额输入
+                const customInput = document.getElementById('customAmountInput');
+                const customDisplay = document.getElementById('customAmountDisplay');
+                if (customInput) customInput.value = '';
+                if (customDisplay) customDisplay.textContent = '¥0';
                 
-                updateTotalAmount();
+                window.updateTotalAmount();
             });
             
             confirmOrderBtn.addEventListener('click', async () => {
-                if (selectedServices.length === 0 && customAmountValue === 0) {
+                if (window.selectedServices.length === 0 && window.customAmountValue === 0) {
                     alert('请至少选择一项服务或输入自定义金额');
                     return;
                 }
                 
-                let serviceNames = selectedServices.map(s => s.name).join(' + ');
+                let serviceNames = window.selectedServices.map(s => s.name).join(' + ');
                 
-                if (customAmountValue > 0) {
+                if (window.customAmountValue > 0) {
                     if (serviceNames) {
-                        serviceNames += ` + 自定义¥${customAmountValue}`;
+                        serviceNames += ` + 自定义¥${window.customAmountValue}`;
                     } else {
-                        serviceNames = `自定义服务¥${customAmountValue}`;
+                        serviceNames = `自定义服务¥${window.customAmountValue}`;
                     }
                 }
                 
-                const result = await dataManager.addOrder(totalAmount, serviceNames);
+                const result = await dataManager.addOrder(window.totalAmount, serviceNames);
                 
                 await loadDataToPage();
                 
-                document.getElementById('amountToCollect').textContent = `¥${totalAmount}`;
+                document.getElementById('amountToCollect').textContent = `¥${window.totalAmount}`;
                 
                 quickOrderModal.style.display = 'none';
                 collectMoneyModal.style.display = 'flex';
                 
-                selectedServices = [];
-                serviceItems.forEach(item => {
-                    if (item.id !== 'customAmountItem') {
-                        item.style.backgroundColor = '';
-                    }
+                // 重置选择状态
+                window.selectedServices = [];
+                window.customAmountSelected = false;
+                window.customAmountValue = 0;
+                
+                // 重置所有服务项的背景色
+                const allServiceItems = document.querySelectorAll('#quickOrderModal .service-item');
+                allServiceItems.forEach(item => {
+                    item.style.backgroundColor = '';
                 });
                 
-                customAmountInput.value = '';
-                customAmountDisplay.textContent = '¥0';
-                customAmountSelected = false;
-                customAmountValue = 0;
-                customAmountItem.style.backgroundColor = '';
+                // 重置自定义金额输入
+                const customInput = document.getElementById('customAmountInput');
+                const customDisplay = document.getElementById('customAmountDisplay');
+                if (customInput) customInput.value = '';
+                if (customDisplay) customDisplay.textContent = '¥0';
                 
-                updateTotalAmount();
+                window.updateTotalAmount();
             });
             
             // 收款功能
@@ -2430,12 +2323,12 @@ newConfirmBtn.addEventListener('click', async function() {
             const cashPayBtn = document.getElementById('cashPayBtn');
             
             collectMoneyBtn.addEventListener('click', () => {
-                if (totalAmount === 0) {
+                if (window.totalAmount === 0) {
                     alert('请先创建订单');
                     return;
                 }
                 
-                document.getElementById('amountToCollect').textContent = `¥${totalAmount}`;
+                document.getElementById('amountToCollect').textContent = `¥${window.totalAmount}`;
                 collectMoneyModal.style.display = 'flex';
             });
             
@@ -2449,9 +2342,9 @@ newConfirmBtn.addEventListener('click', async function() {
             
             function processPayment(method) {
                 setTimeout(() => {
-                    alert(`支付成功！收款¥${totalAmount}（${method}）`);
+                    alert(`支付成功！收款¥${window.totalAmount}（${method}）`);
                     collectMoneyModal.style.display = 'none';
-                    totalAmount = 0;
+                    window.totalAmount = 0;
                     document.getElementById('amountToCollect').textContent = '¥0';
                 }, 500);
             }
