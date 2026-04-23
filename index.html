@@ -630,6 +630,77 @@
             color: var(--text-light);
         }
         
+        .order-item-full {
+            position: relative;
+        }
+        
+        .order-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .order-delete-btn {
+            width: 30px;
+            height: 30px;
+            border: none;
+            background: transparent;
+            color: var(--text-light);
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        
+        .order-delete-btn:hover {
+            background: #ffe0e0;
+            color: #ff4444;
+        }
+        
+        .order-delete-confirm {
+            display: none;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: white;
+            border-radius: 10px;
+            padding: 8px 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            z-index: 10;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+        
+        .order-delete-confirm.show {
+            display: flex;
+        }
+        
+        .order-delete-confirm .confirm-yes {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 4px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .order-delete-confirm .confirm-no {
+            background: #f0f0f0;
+            color: #666;
+            border: none;
+            padding: 4px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
         .order-item-amount {
             font-size: 18px;
             font-weight: 600;
@@ -1722,6 +1793,44 @@
                 return { data, orderId };
             },
             
+            // 删除单个订单
+            deleteOrder: async function(orderId) {
+                const data = await this.getData();
+                const orderIndex = data.allOrders.findIndex(o => o.id === orderId);
+                
+                if (orderIndex === -1) {
+                    this.showNotification('未找到该订单', 'error');
+                    return null;
+                }
+                
+                const deletedOrder = data.allOrders[orderIndex];
+                const today = this.getDateString(new Date());
+                
+                // 从订单列表中移除
+                data.allOrders.splice(orderIndex, 1);
+                
+                // 如果是今天的订单，更新今日统计
+                if (deletedOrder.date === today) {
+                    data.today.orders = Math.max(0, data.today.orders - 1);
+                    data.today.income = Math.max(0, data.today.income - deletedOrder.amount);
+                    data.today.customers = Math.max(0, data.today.customers - 1);
+                }
+                
+                // 更新当月统计
+                const now = new Date();
+                const orderDate = new Date(deletedOrder.date);
+                if (orderDate.getFullYear() === now.getFullYear() && orderDate.getMonth() === now.getMonth()) {
+                    data.month.orders = Math.max(0, data.month.orders - 1);
+                    data.month.income = Math.max(0, data.month.income - deletedOrder.amount);
+                    data.month.customers = Math.max(0, data.month.customers - 1);
+                }
+                
+                await this.saveData(data);
+                this.showNotification(`订单 #${orderId} 已删除`, 'success');
+                
+                return { data, deletedOrder };
+            },
+            
             // 保存备份记录（本地快照，最多保留10条）
             saveBackup: async function(type, data) {
                 const backups = JSON.parse(localStorage.getItem('nailSalonBackups') || '[]');
@@ -2457,12 +2566,72 @@ newConfirmBtn.addEventListener('click', async function() {
                                 <h4>订单 #${order.id}</h4>
                                 <p>${order.time}</p>
                             </div>
-                            <div class="order-item-amount">¥${order.amount}</div>
+                            <div class="order-item-actions">
+                                <div class="order-item-amount">¥${order.amount}</div>
+                                <button class="order-delete-btn" data-order-id="${order.id}" title="删除订单">🗑️</button>
+                            </div>
+                            <div class="order-delete-confirm" data-confirm-id="${order.id}">
+                                <span>确认删除？</span>
+                                <button class="confirm-yes" data-delete-id="${order.id}">删除</button>
+                                <button class="confirm-no" data-cancel-id="${order.id}">取消</button>
+                            </div>
                         `;
                         dateGroup.appendChild(orderItem);
                     });
                     
                     ordersListFull.appendChild(dateGroup);
+                });
+                
+                // 绑定删除按钮事件
+                bindDeleteOrderEvents();
+            }
+            
+            // 绑定删除订单事件
+            function bindDeleteOrderEvents() {
+                // 删除按钮点击
+                document.querySelectorAll('.order-delete-btn').forEach(btn => {
+                    btn.onclick = function(e) {
+                        e.stopPropagation();
+                        const orderId = this.getAttribute('data-order-id');
+                        const confirmBox = document.querySelector(`[data-confirm-id="${orderId}"]`);
+                        if (confirmBox) {
+                            confirmBox.classList.add('show');
+                        }
+                    };
+                });
+                
+                // 确认删除
+                document.querySelectorAll('.order-delete-confirm .confirm-yes').forEach(btn => {
+                    btn.onclick = async function(e) {
+                        e.stopPropagation();
+                        const orderId = this.getAttribute('data-delete-id');
+                        await dataManager.deleteOrder(orderId);
+                        loadOrdersPage();
+                        loadDataToPage();
+                        loadReportsPage();
+                    };
+                });
+                
+                // 取消删除
+                document.querySelectorAll('.order-delete-confirm .confirm-no').forEach(btn => {
+                    btn.onclick = function(e) {
+                        e.stopPropagation();
+                        const orderId = this.getAttribute('data-cancel-id');
+                        const confirmBox = document.querySelector(`[data-confirm-id="${orderId}"]`);
+                        if (confirmBox) {
+                            confirmBox.classList.remove('show');
+                        }
+                    };
+                });
+                
+                // 点击其他地方关闭确认框
+                document.querySelectorAll('.order-item-full').forEach(item => {
+                    item.addEventListener('click', function(e) {
+                        if (!e.target.closest('.order-delete-confirm') && !e.target.closest('.order-delete-btn')) {
+                            const confirmBox = this.querySelector('.order-delete-confirm');
+                            if (confirmBox) confirmBox.classList.remove('show');
+                        }
+                    });
                 });
             }
             
